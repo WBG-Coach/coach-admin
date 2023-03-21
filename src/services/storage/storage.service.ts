@@ -1,4 +1,4 @@
-import { User } from "../../types";
+import { IUser } from "../../types";
 
 const StorageService = {
   getAccessToken: (): string | undefined => {
@@ -11,13 +11,13 @@ const StorageService = {
     localStorage.setItem("accessToken", token);
   },
 
-  getUser: (): User | undefined => {
+  getUser: (): IUser | undefined => {
     const localUser = localStorage.getItem("user");
     if (localUser) return JSON.parse(localUser);
     return undefined;
   },
 
-  setUser: (user: User): void => {
+  setUser: (user: IUser): void => {
     localStorage.setItem("user", JSON.stringify(user));
   },
 

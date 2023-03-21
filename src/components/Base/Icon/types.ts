@@ -1,13 +1,13 @@
-import { SpaceProps } from "styled-system";
+import { BoxProps } from "@chakra-ui/react";
 
 export interface OwnProps {
-  /** Icon name (see names on example below) */
   name: string;
-  /** Icon color */
+
   color?: string;
-  /** Icon size (square: size x size) */
-  size?: string;
+
+  size?: number;
+
   onClick?: (e: any) => void;
 }
 
-export type Props = OwnProps & SpaceProps;
+export type Props = BoxProps & OwnProps;
