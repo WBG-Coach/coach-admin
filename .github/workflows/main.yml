@@ -27,5 +27,5 @@ jobs:
           script: |
             cd containers/coach-admin-sl
             git pull
-            sudo docker build -t coach-backend-sl .
+            sudo docker build -t coach-admin-sl .
             sudo docker-compose up -d
