@@ -9,15 +9,7 @@ jobs:
   build:
     name: Deploy to server
     runs-on: ubuntu-latest
-    env:
-      REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm install
-      - run: npm run test
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v0.1.8
         with:

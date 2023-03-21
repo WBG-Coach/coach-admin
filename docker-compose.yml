@@ -1,0 +1,13 @@
+version: "3.3"
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false
+
+services:
+  coach-admin-sl:
+    ports:
+      - "3001:80"
+    image: coach-admin-sl
