@@ -14,6 +14,6 @@ RUN rm /etc/nginx/conf.d/default.conf
 
 COPY nginx.conf /etc/nginx/conf.d/
 
-COPY --from=build /home/app /usr/share/nginx/html
+COPY --from=build /home/app/dist /usr/share/nginx/html
 
 EXPOSE 80
