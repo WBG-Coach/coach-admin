@@ -1,17 +1,19 @@
-FROM node:latest as build 
+FROM node:alpine as build
 
-WORKDIR /react-app
+WORKDIR /home/app
 
-COPY package*.json .
+COPY package.json ./
 
-RUN yarn install
+COPY . /home/app
 
-COPY . .
+RUN npm install
 
-RUN yarn build
+FROM nginx:alpine
 
-FROM nginx:1.19
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY nginx.conf /etc/nginx/conf.d/
+
+COPY --from=build /home/app /usr/share/nginx/html
 
 EXPOSE 80
-
-COPY --from=build /react-app/build /usr/share/nginx/html
