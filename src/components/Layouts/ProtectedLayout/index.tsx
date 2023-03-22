@@ -6,15 +6,12 @@ import { UserContext } from "../../../contexts/UserContext";
 import Navbar from "@/components/Navbar";
 
 export const ProtectedLayout = () => {
-  const { user, userAlredyLoaded } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userAlredyLoaded) {
-      console.log("here");
-      navigate("/login");
-    }
-  }, [user, navigate, userAlredyLoaded]);
+    if (!user) navigate("/login");
+  }, [user, navigate]);
 
   return (
     <HStack w="100%">

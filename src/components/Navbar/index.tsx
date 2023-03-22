@@ -32,20 +32,10 @@ const Navbar: React.FC = () => {
                   icon={subItem.icon}
                   label={t(`Navbar.${subItem.label}`)}
                   route={subItem.route}
+                  onClick={!subItem.route ? logout : undefined}
                 />
               ))}
             </Stack>
-          ) : item.lasts ? (
-            <VStack mt={"100%"} key={index}>
-              {item.lasts.map((lastItem, sIndex) => (
-                <MenuItem
-                  key={index + sIndex}
-                  icon={lastItem.icon}
-                  label={t(`Navbar.${lastItem.label}`)}
-                  onClick={logout}
-                />
-              ))}
-            </VStack>
           ) : (
             <MenuItem
               key={index}

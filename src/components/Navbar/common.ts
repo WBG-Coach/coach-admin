@@ -5,32 +5,17 @@ export const MenuItems = [
     route: "/",
   },
   {
-    icon: "box",
-    label: "projects",
-    route: "/projects",
-  },
-  {
-    icon: "puzzle-piece",
-    label: "competencies",
-    route: "/competencies",
-  },
-  {
     label: "questionnaire",
     subItems: [
       {
-        icon: "clipboard-notes",
-        label: "observation",
-        route: "/observation-questionnaire",
-      },
-      {
-        icon: "comments",
-        label: "feedback",
-        route: "/feedbacks-questionnaire",
+        icon: "puzzle-piece",
+        label: "competencies",
+        route: "/competencies",
       },
       {
         icon: "clipboard-notes",
-        label: "documentation",
-        route: "/documentations-questionnaire",
+        label: "questions",
+        route: "/questions",
       },
     ],
   },
@@ -57,15 +42,16 @@ export const MenuItems = [
         label: "sessions",
         route: "/sessions",
       },
+    ],
+  },
+  {
+    label: "account",
+    subItems: [
       {
         icon: "setting",
         label: "settings",
         route: "/settings",
       },
-    ],
-  },
-  {
-    lasts: [
       {
         icon: "signout",
         label: "logout",

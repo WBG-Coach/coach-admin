@@ -19,7 +19,10 @@ const Login: React.FC = () => {
   } = useForm({ defaultValues });
 
   const handleLogin: SubmitHandler<typeof defaultValues> = async (values) => {
-    await login(values);
+    try {
+      await login(values);
+    } catch {}
+    return;
   };
 
   return (
@@ -59,6 +62,7 @@ const Login: React.FC = () => {
                 render={({ field, fieldState: { error } }) => (
                   <Input
                     placeholder="Password"
+                    type="password"
                     {...field}
                     isInvalid={!!error}
                     h={"48px"}

@@ -1,12 +1,9 @@
 const enTranslation = {
   Navbar: {
-    projects: "Projects",
     dashboard: "Dashboard",
-    competencies: "Competencies",
     questionnaire: "QUESTIONNAIRE",
-    observation: "Observation",
-    feedback: "Feedback",
-    documentation: "Documentation",
+    competencies: "Competencies",
+    questions: "Questions",
     data: "DATA",
     schools: "Schools",
     coaches: "Coaches",

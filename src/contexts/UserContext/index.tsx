@@ -1,13 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import AuthService from "@/services/auth";
 import StorageService from "@/services/storage/storage.service";
-import UserService from "../../services/user";
-import { IUser } from "../../types";
 import { redirect } from "react-router-dom";
+import AuthService from "@/services/auth";
+import { IUser } from "../../types";
 
 export type UserContextProps = {
   login: (prop: { email: string; password: string }) => Promise<void>;
-  userAlredyLoaded?: boolean;
   logout: () => void;
   user?: IUser;
 };
@@ -21,40 +19,27 @@ interface Props {
 }
 
 const UserContextProvider = ({ children }: Props) => {
-  const [userAlredyLoaded, setuserAlredyLoaded] = useState<boolean>(false);
   const [user, setUser] = useState<IUser>();
 
   useEffect(() => {
-    (async () => {
-      if (!user) {
-        let storageUser = StorageService.getUser();
-        if (storageUser) {
-          setUser(storageUser);
-          setUser(await UserService.getCurrentUser());
-        }
-      }
-      setuserAlredyLoaded(true);
-    })();
-  }, [user]);
-
-  useEffect(() => {
-    if (user) {
-      StorageService.setUser(user);
+    let storageUser = StorageService.getUser();
+    if (storageUser) {
+      setUser(storageUser);
     }
-  }, [user]);
+  }, []);
 
   const handleLogin = async (props: { email: string; password: string }) => {
     const response = await AuthService.login(props);
 
-    StorageService.setAccessToken(response.headers.token || "");
     setUser(response.data);
-    redirect("/");
+    StorageService.setUser(response.data);
+    StorageService.setAccessToken(response.headers.token || "");
   };
 
   const logout = () => {
+    console.log("saindo");
     setUser(undefined);
     StorageService.cleanStorage();
-    redirect("/login");
   };
 
   return (
@@ -63,7 +48,6 @@ const UserContextProvider = ({ children }: Props) => {
         login: handleLogin,
         logout,
         user,
-        userAlredyLoaded,
       }}
     >
       {children}

@@ -18,7 +18,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 
   return (
     <HStack
-      onClick={() => (onClick ? onClick : navigate(route || ""))}
+      onClick={() => (onClick ? onClick() : navigate(route || ""))}
       p={"8px 16px"}
       alignItems={"flex-start"}
       w={"100%"}
