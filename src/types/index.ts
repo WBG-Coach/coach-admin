@@ -2,6 +2,10 @@ export interface ITeacher {
   id: string;
   name: string;
 }
+export interface ICoach {
+  id: string;
+  name: string;
+}
 
 export interface IUser {
   id: string;

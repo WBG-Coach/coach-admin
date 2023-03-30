@@ -1,6 +1,6 @@
 import { AnimatePresence } from "framer-motion";
 import { Routes, Route, Navigate } from "react-router-dom";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { ProtectedLayout } from "../components/Layouts/ProtectedLayout";
 import Login from "@/pages/Login";
