@@ -104,19 +104,19 @@ const TeachersPage: React.FC = () => {
       <Modal isOpen={!!teacherToDelete} onClose={onCloseDeleteModal}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Confirmar Exclusão</ModalHeader>
+          <ModalHeader>Confirm Deletion</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>Tem certeza que deseja excluir este nome?</ModalBody>
+          <ModalBody>Are you sure you want to delete this school?</ModalBody>
           <ModalFooter>
             <Button variant="ghost" mr={3} onClick={onCloseDeleteModal}>
-              Cancelar
+              Cancel
             </Button>
             <Button
               colorScheme="red"
               onClick={deleteTeacher}
               isLoading={isLoadingDelete}
             >
-              Excluir
+              Delete
             </Button>
           </ModalFooter>
         </ModalContent>
