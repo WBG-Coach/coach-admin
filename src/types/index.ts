@@ -70,6 +70,11 @@ export interface ISession {
   coach_id: IUser["id"];
   school_id: ISchool["id"];
   teacher_id: ITeacher["id"];
+  subject: string;
+
+  coach: ICoach;
+  school: ISchool;
+  teacher: ITeacher;
 }
 
 export interface IDocumentation {
