@@ -2,7 +2,7 @@ import axios from "axios";
 import StorageService from "./storage/storage.service";
 
 const config = {
-  baseURL: "http://44.213.115.141:3000/",
+  baseURL: "http://3.237.104.145:3000/",
 };
 
 const _axios = axios.create(config);
