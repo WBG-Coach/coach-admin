@@ -9,5 +9,5 @@ networks:
 services:
   coach-admin-sl:
     ports:
-      - "3001:80"
-    image: coach-admin-sl
+      - "4001:80"
+    image: coachsl-admin
