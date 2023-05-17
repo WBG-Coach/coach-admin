@@ -17,6 +17,7 @@ export type UserSignUpParams = {
 
 export const AuthService = {
   login: (body: UserLoginParams): Promise<any> => _axios.post("auth", body),
+  getGuestToken: () => _axios.get<string>("auth/superset"),
 };
 
 export default AuthService;

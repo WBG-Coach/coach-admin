@@ -2,7 +2,7 @@ import axios from "axios";
 import StorageService from "./storage/storage.service";
 
 const config = {
-  baseURL: "http://3.237.104.145:3000/",
+  baseURL: import.meta.env.VITE_API_URL,
 };
 
 const _axios = axios.create(config);
