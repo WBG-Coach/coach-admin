@@ -49,7 +49,7 @@ const SessionList: React.FC<Props> = ({
             <Text flex={2}>{session?.teacher.name}</Text>
             <Text flex={1}>{session?.subject}</Text>
             <Box flex={1} display="flex" justifyContent="flex-end">
-              <IconButton
+              {/* <IconButton
                 ml="auto"
                 icon={<EditIcon />}
                 aria-label="Editar"
@@ -63,7 +63,7 @@ const SessionList: React.FC<Props> = ({
                 size="sm"
                 colorScheme="red"
                 onClick={() => handleDelete(session)}
-              />
+              /> */}
             </Box>
           </Flex>
         </Box>

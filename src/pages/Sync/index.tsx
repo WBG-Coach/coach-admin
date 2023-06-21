@@ -1,6 +1,6 @@
 import Loader from "@/components/Base/Loader";
-import SessionService from "@/services/session";
-import { ISession } from "@/types";
+import SyncService from "@/services/sync";
+import { ISync } from "@/types";
 import {
   Box,
   Button,
@@ -17,57 +17,55 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import SessionForm from "./SessionForm";
-import SessionList from "./SessionList";
+import SyncList from "./SyncList";
 
-const SessionsPage: React.FC = () => {
-  const [newSession, setNewSession] = useState(false);
-  const [sessions, setSessions] = useState<ISession[]>([]);
+const SyncsPage: React.FC = () => {
+  const [newSync, setNewSync] = useState(false);
+  const [syncs, setSyncs] = useState<ISync[]>([]);
   const [isLoadingList, setIsLoadingList] = useState(true);
   const [isLoadingForm, setIsLoadingForm] = useState(false);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
-  const [sessionToEdit, setSessionToEdit] = useState<ISession>();
-  const [sessionToDelete, setSessionToDelete] = useState<ISession>();
+  const [syncToEdit, setSyncToEdit] = useState<ISync>();
+  const [syncToDelete, setSyncToDelete] = useState<ISync>();
 
   useEffect(() => {
-    loadSessions();
+    loadSyncs();
   }, []);
 
-  const loadSessions = async () => {
+  const loadSyncs = async () => {
     setIsLoadingList(true);
-    const data = await SessionService.getSessions();
-    setSessions(data);
+    const data = await SyncService.getSyncs();
+    setSyncs(data);
     setIsLoadingList(false);
   };
 
   const closeForm = () => {
-    setNewSession(false);
-    setSessionToEdit(undefined);
+    setNewSync(false);
+    setSyncToEdit(undefined);
   };
 
-  const saveSession = async (session: Partial<ISession>) => {
+  const saveSync = async (sync: Partial<ISync>) => {
     setIsLoadingForm(true);
-    if (sessionToEdit) {
-      await SessionService.updateSession({ ...sessionToEdit, ...session });
+    if (syncToEdit) {
+      await SyncService.updateSync({ ...syncToEdit, ...sync });
     } else {
-      await SessionService.saveSession(session);
+      await SyncService.saveSync(sync);
     }
     setIsLoadingForm(false);
-    loadSessions();
+    loadSyncs();
     closeForm();
   };
 
-  const deleteSession = async () => {
+  const deleteSync = async () => {
     setIsLoadingDelete(true);
-    if (sessionToDelete)
-      await SessionService.DeleteSession(sessionToDelete?.id);
+    if (syncToDelete) await SyncService.DeleteSync(syncToDelete?.id);
     setIsLoadingDelete(false);
     onCloseDeleteModal();
-    loadSessions();
+    loadSyncs();
   };
 
   const onCloseDeleteModal = () => {
-    setSessionToDelete(undefined);
+    setSyncToDelete(undefined);
   };
 
   return (
@@ -75,36 +73,26 @@ const SessionsPage: React.FC = () => {
       <Flex
         pb={4}
         mb={6}
-        justifyContent="space-between"
         w="full"
         alignItems="center"
         borderBottom="1px solid"
+        justifyContent="space-between"
       >
-        <Heading>Sessions</Heading>
-        {/* <Button onClick={() => setNewSession(true)}>New session</Button> */}
+        <Heading>Syncs</Heading>
+        {/* <Button onClick={() => setNewSync(true)}>New sync</Button> */}
       </Flex>
-
-      <SessionForm
-        onClose={closeForm}
-        onSubmit={saveSession}
-        isSubmitting={isLoadingForm}
-        sessionToEdit={sessionToEdit}
-        isOpen={!!sessionToEdit || newSession}
-      />
-
       {isLoadingList ? (
         <Center minW={"350px"} h={"200px"}>
           <Loader />
         </Center>
       ) : (
-        <SessionList
-          sessions={sessions}
-          handleEdit={setSessionToEdit}
-          handleDelete={setSessionToDelete}
+        <SyncList
+          syncs={syncs}
+          handleEdit={setSyncToEdit}
+          handleDelete={setSyncToDelete}
         />
       )}
-
-      <Modal isOpen={!!sessionToDelete} onClose={onCloseDeleteModal}>
+      <Modal isOpen={!!syncToDelete} onClose={onCloseDeleteModal}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Confirm Deletion</ModalHeader>
@@ -116,7 +104,7 @@ const SessionsPage: React.FC = () => {
             </Button>
             <Button
               colorScheme="red"
-              onClick={deleteSession}
+              onClick={deleteSync}
               isLoading={isLoadingDelete}
             >
               Delete
@@ -128,4 +116,4 @@ const SessionsPage: React.FC = () => {
   );
 };
 
-export default SessionsPage;
+export default SyncsPage;

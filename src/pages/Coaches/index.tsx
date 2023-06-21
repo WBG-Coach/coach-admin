@@ -78,7 +78,7 @@ const CoachesPage: React.FC = () => {
         alignItems="center"
         borderBottom="1px solid"
       >
-        <Heading>Coachs</Heading>
+        <Heading>{`Coachs (count: ${coaches.length})`}</Heading>
         <Button onClick={() => setNewCoach(true)}>New coach</Button>
       </Flex>
       <CoachForm

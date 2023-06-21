@@ -1,5 +1,5 @@
 import Loader from "@/components/Base/Loader";
-import TeacherService from "@/services/teacher";
+import SyncService from "@/services/teacher";
 import { ITeacher } from "@/types";
 import {
   Box,
@@ -35,7 +35,7 @@ const TeachersPage: React.FC = () => {
 
   const loadTeachers = async () => {
     setIsLoadingList(true);
-    const data = await TeacherService.getTeachers();
+    const data = await SyncService.getTeachers();
     setTeachers(data);
     setIsLoadingList(false);
   };
@@ -48,9 +48,9 @@ const TeachersPage: React.FC = () => {
   const saveTeacher = async (teacher: Partial<ITeacher>) => {
     setIsLoadingForm(true);
     if (teacherToEdit) {
-      await TeacherService.updateTeacher({ ...teacherToEdit, ...teacher });
+      await SyncService.updateTeacher({ ...teacherToEdit, ...teacher });
     } else {
-      await TeacherService.saveTeacher(teacher);
+      await SyncService.saveTeacher(teacher);
     }
     setIsLoadingForm(false);
     loadTeachers();
@@ -59,8 +59,7 @@ const TeachersPage: React.FC = () => {
 
   const deleteTeacher = async () => {
     setIsLoadingDelete(true);
-    if (teacherToDelete)
-      await TeacherService.DeleteTeacher(teacherToDelete?.id);
+    if (teacherToDelete) await SyncService.DeleteTeacher(teacherToDelete?.id);
     setIsLoadingDelete(false);
     onCloseDeleteModal();
     loadTeachers();
@@ -75,13 +74,13 @@ const TeachersPage: React.FC = () => {
       <Flex
         pb={4}
         mb={6}
-        justifyContent="space-between"
         w="full"
         alignItems="center"
         borderBottom="1px solid"
+        justifyContent="space-between"
       >
-        <Heading>Teachers</Heading>
-        <Button onClick={() => setNewTeacher(true)}>New teacher</Button>
+        <Heading>{`Teachers (count: ${teachers.length})`}</Heading>
+        {/* <Button onClick={() => setNewTeacher(true)}>New teacher</Button> */}
       </Flex>
       <TeacherForm
         onClose={closeForm}

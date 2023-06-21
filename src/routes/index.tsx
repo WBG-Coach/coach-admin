@@ -12,6 +12,7 @@ import CoachesPage from "@/pages/Coaches";
 import SessionsPage from "@/pages/Sessions";
 import SettingsPage from "@/pages/Settings";
 import TeachersPage from "@/pages/Teacher";
+import SyncsPage from "@/pages/Sync";
 
 export const Router = () => {
   const { user } = useContext(UserContext);
@@ -33,6 +34,7 @@ export const Router = () => {
             <Route path="teachers" element={<TeachersPage />} />
             <Route path="sessions" element={<SessionsPage />} />
             <Route path="settings" element={<SettingsPage />} />
+            <Route path="syncs" element={<SyncsPage />} />
           </Route>
         )}
         <Route path="*" element={<Navigate to="/" replace />} />

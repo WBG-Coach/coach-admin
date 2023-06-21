@@ -79,8 +79,8 @@ const SchoolsPage: React.FC = () => {
         alignItems="center"
         borderBottom="1px solid"
       >
-        <Heading>Schools</Heading>
-        <Button onClick={() => setNewSchool(true)}>New school</Button>
+        <Heading>{`Schools (count: ${schools.length})`}</Heading>
+        {/* <Button onClick={() => setNewSchool(true)}>New school</Button> */}
       </Flex>
       <SchoolForm
         onClose={closeForm}

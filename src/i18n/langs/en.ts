@@ -11,6 +11,7 @@ const enTranslation = {
     sessions: "Sessions",
     settings: "Settings",
     logout: "Logout",
+    syncs: "Sync",
   },
 };
 

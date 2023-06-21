@@ -10,7 +10,13 @@ type Props = {
 
 const CoachList: React.FC<Props> = ({ coachs, handleDelete, handleEdit }) => {
   return (
-    <Flex flexDirection="column" alignItems="center" w="full">
+    <Flex
+      flexDirection="column"
+      alignItems="center"
+      w="full"
+      maxH="calc(100vh - 110px)"
+      overflow={"scroll"}
+    >
       {coachs.map((coach, index) => (
         <Box
           key={index}
@@ -22,7 +28,7 @@ const CoachList: React.FC<Props> = ({ coachs, handleDelete, handleEdit }) => {
         >
           <Flex justifyContent="space-between">
             <Text fontSize="xl">{coach?.name}</Text>
-            <Box>
+            {/* <Box>
               <IconButton
                 icon={<EditIcon />}
                 aria-label="Editar"
@@ -37,7 +43,7 @@ const CoachList: React.FC<Props> = ({ coachs, handleDelete, handleEdit }) => {
                 colorScheme="red"
                 onClick={() => handleDelete(coach)}
               />
-            </Box>
+            </Box> */}
           </Flex>
         </Box>
       ))}

@@ -1,7 +1,16 @@
+export interface ISync {
+  id: string;
+  model: string;
+  deviceId: string;
+  apiLevel: string;
+  lastPulledAt: Date;
+}
+
 export interface ITeacher {
   id: string;
   name: string;
 }
+
 export interface ICoach {
   id: string;
   name: string;

@@ -42,6 +42,11 @@ export const MenuItems = [
         label: "sessions",
         route: "/sessions",
       },
+      {
+        icon: "sync",
+        label: "syncs",
+        route: "/syncs",
+      },
     ],
   },
   {

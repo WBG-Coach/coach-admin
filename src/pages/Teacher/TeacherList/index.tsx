@@ -14,7 +14,13 @@ const TeacherList: React.FC<Props> = ({
   handleEdit,
 }) => {
   return (
-    <Flex flexDirection="column" alignItems="center" w="full">
+    <Flex
+      flexDirection="column"
+      alignItems="center"
+      w="full"
+      maxH={"calc(100vh - 110px)"}
+      overflow={"scroll"}
+    >
       {teachers.map((teacher, index) => (
         <Box
           key={index}
