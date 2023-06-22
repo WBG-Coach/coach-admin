@@ -29,7 +29,7 @@ const SyncList: React.FC<Props> = ({ syncs, handleDelete, handleEdit }) => {
             <Text fontSize="xl">{sync?.apiLevel}</Text>
             <Text fontSize="xl">{sync?.model}</Text>
             <Text fontSize="xl">{sync?.deviceId}</Text>
-            <Text fontSize="xl">{sync?.lastPulledAt}</Text>
+            <Text fontSize="xl">{`${sync?.lastPulledAt}`}</Text>
           </Flex>
         </Box>
       ))}
