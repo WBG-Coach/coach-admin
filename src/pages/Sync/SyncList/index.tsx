@@ -9,7 +9,13 @@ type Props = {
 
 const SyncList: React.FC<Props> = ({ syncs, handleDelete, handleEdit }) => {
   return (
-    <Flex flexDirection="column" alignItems="center" w="full">
+    <Flex
+      flexDirection="column"
+      alignItems="center"
+      w="full"
+      maxH="calc(100vh - 110px)"
+      overflow={"auto"}
+    >
       {syncs.map((sync, index) => (
         <Box
           key={index}
@@ -21,8 +27,9 @@ const SyncList: React.FC<Props> = ({ syncs, handleDelete, handleEdit }) => {
         >
           <Flex justifyContent="space-between">
             <Text fontSize="xl">{sync?.apiLevel}</Text>
+            <Text fontSize="xl">{sync?.model}</Text>
             <Text fontSize="xl">{sync?.deviceId}</Text>
-            <Text fontSize="xl">{sync?.lastPulledAt.getDay()}</Text>
+            <Text fontSize="xl">{sync?.lastPulledAt}</Text>
           </Flex>
         </Box>
       ))}

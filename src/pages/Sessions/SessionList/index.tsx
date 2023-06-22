@@ -14,7 +14,13 @@ const SessionList: React.FC<Props> = ({
   handleEdit,
 }) => {
   return (
-    <Flex flexDirection="column" alignItems="center" w="full">
+    <Flex
+      flexDirection="column"
+      alignItems="center"
+      w="full"
+      maxH={"calc(100vh - 110px)"}
+      overflow={"scroll"}
+    >
       <Box borderBottomWidth="1px" p="4" my="2" w="full">
         <Flex justifyContent="space-between">
           <Text flex={2} fontWeight="bold">

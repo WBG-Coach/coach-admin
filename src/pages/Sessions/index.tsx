@@ -80,7 +80,7 @@ const SessionsPage: React.FC = () => {
         alignItems="center"
         borderBottom="1px solid"
       >
-        <Heading>Sessions</Heading>
+        <Heading>{`Sessions (count: ${sessions.length})`}</Heading>
         {/* <Button onClick={() => setNewSession(true)}>New session</Button> */}
       </Flex>
 

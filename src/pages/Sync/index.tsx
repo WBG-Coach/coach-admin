@@ -92,26 +92,6 @@ const SyncsPage: React.FC = () => {
           handleDelete={setSyncToDelete}
         />
       )}
-      <Modal isOpen={!!syncToDelete} onClose={onCloseDeleteModal}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Confirm Deletion</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>Are you sure you want to delete this school?</ModalBody>
-          <ModalFooter>
-            <Button variant="ghost" mr={3} onClick={onCloseDeleteModal}>
-              Cancel
-            </Button>
-            <Button
-              colorScheme="red"
-              onClick={deleteSync}
-              isLoading={isLoadingDelete}
-            >
-              Delete
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </Box>
   );
 };
