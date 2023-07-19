@@ -1,6 +1,6 @@
 import Loader from "@/components/Base/Loader";
 import CompetenceService from "@/services/competence";
-import { ICompetence, ICompetence } from "@/types";
+import { ICompetence } from "@/types";
 import {
   Box,
   Button,
