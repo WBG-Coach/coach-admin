@@ -27,12 +27,12 @@ export const Router = () => {
         ) : (
           <Route path="/" element={<ProtectedLayout />}>
             <Route index element={<DashboardPage />} />
-            <Route path="competencies" element={<CompetenciesPage />} />
+            <Route path="teaching-practices" element={<CompetenciesPage />} />
+            <Route path="coaching-sessions" element={<SessionsPage />} />
             <Route path="questions" element={<QuestionsPage />} />
             <Route path="schools" element={<SchoolsPage />} />
             <Route path="coaches" element={<CoachesPage />} />
             <Route path="teachers" element={<TeachersPage />} />
-            <Route path="sessions" element={<SessionsPage />} />
             <Route path="settings" element={<SettingsPage />} />
             <Route path="syncs" element={<SyncsPage />} />
           </Route>

@@ -1,6 +1,6 @@
 export const MenuItems = [
   {
-    icon: "home-alt",
+    icon: "chart-line",
     label: "dashboard",
     route: "/",
   },
@@ -8,14 +8,14 @@ export const MenuItems = [
     label: "questionnaire",
     subItems: [
       {
-        icon: "puzzle-piece",
-        label: "competencies",
-        route: "/competencies",
+        icon: "document-layout-right",
+        label: "teaching-practices",
+        route: "/teaching-practices",
       },
       {
         icon: "clipboard-notes",
-        label: "questions",
-        route: "/questions",
+        label: "coaching-sessions",
+        route: "/coaching-sessions",
       },
     ],
   },
@@ -28,38 +28,19 @@ export const MenuItems = [
         route: "/schools",
       },
       {
-        icon: "user",
+        icon: "users-alt",
         label: "coaches",
         route: "/coaches",
       },
       {
-        icon: "user-circle",
+        icon: "graduation-cap",
         label: "teachers",
         route: "/teachers",
-      },
-      {
-        icon: "notes",
-        label: "sessions",
-        route: "/sessions",
       },
       {
         icon: "sync",
         label: "syncs",
         route: "/syncs",
-      },
-    ],
-  },
-  {
-    label: "account",
-    subItems: [
-      {
-        icon: "setting",
-        label: "settings",
-        route: "/settings",
-      },
-      {
-        icon: "signout",
-        label: "logout",
       },
     ],
   },

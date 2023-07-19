@@ -1,4 +1,4 @@
-import { HStack } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 import { Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,7 +15,9 @@ export const ProtectedLayout = () => {
 
   return (
     <HStack w="100%">
-      <Navbar />
+      <Box w="240px">
+        <Navbar />
+      </Box>
       <Outlet />
     </HStack>
   );

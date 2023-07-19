@@ -1,8 +1,8 @@
-import { HStack, Stack, Text, useTheme } from "@chakra-ui/react";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Icon from "../../Base/Icon";
+import { HStack, Text, useTheme } from "@chakra-ui/react";
 import { MenuItemProps } from "./types";
+import Icon from "../../Base/Icon";
 
 export const MenuItem: React.FC<MenuItemProps> = ({
   icon,
@@ -12,35 +12,22 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { theme } = useTheme();
 
   const isSelected = route && pathname.endsWith(route || "");
 
   return (
     <HStack
-      onClick={() => (onClick ? onClick() : navigate(route || ""))}
-      p={"8px 16px"}
-      alignItems={"flex-start"}
-      w={"100%"}
+      w="100%"
+      p={"12px 16px"}
       cursor={"pointer"}
-      background={isSelected ? "Primary.$100" : "transparent"}
-      spacing={"0px"}
-      transition={"300ms all"}
-      borderRadius={"4px"}
       position={"relative"}
+      borderLeft={"4px solid"}
+      transition={"300ms all"}
+      alignItems={"flex-start"}
+      background={isSelected ? "Primary.$100" : "transparent"}
+      borderColor={isSelected ? "Primary.$200" : "transparent"}
+      onClick={() => (onClick ? onClick() : navigate(route || ""))}
     >
-      {isSelected && (
-        <Stack
-          position={"absolute"}
-          left={"0px"}
-          borderRadius={"4px"}
-          w={"4px"}
-          h={"60%"}
-          background={"Primary.$200"}
-          zIndex={"2"}
-        />
-      )}
-
       <Icon size={24} name={icon} color={isSelected ? "#3373CC" : "#49504C"} />
       <Text
         ml={"12px !important"}
