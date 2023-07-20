@@ -19,8 +19,11 @@ import {
 import { useEffect, useState } from "react";
 import TeacherForm from "./TeacherForm";
 import TeacherList from "./TeacherList";
+import HeaderPage from "@/components/HeaderPage";
+import { useTranslation } from "react-i18next";
 
 const TeachersPage: React.FC = () => {
+  const { t } = useTranslation();
   const [newTeacher, setNewTeacher] = useState(false);
   const [teachers, setTeachers] = useState<ITeacher[]>([]);
   const [isLoadingList, setIsLoadingList] = useState(true);
@@ -71,17 +74,7 @@ const TeachersPage: React.FC = () => {
 
   return (
     <Box p={4} minH="100vh" flex={1}>
-      <Flex
-        pb={4}
-        mb={6}
-        w="full"
-        alignItems="center"
-        borderBottom="1px solid"
-        justifyContent="space-between"
-      >
-        <Heading>{`Teachers (count: ${teachers.length})`}</Heading>
-        {/* <Button onClick={() => setNewTeacher(true)}>New teacher</Button> */}
-      </Flex>
+      <HeaderPage title={t("Navbar.teachers")} subtitle={t("Navbar.data")} />
       <TeacherForm
         onClose={closeForm}
         onSubmit={saveTeacher}

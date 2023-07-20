@@ -13,6 +13,9 @@ const enTranslation = {
     logout: "Logout",
     syncs: "Sync",
   },
+  competence: {
+    title: "Name",
+  },
 };
 
 export default enTranslation;

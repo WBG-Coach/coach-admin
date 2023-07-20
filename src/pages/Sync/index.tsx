@@ -18,8 +18,11 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import SyncList from "./SyncList";
+import { useTranslation } from "react-i18next";
+import HeaderPage from "@/components/HeaderPage";
 
 const SyncsPage: React.FC = () => {
+  const { t } = useTranslation();
   const [newSync, setNewSync] = useState(false);
   const [syncs, setSyncs] = useState<ISync[]>([]);
   const [isLoadingList, setIsLoadingList] = useState(true);
@@ -70,17 +73,8 @@ const SyncsPage: React.FC = () => {
 
   return (
     <Box p={4} minH="100vh" flex={1}>
-      <Flex
-        pb={4}
-        mb={6}
-        w="full"
-        alignItems="center"
-        borderBottom="1px solid"
-        justifyContent="space-between"
-      >
-        <Heading>Syncs</Heading>
-        {/* <Button onClick={() => setNewSync(true)}>New sync</Button> */}
-      </Flex>
+      {" "}
+      <HeaderPage title={t("Navbar.syncs")} subtitle={t("Navbar.data")} />
       {isLoadingList ? (
         <Center minW={"350px"} h={"200px"}>
           <Loader />

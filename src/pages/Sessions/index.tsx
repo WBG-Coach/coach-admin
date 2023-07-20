@@ -19,8 +19,11 @@ import {
 import { useEffect, useState } from "react";
 import SessionForm from "./SessionForm";
 import SessionList from "./SessionList";
+import HeaderPage from "@/components/HeaderPage";
+import { useTranslation } from "react-i18next";
 
 const SessionsPage: React.FC = () => {
+  const { t } = useTranslation();
   const [newSession, setNewSession] = useState(false);
   const [sessions, setSessions] = useState<ISession[]>([]);
   const [isLoadingList, setIsLoadingList] = useState(true);
@@ -72,17 +75,10 @@ const SessionsPage: React.FC = () => {
 
   return (
     <Box p={4} minH="100vh" flex={1}>
-      <Flex
-        pb={4}
-        mb={6}
-        justifyContent="space-between"
-        w="full"
-        alignItems="center"
-        borderBottom="1px solid"
-      >
-        <Heading>{`Sessions (count: ${sessions.length})`}</Heading>
-        {/* <Button onClick={() => setNewSession(true)}>New session</Button> */}
-      </Flex>
+      <HeaderPage
+        subtitle={t("Navbar.questionnaire")}
+        title={t("Navbar.coaching-sessions")}
+      />
 
       <SessionForm
         onClose={closeForm}

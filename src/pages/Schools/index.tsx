@@ -19,8 +19,11 @@ import {
 import { useEffect, useState } from "react";
 import SchoolForm from "./SchoolForm";
 import SchoolList from "./SchoolList";
+import HeaderPage from "@/components/HeaderPage";
+import { useTranslation } from "react-i18next";
 
 const SchoolsPage: React.FC = () => {
+  const { t } = useTranslation();
   const [newSchool, setNewSchool] = useState(false);
   const [schools, setSchools] = useState<ISchool[]>([]);
   const [isLoadingList, setIsLoadingList] = useState(true);
@@ -71,17 +74,7 @@ const SchoolsPage: React.FC = () => {
 
   return (
     <Box p={4} minH="100vh" flex={1}>
-      <Flex
-        pb={4}
-        mb={6}
-        justifyContent="space-between"
-        w="full"
-        alignItems="center"
-        borderBottom="1px solid"
-      >
-        <Heading>{`Schools (count: ${schools.length})`}</Heading>
-        {/* <Button onClick={() => setNewSchool(true)}>New school</Button> */}
-      </Flex>
+      <HeaderPage subtitle={t("Navbar.data")} title={t("Navbar.schools")} />
       <SchoolForm
         onClose={closeForm}
         onSubmit={saveSchool}

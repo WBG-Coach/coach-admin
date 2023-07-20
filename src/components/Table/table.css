@@ -1,0 +1,61 @@
+/* .item must be first */
+.item {
+  align-items: center;
+  color: #3373cc;
+  cursor: pointer;
+  display: flex;
+  font-size: 14px;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
+}
+
+.item:hover {
+  opacity: 0.7;
+}
+
+.disabled-page {
+  color: #808e9b;
+}
+
+.active {
+  border-radius: 40px;
+  color: #ffffff;
+  background-color: #3373cc;
+}
+
+.break-me {
+}
+
+.next {
+  font-size: 4px;
+  height: 60px;
+  position: absolute;
+  right: 0;
+  width: 150px;
+}
+
+.pagination {
+  align-items: center;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  justify-content: center;
+  list-style-type: none;
+  position: relative;
+  margin: auto;
+  width: 500px;
+}
+
+.pagination-page {
+  font-weight: 700;
+}
+
+.previous {
+  font-size: 4px;
+  height: 60px;
+  left: 0;
+  position: absolute;
+  width: 150px;
+}

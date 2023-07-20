@@ -18,8 +18,11 @@ import {
 import { useEffect, useState } from "react";
 import CoachForm from "./CoachForm";
 import CoachList from "./CoachList";
+import HeaderPage from "@/components/HeaderPage";
+import { useTranslation } from "react-i18next";
 
 const CoachesPage: React.FC = () => {
+  const { t } = useTranslation();
   const [newCoach, setNewCoach] = useState(false);
   const [coaches, setCoaches] = useState<ICoach[]>([]);
   const [isLoadingList, setIsLoadingList] = useState(true);
@@ -70,17 +73,7 @@ const CoachesPage: React.FC = () => {
 
   return (
     <Box p={4} minH="100vh" flex={1}>
-      <Flex
-        pb={4}
-        mb={6}
-        justifyContent="space-between"
-        w="full"
-        alignItems="center"
-        borderBottom="1px solid"
-      >
-        <Heading>{`Coachs (count: ${coaches.length})`}</Heading>
-        <Button onClick={() => setNewCoach(true)}>New coach</Button>
-      </Flex>
+      <HeaderPage subtitle={t("Navbar.data")} title={t("Navbar.coaches")} />
       <CoachForm
         onClose={closeForm}
         onSubmit={saveCoach}

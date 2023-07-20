@@ -19,8 +19,11 @@ import {
 import { useEffect, useState } from "react";
 import CompetenceForm from "./CompetenceForm";
 import CompetenceList from "./CompetenceList";
+import HeaderPage from "@/components/HeaderPage";
+import { useTranslation } from "react-i18next";
 
 const CompetenciesPage: React.FC = () => {
+  const { t } = useTranslation();
   const [newCompetence, setNewCompetence] = useState(false);
   const [competencies, setCompetencies] = useState<ICompetence[]>([]);
   const [isLoadingList, setIsLoadingList] = useState(true);
@@ -75,17 +78,10 @@ const CompetenciesPage: React.FC = () => {
 
   return (
     <Box p={4} minH="100vh" flex={1}>
-      <Flex
-        pb={4}
-        mb={6}
-        justifyContent="space-between"
-        w="full"
-        alignItems="center"
-        borderBottom="1px solid"
-      >
-        <Heading>{`Competences (count: ${competencies.length})`}</Heading>
-        {/* <Button onClick={() => setNewCompetence(true)}>New competence</Button> */}
-      </Flex>
+      <HeaderPage
+        subtitle={t("Navbar.questionnaire")}
+        title={t("Navbar.teaching-practices")}
+      />
 
       <CompetenceForm
         onClose={closeForm}
