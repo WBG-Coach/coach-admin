@@ -1,9 +1,9 @@
-import { Box, Center, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Center, HStack, Input, Text, VStack } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 import ReactPaginate from "react-paginate";
 import Icon from "../Base/Icon";
 import "./table.css";
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 type Column = {
   renderColumn: (item: any) => React.ReactNode;
@@ -14,7 +14,7 @@ type Column = {
 type Props = {
   data: any[];
   columns: Column[];
-  filters?: [];
+  filters?: { label: string; prop: string }[];
 };
 
 const PAGE_SIZE = 5;
@@ -22,6 +22,28 @@ const PAGE_SIZE = 5;
 const Table: React.FC<Props> = ({ columns, data, filters }) => {
   const [page, setPage] = useState(0);
   const { t } = useTranslation();
+  const [filter, setFilter] = useState<any>({});
+  const [filteredData, setFilteredData] = useState(data);
+
+  const handleFilterValue = (e: ChangeEvent<HTMLInputElement>) => {
+    setFilter({ ...filter, [e.target.name]: e.target.value.toUpperCase() });
+  };
+
+  useEffect(() => {
+    const props = Object.keys(filter);
+    if (props.length > 0) {
+      setPage(0);
+      setFilteredData(
+        data.filter((item) => {
+          for (let index = 0; index < props.length; index++) {
+            const prop = props[index];
+            if (!(item[prop] as string).includes(filter[prop])) return false;
+          }
+          return true;
+        })
+      );
+    }
+  }, [data, filter]);
 
   return (
     <VStack
@@ -30,7 +52,22 @@ const Table: React.FC<Props> = ({ columns, data, filters }) => {
       overflow="hidden"
       border="1px solid #DCE0E5"
     >
-      {filters && <HStack w="100%" minH={"40px"} mb="0" bg="#F2F4F7"></HStack>}
+      {filters && (
+        <HStack w="100%" minH={"40px"} mb="0" bg="#F2F4F7" p="16px">
+          {filters.map((filter) => (
+            <VStack alignItems="start">
+              <Text fontWeight={600}>{filter.label}</Text>
+              <Input
+                p="16px"
+                bg="white"
+                name={filter.prop}
+                placeholder={filter.label}
+                onChange={handleFilterValue}
+              />
+            </VStack>
+          ))}
+        </HStack>
+      )}
 
       <VStack
         w="100%"
@@ -53,7 +90,7 @@ const Table: React.FC<Props> = ({ columns, data, filters }) => {
           ))}
         </HStack>
         <VStack w="100%">
-          {data
+          {filteredData
             .slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE)
             .map((item) => (
               <HStack w="100%">
@@ -74,6 +111,7 @@ const Table: React.FC<Props> = ({ columns, data, filters }) => {
       </VStack>
       <Center flex={1} p="16px">
         <ReactPaginate
+          forcePage={page}
           activeClassName={"item active "}
           breakClassName={"item break-me "}
           breakLabel={"..."}
@@ -83,7 +121,7 @@ const Table: React.FC<Props> = ({ columns, data, filters }) => {
           nextClassName={"item next "}
           nextLabel={<Icon name="angle-right" />}
           onPageChange={({ selected }) => setPage(selected)}
-          pageCount={data.length / PAGE_SIZE}
+          pageCount={filteredData.length / PAGE_SIZE}
           pageClassName={"item pagination-page "}
           pageRangeDisplayed={1}
           previousClassName={"item previous"}

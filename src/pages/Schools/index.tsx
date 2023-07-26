@@ -17,10 +17,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import SchoolForm from "./SchoolForm";
 import SchoolList from "./SchoolList";
 import HeaderPage from "@/components/HeaderPage";
 import { useTranslation } from "react-i18next";
+import SchoolForm from "./SchoolForm";
 
 const SchoolsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -74,12 +74,16 @@ const SchoolsPage: React.FC = () => {
 
   return (
     <Box p={4} minH="100vh" flex={1}>
-      <HeaderPage subtitle={t("Navbar.data")} title={t("Navbar.schools")} />
+      <HeaderPage
+        subtitle={t("Navbar.data")}
+        title={t("Navbar.schools")}
+        newButtonValue={t("school.new-school")}
+        onClickNew={() => setNewSchool(true)}
+      />
       <SchoolForm
         onClose={closeForm}
         onSubmit={saveSchool}
-        isSubmitting={isLoadingForm}
-        schoolToEdit={schoolToEdit}
+        school={schoolToEdit}
         isOpen={!!schoolToEdit || newSchool}
       />
       {isLoadingList ? (

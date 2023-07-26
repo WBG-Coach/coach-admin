@@ -29,16 +29,19 @@ export interface IGuide {
 }
 
 export interface ICompetence {
-  id: string;
+  id?: string;
   title: string;
-  guide_id: IGuide["id"];
+  guide_id?: IGuide["id"];
+  questions?: IQuestion[];
+  deleted_at?: Date | null;
 }
 
 export interface IQuestion {
-  id: string;
+  id?: string;
   title: string;
-  questionnaire_id: IQuestionnaire["id"];
-  competence_id: ICompetence["id"];
+  description: string;
+  questionnaire_id?: IQuestionnaire["id"];
+  competence_id?: ICompetence["id"];
 }
 
 export interface IQuestionnaire {
@@ -62,7 +65,7 @@ export interface IAnswer {
 }
 
 export interface ISchool {
-  id: string;
+  id?: string;
   name: string;
 }
 

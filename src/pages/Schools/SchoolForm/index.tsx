@@ -2,72 +2,125 @@ import { ISchool } from "@/types";
 import {
   Input,
   Button,
-  FormLabel,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  DrawerFooter,
   FormControl,
-  FormErrorMessage,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
+  FormLabel,
+  Text,
+  useToast,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   isOpen: boolean;
-  isSubmitting: boolean;
-  schoolToEdit?: ISchool;
-  onSubmit: (school: Partial<ISchool>) => void;
+  school?: ISchool;
+  onSubmit: (competence: ISchool) => void;
   onClose: () => void;
+  readonly?: boolean;
 };
 
 const SchoolForm: React.FC<Props> = ({
   isOpen,
-  isSubmitting,
-  schoolToEdit,
+  school,
   onClose,
   onSubmit,
+  readonly,
 }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { t } = useTranslation();
+  const toast = useToast();
+  const [schoolValues, setSchoolValues] = useState<ISchool>({
+    name: "",
+  });
+
+  useEffect(() => {
+    if (school) {
+      setSchoolValues(school);
+    } else {
+      setSchoolValues({
+        name: "",
+      });
+    }
+  }, [isOpen, school]);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSchoolValues({
+      ...schoolValues,
+      [e.target.name]: e.target.value.toUpperCase(),
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!schoolValues.name) {
+      toast({
+        title: "School name is required.",
+        status: "warning",
+        duration: 9000,
+        isClosable: true,
+        position: "top-left",
+      });
+      return;
+    }
+
+    onSubmit(schoolValues);
+  };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>{schoolToEdit ? "Edit" : "New"} School</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl isInvalid={!!errors.name}>
-              <FormLabel htmlFor="name">Nome</FormLabel>
-              <Input
-                id="name"
-                defaultValue={schoolToEdit?.name}
-                {...register("name", { required: true })}
-              />
-              <FormErrorMessage>
-                {errors.name &&
-                  errors.name.type === "required" &&
-                  "Name is required"}
-              </FormErrorMessage>
+    <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
+      <DrawerOverlay />
+      <DrawerContent roundedLeft={14}>
+        <form
+          onSubmit={handleSubmit}
+          style={{ height: "100%", display: "flex", flexDirection: "column" }}
+        >
+          <DrawerCloseButton mt={2} color="Primary.$200" />
+
+          <DrawerHeader>
+            {school
+              ? readonly
+                ? "View School"
+                : "Update school"
+              : "New School"}
+          </DrawerHeader>
+
+          <DrawerBody>
+            <FormControl id="name" isRequired>
+              <FormLabel fontSize="16px" lineHeight="24px" fontWeight={500}>
+                School name
+              </FormLabel>
+              {readonly ? (
+                <Text>{schoolValues.name}</Text>
+              ) : (
+                <Input
+                  type="text"
+                  name="name"
+                  value={schoolValues.name}
+                  onChange={handleInputChange}
+                />
+              )}
             </FormControl>
-            <Button
-              my="4"
-              colorScheme="teal"
-              isLoading={isSubmitting}
-              type="submit"
-            >
-              Save
-            </Button>
-          </form>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+          </DrawerBody>
+
+          {!readonly && (
+            <DrawerFooter mt="auto">
+              <Button colorScheme="blue" mr={3} type="submit">
+                Save
+              </Button>
+              <Button variant="outline" mr={"auto"} onClick={onClose}>
+                Cancel
+              </Button>
+            </DrawerFooter>
+          )}
+        </form>
+      </DrawerContent>
+    </Drawer>
   );
 };
 

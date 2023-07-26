@@ -1,21 +1,7 @@
 import Loader from "@/components/Base/Loader";
 import CompetenceService from "@/services/competence";
 import { ICompetence } from "@/types";
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Heading,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Center } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import CompetenceForm from "./CompetenceForm";
 import CompetenceList from "./CompetenceList";
@@ -27,10 +13,8 @@ const CompetenciesPage: React.FC = () => {
   const [newCompetence, setNewCompetence] = useState(false);
   const [competencies, setCompetencies] = useState<ICompetence[]>([]);
   const [isLoadingList, setIsLoadingList] = useState(true);
-  const [isLoadingForm, setIsLoadingForm] = useState(false);
-  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const [competenceToEdit, setCompetenceToEdit] = useState<ICompetence>();
-  const [competenceToDelete, setCompetenceToDelete] = useState<ICompetence>();
+  const [competenceToView, setCompetenceToView] = useState<ICompetence>();
 
   useEffect(() => {
     loadCompetences();
@@ -43,37 +27,29 @@ const CompetenciesPage: React.FC = () => {
     setIsLoadingList(false);
   };
 
-  const closeForm = () => {
-    setNewCompetence(false);
-    setCompetenceToEdit(undefined);
+  const handleActivate = async (item: ICompetence) => {
+    const newItem = {
+      ...item,
+      deleted_at: item.deleted_at ? null : new Date(),
+    };
+    await handleSave(newItem);
   };
 
-  const saveCompetence = async (competence: Partial<ICompetence>) => {
-    setIsLoadingForm(true);
-    if (competenceToEdit) {
-      await CompetenceService.updateCompetence({
-        ...competenceToEdit,
-        ...competence,
-      });
+  const handleSave = async (itemToSave: ICompetence) => {
+    closeModal();
+    setIsLoadingList(true);
+    if (itemToSave.id) {
+      await CompetenceService.updateCompetence(itemToSave);
     } else {
-      await CompetenceService.saveCompetence(competence);
+      await CompetenceService.saveCompetence(itemToSave);
     }
-    setIsLoadingForm(false);
-    loadCompetences();
-    closeForm();
+    await loadCompetences();
   };
 
-  const deleteCompetence = async () => {
-    setIsLoadingDelete(true);
-    if (competenceToDelete)
-      await CompetenceService.deleteCompetence(competenceToDelete?.id);
-    setIsLoadingDelete(false);
-    onCloseDeleteModal();
-    loadCompetences();
-  };
-
-  const onCloseDeleteModal = () => {
-    setCompetenceToDelete(undefined);
+  const closeModal = () => {
+    setNewCompetence(false);
+    setCompetenceToView(undefined);
+    setCompetenceToEdit(undefined);
   };
 
   return (
@@ -81,14 +57,16 @@ const CompetenciesPage: React.FC = () => {
       <HeaderPage
         subtitle={t("Navbar.questionnaire")}
         title={t("Navbar.teaching-practices")}
+        newButtonValue={t("competence.new-competence")}
+        onClickNew={() => setNewCompetence(true)}
       />
 
       <CompetenceForm
-        onClose={closeForm}
-        onSubmit={saveCompetence}
-        isSubmitting={isLoadingForm}
-        competenceToEdit={competenceToEdit}
-        isOpen={!!competenceToEdit || newCompetence}
+        onSubmit={handleSave}
+        onClose={closeModal}
+        competence={competenceToEdit || competenceToView}
+        isOpen={!!competenceToView || !!competenceToEdit || newCompetence}
+        readonly={!!competenceToView}
       />
 
       {isLoadingList ? (
@@ -98,31 +76,11 @@ const CompetenciesPage: React.FC = () => {
       ) : (
         <CompetenceList
           competences={competencies}
+          handleActivate={handleActivate}
           handleEdit={setCompetenceToEdit}
-          handleDelete={setCompetenceToDelete}
+          handleOpen={setCompetenceToView}
         />
       )}
-
-      <Modal isOpen={!!competenceToDelete} onClose={onCloseDeleteModal}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Confirm Deletion</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>Are you sure you want to delete this school?</ModalBody>
-          <ModalFooter>
-            <Button variant="ghost" mr={3} onClick={onCloseDeleteModal}>
-              Cancel
-            </Button>
-            <Button
-              colorScheme="red"
-              onClick={deleteCompetence}
-              isLoading={isLoadingDelete}
-            >
-              Delete
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </Box>
   );
 };
