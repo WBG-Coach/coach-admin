@@ -62,7 +62,8 @@ const SchoolsPage: React.FC = () => {
 
   const deleteSchool = async () => {
     setIsLoadingDelete(true);
-    if (schoolToDelete) await SchoolService.DeleteSchool(schoolToDelete?.id);
+    if (schoolToDelete)
+      await SchoolService.DeleteSchool(schoolToDelete?.id || "");
     setIsLoadingDelete(false);
     onCloseDeleteModal();
     loadSchools();

@@ -272,14 +272,17 @@ const CompetenceForm: React.FC<Props> = ({
                   </Text>
                 )}
 
-              {competenceValues?.questions?.length > 0 && (
-                <Box my="24px" w="100%" h="1px" bg="#eee" />
-              )}
+              {competenceValues?.questions &&
+                competenceValues?.questions?.length > 0 && (
+                  <Box my="24px" w="100%" h="1px" bg="#eee" />
+                )}
 
               {showQuestionForm && editIndex === null && (
                 <Box w="full">
                   <Text mb="24px" fontWeight={600}>{`Question ${
-                    competenceValues?.questions?.length + 1 || 1
+                    (competenceValues?.questions &&
+                      competenceValues?.questions?.length + 1) ||
+                    1
                   }`}</Text>
                   <FormControl id="title" isRequired>
                     <FormLabel>Title</FormLabel>
