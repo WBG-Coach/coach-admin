@@ -296,7 +296,7 @@ const CompetenceForm: React.FC<Props> = ({
                     <Input
                       type="text"
                       name="description"
-                      value={question.subtitle}
+                      value={question.description}
                       onChange={handleQuestionChange}
                     />
                   </FormControl>
