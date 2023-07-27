@@ -5,8 +5,6 @@ import {
   Box,
   Button,
   Center,
-  Flex,
-  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -20,6 +18,7 @@ import CoachForm from "./CoachForm";
 import CoachList from "./CoachList";
 import HeaderPage from "@/components/HeaderPage";
 import { useTranslation } from "react-i18next";
+import handleDownloadJSON from "@/common/download";
 
 const CoachesPage: React.FC = () => {
   const { t } = useTranslation();
@@ -73,7 +72,16 @@ const CoachesPage: React.FC = () => {
 
   return (
     <Box p={4} minH="100vh" flex={1}>
-      <HeaderPage subtitle={t("Navbar.data")} title={t("Navbar.coaches")} />
+      <HeaderPage
+        subtitle={t("Navbar.data")}
+        title={t("Navbar.coaches")}
+        onClickDownload={() =>
+          handleDownloadJSON(
+            coaches,
+            t("Navbar.coaches").toLowerCase().replaceAll(" ", "-")
+          )
+        }
+      />
       <CoachForm
         onClose={closeForm}
         onSubmit={saveCoach}

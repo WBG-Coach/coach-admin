@@ -32,6 +32,9 @@ const enTranslation = {
     view: "View",
     delete: "Delete",
   },
+  general: {
+    "download-data": "Download data",
+  },
 };
 
 export default enTranslation;

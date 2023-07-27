@@ -5,8 +5,6 @@ import {
   Box,
   Button,
   Center,
-  Flex,
-  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -14,13 +12,13 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import SchoolList from "./SchoolList";
 import HeaderPage from "@/components/HeaderPage";
 import { useTranslation } from "react-i18next";
 import SchoolForm from "./SchoolForm";
+import handleDownloadJSON from "@/common/download";
 
 const SchoolsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -80,6 +78,12 @@ const SchoolsPage: React.FC = () => {
         title={t("Navbar.schools")}
         newButtonValue={t("school.new-school")}
         onClickNew={() => setNewSchool(true)}
+        onClickDownload={() =>
+          handleDownloadJSON(
+            schools,
+            t("Navbar.schools").toLowerCase().replaceAll(" ", "-")
+          )
+        }
       />
       <SchoolForm
         onClose={closeForm}

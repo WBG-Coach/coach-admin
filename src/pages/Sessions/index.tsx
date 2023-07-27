@@ -5,8 +5,6 @@ import {
   Box,
   Button,
   Center,
-  Flex,
-  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -14,13 +12,13 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import SessionForm from "./SessionForm";
 import SessionList from "./SessionList";
 import HeaderPage from "@/components/HeaderPage";
 import { useTranslation } from "react-i18next";
+import handleDownloadJSON from "@/common/download";
 
 const SessionsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -78,6 +76,12 @@ const SessionsPage: React.FC = () => {
       <HeaderPage
         subtitle={t("Navbar.questionnaire")}
         title={t("Navbar.coaching-sessions")}
+        onClickDownload={() =>
+          handleDownloadJSON(
+            sessions,
+            t("Navbar.sessions").toLowerCase().replaceAll(" ", "-")
+          )
+        }
       />
 
       <SessionForm
