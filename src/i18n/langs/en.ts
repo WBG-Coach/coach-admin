@@ -35,6 +35,20 @@ const enTranslation = {
   general: {
     "download-data": "Download data",
   },
+  settings: {
+    title: "Settings",
+    tabs: {
+      user: {
+        title: "General",
+      },
+      users: {
+        title: "Users",
+      },
+      "change-password": {
+        title: "Change password",
+      },
+    },
+  },
 };
 
 export default enTranslation;

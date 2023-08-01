@@ -5,12 +5,13 @@ import {
   FormLabel,
   FormControl,
   FormErrorMessage,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  DrawerFooter,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
@@ -36,13 +37,20 @@ const CoachForm: React.FC<Props> = ({
   } = useForm();
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>{coachToEdit ? "Edit" : "New"} Coach</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <form onSubmit={handleSubmit(onSubmit)}>
+    <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
+      <DrawerOverlay />
+      <DrawerContent roundedLeft={14}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          style={{ height: "100%", display: "flex", flexDirection: "column" }}
+        >
+          <DrawerCloseButton mt={2} color="Primary.$200" />
+
+          <DrawerHeader>
+            {coachToEdit ? "New Teacher" : "Update teacher"}
+          </DrawerHeader>
+
+          <DrawerBody>
             <FormControl isInvalid={!!errors.name}>
               <FormLabel htmlFor="name">Nome</FormLabel>
               <Input
@@ -56,18 +64,19 @@ const CoachForm: React.FC<Props> = ({
                   "Name is required"}
               </FormErrorMessage>
             </FormControl>
-            <Button
-              my="4"
-              colorScheme="teal"
-              isLoading={isSubmitting}
-              type="submit"
-            >
+          </DrawerBody>
+
+          <DrawerFooter mt="auto">
+            <Button colorScheme="blue" mr={3} type="submit">
               Save
             </Button>
-          </form>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+            <Button variant="outline" mr={"auto"} onClick={onClose}>
+              Cancel
+            </Button>
+          </DrawerFooter>
+        </form>
+      </DrawerContent>
+    </Drawer>
   );
 };
 

@@ -108,7 +108,7 @@ const TeachersPage: React.FC = () => {
         <ModalContent>
           <ModalHeader>Confirm Deletion</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>Are you sure you want to delete this school?</ModalBody>
+          <ModalBody>Are you sure you want to delete this teacher?</ModalBody>
           <ModalFooter>
             <Button variant="ghost" mr={3} onClick={onCloseDeleteModal}>
               Cancel
