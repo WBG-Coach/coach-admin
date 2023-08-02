@@ -3,18 +3,10 @@ import SessionService from "@/services/session";
 import { ISession } from "@/types";
 import {
   Box,
-  Button,
   Center,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import SessionForm from "./SessionForm";
+import SessionView from "./SessionView";
 import SessionList from "./SessionList";
 import HeaderPage from "@/components/HeaderPage";
 import { useTranslation } from "react-i18next";
@@ -22,13 +14,9 @@ import handleDownloadJSON from "@/common/download";
 
 const SessionsPage: React.FC = () => {
   const { t } = useTranslation();
-  const [newSession, setNewSession] = useState(false);
   const [sessions, setSessions] = useState<ISession[]>([]);
   const [isLoadingList, setIsLoadingList] = useState(true);
-  const [isLoadingForm, setIsLoadingForm] = useState(false);
-  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
-  const [sessionToEdit, setSessionToEdit] = useState<ISession>();
-  const [sessionToDelete, setSessionToDelete] = useState<ISession>();
+  const [sessionToView, setSessionToView] = useState<ISession>();
 
   useEffect(() => {
     loadSessions();
@@ -41,36 +29,6 @@ const SessionsPage: React.FC = () => {
     setIsLoadingList(false);
   };
 
-  const closeForm = () => {
-    setNewSession(false);
-    setSessionToEdit(undefined);
-  };
-
-  const saveSession = async (session: Partial<ISession>) => {
-    setIsLoadingForm(true);
-    if (sessionToEdit) {
-      await SessionService.updateSession({ ...sessionToEdit, ...session });
-    } else {
-      await SessionService.saveSession(session);
-    }
-    setIsLoadingForm(false);
-    loadSessions();
-    closeForm();
-  };
-
-  const deleteSession = async () => {
-    setIsLoadingDelete(true);
-    if (sessionToDelete)
-      await SessionService.DeleteSession(sessionToDelete?.id);
-    setIsLoadingDelete(false);
-    onCloseDeleteModal();
-    loadSessions();
-  };
-
-  const onCloseDeleteModal = () => {
-    setSessionToDelete(undefined);
-  };
-
   return (
     <Box p={4} minH="100vh" flex={1}>
       <HeaderPage
@@ -79,17 +37,14 @@ const SessionsPage: React.FC = () => {
         onClickDownload={() =>
           handleDownloadJSON(
             sessions,
-            t("Navbar.sessions").toLowerCase().replaceAll(" ", "-")
+            t("Navbar.sessions").toLowerCase().replace(" ", "-")
           )
         }
       />
 
-      <SessionForm
-        onClose={closeForm}
-        onSubmit={saveSession}
-        isSubmitting={isLoadingForm}
-        sessionToEdit={sessionToEdit}
-        isOpen={!!sessionToEdit || newSession}
+      <SessionView
+        session={sessionToView}
+        onClose={() => setSessionToView(undefined)}
       />
 
       {isLoadingList ? (
@@ -97,33 +52,8 @@ const SessionsPage: React.FC = () => {
           <Loader />
         </Center>
       ) : (
-        <SessionList
-          sessions={sessions}
-          handleEdit={setSessionToEdit}
-          handleDelete={setSessionToDelete}
-        />
+        <SessionList sessions={sessions} handleOpen={setSessionToView} />
       )}
-
-      <Modal isOpen={!!sessionToDelete} onClose={onCloseDeleteModal}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Confirm Deletion</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>Are you sure you want to delete this school?</ModalBody>
-          <ModalFooter>
-            <Button variant="ghost" mr={3} onClick={onCloseDeleteModal}>
-              Cancel
-            </Button>
-            <Button
-              colorScheme="red"
-              onClick={deleteSession}
-              isLoading={isLoadingDelete}
-            >
-              Delete
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </Box>
   );
 };

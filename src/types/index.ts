@@ -9,11 +9,16 @@ export interface ISync {
 export interface ITeacher {
   id: string;
   name: string;
+  surname: string;
+  birthdate?: Date;
+  subject?: string;
+  emis_number?: string;
 }
 
 export interface ICoach {
   id: string;
   name: string;
+  surname: string;
 }
 
 export interface IUser {
@@ -34,6 +39,7 @@ export interface ICompetence {
   guide_id?: IGuide["id"];
   questions?: IQuestion[];
   deleted_at?: Date | null;
+  answers?: IAnswer[];
 }
 
 export interface IQuestion {
@@ -42,6 +48,7 @@ export interface IQuestion {
   description: string;
   questionnaire_id?: IQuestionnaire["id"];
   competence_id?: ICompetence["id"];
+  competence?: ICompetence;
 }
 
 export interface IQuestionnaire {
@@ -58,10 +65,12 @@ export interface IOption {
 
 export interface IAnswer {
   id: string;
-  value: string;
+  value: number;
   question_id: IQuestion["id"];
   option_id: IOption["id"];
   session_id: ISession["id"];
+
+  question: IQuestion;
 }
 
 export interface ISchool {
@@ -84,6 +93,10 @@ export interface ISession {
   school_id: ISchool["id"];
   teacher_id: ITeacher["id"];
   subject: string;
+
+  answers: IAnswer[];
+
+  feedbacks: IFeedback[];
 
   coach: ICoach;
   school: ISchool;
