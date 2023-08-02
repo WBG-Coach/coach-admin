@@ -1,13 +1,13 @@
-import Loader from "@/components/Base/Loader";
-import CompetenceService from "@/services/competence";
-import { ICompetence } from "@/types";
-import { Box, Center } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import CompetenceForm from "./CompetenceForm";
-import CompetenceList from "./CompetenceList";
-import HeaderPage from "@/components/HeaderPage";
-import { useTranslation } from "react-i18next";
-import handleDownloadJSON from "@/common/download";
+import Loader from '@/components/Base/Loader';
+import CompetenceService from '@/services/competence';
+import { ICompetence } from '@/types';
+import { Box, Center } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import CompetenceForm from './CompetenceForm';
+import CompetenceList from './CompetenceList';
+import HeaderPage from '@/components/HeaderPage';
+import { useTranslation } from 'react-i18next';
+import handleDownloadJSON from '@/common/download';
 
 const CompetenciesPage: React.FC = () => {
   const { t } = useTranslation();
@@ -56,15 +56,12 @@ const CompetenciesPage: React.FC = () => {
   return (
     <Box p={4} minH="100vh" flex={1}>
       <HeaderPage
-        subtitle={t("Navbar.questionnaire")}
-        title={t("Navbar.teaching-practices")}
-        newButtonValue={t("competence.new-competence")}
+        subtitle={t('Navbar.questionnaire')}
+        title={t('Navbar.teaching-practices')}
+        newButtonValue={t('competence.new-competence')}
         onClickNew={() => setNewCompetence(true)}
         onClickDownload={() =>
-          handleDownloadJSON(
-            competencies,
-            t("Navbar.teaching-practices").toLowerCase().replaceAll(" ", "-")
-          )
+          handleDownloadJSON(competencies, t('Navbar.teaching-practices').toLowerCase().replace(' ', '-'))
         }
       />
 
@@ -77,7 +74,7 @@ const CompetenciesPage: React.FC = () => {
       />
 
       {isLoadingList ? (
-        <Center minW={"350px"} h={"200px"}>
+        <Center minW={'350px'} h={'200px'}>
           <Loader />
         </Center>
       ) : (

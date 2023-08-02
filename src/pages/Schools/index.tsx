@@ -1,6 +1,6 @@
-import Loader from "@/components/Base/Loader";
-import SchoolService from "@/services/school";
-import { ISchool } from "@/types";
+import Loader from '@/components/Base/Loader';
+import SchoolService from '@/services/school';
+import { ISchool } from '@/types';
 import {
   Box,
   Button,
@@ -12,13 +12,13 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import SchoolList from "./SchoolList";
-import HeaderPage from "@/components/HeaderPage";
-import { useTranslation } from "react-i18next";
-import SchoolForm from "./SchoolForm";
-import handleDownloadJSON from "@/common/download";
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import SchoolList from './SchoolList';
+import HeaderPage from '@/components/HeaderPage';
+import { useTranslation } from 'react-i18next';
+import SchoolForm from './SchoolForm';
+import handleDownloadJSON from '@/common/download';
 
 const SchoolsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -60,8 +60,7 @@ const SchoolsPage: React.FC = () => {
 
   const deleteSchool = async () => {
     setIsLoadingDelete(true);
-    if (schoolToDelete)
-      await SchoolService.DeleteSchool(schoolToDelete?.id || "");
+    if (schoolToDelete) await SchoolService.DeleteSchool(schoolToDelete?.id || '');
     setIsLoadingDelete(false);
     onCloseDeleteModal();
     loadSchools();
@@ -74,16 +73,11 @@ const SchoolsPage: React.FC = () => {
   return (
     <Box p={4} minH="100vh" flex={1}>
       <HeaderPage
-        subtitle={t("Navbar.data")}
-        title={t("Navbar.schools")}
-        newButtonValue={t("school.new-school")}
+        subtitle={t('Navbar.data')}
+        title={t('Navbar.schools')}
+        newButtonValue={t('school.new-school')}
         onClickNew={() => setNewSchool(true)}
-        onClickDownload={() =>
-          handleDownloadJSON(
-            schools,
-            t("Navbar.schools").toLowerCase().replaceAll(" ", "-")
-          )
-        }
+        onClickDownload={() => handleDownloadJSON(schools, t('Navbar.schools').toLowerCase().replace(' ', '-'))}
       />
       <SchoolForm
         onClose={closeForm}
@@ -92,15 +86,11 @@ const SchoolsPage: React.FC = () => {
         isOpen={!!schoolToEdit || newSchool}
       />
       {isLoadingList ? (
-        <Center minW={"350px"} h={"200px"}>
+        <Center minW={'350px'} h={'200px'}>
           <Loader />
         </Center>
       ) : (
-        <SchoolList
-          schools={schools}
-          handleEdit={setSchoolToEdit}
-          handleDelete={setSchoolToDelete}
-        />
+        <SchoolList schools={schools} handleEdit={setSchoolToEdit} handleDelete={setSchoolToDelete} />
       )}
       <Modal isOpen={!!schoolToDelete} onClose={onCloseDeleteModal}>
         <ModalOverlay />
@@ -112,11 +102,7 @@ const SchoolsPage: React.FC = () => {
             <Button variant="ghost" mr={3} onClick={onCloseDeleteModal}>
               Cancel
             </Button>
-            <Button
-              colorScheme="red"
-              onClick={deleteSchool}
-              isLoading={isLoadingDelete}
-            >
+            <Button colorScheme="red" onClick={deleteSchool} isLoading={isLoadingDelete}>
               Delete
             </Button>
           </ModalFooter>
