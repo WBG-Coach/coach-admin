@@ -25,6 +25,7 @@ export interface IUser {
   id: string;
   email: string;
   name: string;
+  role: 'analist' | 'admin';
   password: string;
 }
 

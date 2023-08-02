@@ -10,7 +10,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
@@ -41,21 +40,33 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
           <DrawerHeader>{defaultValues && 'id' in defaultValues ? 'Update user' : 'New user'}</DrawerHeader>
 
           <DrawerBody>
-            <FormControl isInvalid={!!errors.name}>
-              <FormLabel htmlFor="name">Name</FormLabel>
-              <Controller
-                rules={{ required: true }}
-                control={control}
-                name="name"
-                render={({ field, fieldState }) => (
-                  <Input id="name" {...field} value={field.value} isInvalid={!!fieldState.error} />
-                )}
-              />
+            <FormLabel htmlFor="name">Name</FormLabel>
+            <Controller
+              rules={{ required: true }}
+              control={control}
+              name="name"
+              render={({ field, fieldState }) => (
+                <Input id="name" {...field} value={field.value} isInvalid={!!fieldState.error} />
+              )}
+            />
 
-              <FormErrorMessage>
-                {errors.name && errors.name.type === 'required' && 'Name is required'}
-              </FormErrorMessage>
-            </FormControl>
+            <FormErrorMessage>{errors.name && errors.name.type === 'required' && 'Name is required'}</FormErrorMessage>
+
+            <FormLabel htmlFor="name" style={{ marginTop: '8px' }}>
+              Email
+            </FormLabel>
+            <Controller
+              rules={{ required: true }}
+              control={control}
+              name="email"
+              render={({ field, fieldState }) => (
+                <Input id="email" {...field} value={field.value} isInvalid={!!fieldState.error} />
+              )}
+            />
+
+            <FormErrorMessage>
+              {errors.email && errors.email.type === 'required' && 'Email is required'}
+            </FormErrorMessage>
           </DrawerBody>
 
           <DrawerFooter mt="auto">
