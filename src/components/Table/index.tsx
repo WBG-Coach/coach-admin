@@ -1,4 +1,4 @@
-import { Box, Center, HStack, Input, Text, VStack } from '@chakra-ui/react';
+import { Box, Center, HStack, Input, Select, Text, VStack } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import Icon from '../Base/Icon';
@@ -14,16 +14,17 @@ type Column = {
 type Props = {
   data: any[];
   columns: Column[];
-  itemsPerPage?: number;
   filters?: { label: string; prop: string }[];
 };
 
-const Table: React.FC<Props> = ({ columns, data, filters, itemsPerPage }) => {
+const SIZE_OPTIONS = [5, 10, 15, 20];
+
+const Table: React.FC<Props> = ({ columns, data, filters }) => {
   const [page, setPage] = useState(0);
   const { t } = useTranslation();
   const [filter, setFilter] = useState<any>({});
   const [filteredData, setFilteredData] = useState(data);
-  const PAGE_SIZE = itemsPerPage || 5;
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const handleFilterValue = (e: ChangeEvent<HTMLInputElement>) => {
     setFilter({ ...filter, [e.target.name]: e.target.value.toUpperCase() });
@@ -79,7 +80,7 @@ const Table: React.FC<Props> = ({ columns, data, filters, itemsPerPage }) => {
           ))}
         </HStack>
         <VStack w="100%">
-          {filteredData.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE).map((item) => (
+          {filteredData.slice(page * itemsPerPage, page * itemsPerPage + itemsPerPage).map((item) => (
             <HStack w="100%">
               {columns.map((column) => (
                 <Box
@@ -96,25 +97,38 @@ const Table: React.FC<Props> = ({ columns, data, filters, itemsPerPage }) => {
           ))}
         </VStack>
       </VStack>
-      <Center flex={1} p="16px">
-        <ReactPaginate
-          forcePage={page}
-          activeClassName={'item active '}
-          breakClassName={'item break-me '}
-          breakLabel={'...'}
-          containerClassName={'pagination'}
-          disabledClassName={'disabled-page'}
-          marginPagesDisplayed={2}
-          nextClassName={'item next '}
-          nextLabel={<Icon name="angle-right" />}
-          onPageChange={({ selected }) => setPage(selected)}
-          pageCount={filteredData.length / PAGE_SIZE}
-          pageClassName={'item pagination-page '}
-          pageRangeDisplayed={1}
-          previousClassName={'item previous'}
-          previousLabel={<Icon name="angle-left" />}
-        />
-      </Center>
+      <HStack p="16px" w="100%">
+        <HStack w="120px"></HStack>
+        <Center flex={1}>
+          <ReactPaginate
+            forcePage={page}
+            activeClassName={'item active '}
+            breakClassName={'item break-me '}
+            breakLabel={'...'}
+            containerClassName={'pagination'}
+            disabledClassName={'disabled-page'}
+            marginPagesDisplayed={2}
+            nextClassName={'item next '}
+            nextLabel={<Icon name="angle-right" />}
+            onPageChange={({ selected }) => setPage(selected)}
+            pageCount={filteredData.length / itemsPerPage}
+            pageClassName={'item pagination-page '}
+            pageRangeDisplayed={1}
+            previousClassName={'item previous'}
+            previousLabel={<Icon name="angle-left" />}
+          />
+        </Center>
+        <VStack w="120px">
+          <Text fontSize="14px" fontWeight="semibold" mr="auto">
+            Items per page:
+          </Text>
+          <Select value={itemsPerPage} onChange={(e) => setItemsPerPage(Number(e.target.value))}>
+            {SIZE_OPTIONS.map((value) => (
+              <option value={value}>{value}</option>
+            ))}
+          </Select>
+        </VStack>
+      </HStack>
     </VStack>
   );
 };
