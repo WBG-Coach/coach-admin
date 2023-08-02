@@ -4,12 +4,16 @@ import Menu from '@/components/Menu';
 import UserService from '@/services/user';
 import { IUser } from '@/types';
 import { Center, HStack, Text, VStack, useTheme } from '@chakra-ui/react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UserForm from './Form';
 import { SubmitHandler } from 'react-hook-form';
+import { UserContext } from '@/contexts/UserContext';
+import AuthService from '@/services/auth';
+import { toast } from 'react-toastify';
 
 const Users = () => {
   const theme = useTheme();
+  const { user } = useContext(UserContext);
   const [currentUser, setCurrentUser] = useState<IUser>();
   const [users, setUsers] = useState({
     isLoading: true,
@@ -26,23 +30,28 @@ const Users = () => {
 
   const handleRemoveUser = async (userId: IUser['id']) => {
     try {
-      //do logic to remove user
+      setUsers({ isLoading: true, data: [] });
+      await UserService.removeUser(userId);
+      refreshUsers();
     } catch (err) {
-      //do logic to show toast
+      toast.error('An error as ocurred on delete of user');
     }
   };
 
   const handleSubmitUser: SubmitHandler<IUser> = async (user) => {
     try {
+      setUsers({ isLoading: true, data: [] });
       if ('id' in user) {
-        // do logic to update in API
-        return;
+        await UserService.updateUser(user.id, user);
+      } else {
+        await AuthService.signup(user);
       }
-
-      //do logic to create in API
     } catch (err) {
-      //do logic to show toast
+      toast.error('An error as ocurred on management of user');
     }
+
+    setCurrentUser(undefined);
+    refreshUsers();
   };
 
   const menuOptions = [
@@ -66,17 +75,17 @@ const Users = () => {
       />
 
       {users.isLoading ? (
-        <Center minW={'350px'} h={'200px'}>
+        <Center minW={'400px'} h={'400px'}>
           <Loader />
         </Center>
       ) : (
         <VStack w={'100%'} flex={1} alignItems={'flex-start'}>
-          {users.data.map((user) => (
+          {users.data.map((currentUser) => (
             <HStack
               justifyContent={'space-between'}
               borderBottom={'1px solid'}
               borderColor={'Gray.$400'}
-              key={user.id}
+              key={currentUser.id}
               py={'12px'}
               px={'16px'}
               w={'100%'}
@@ -86,10 +95,10 @@ const Users = () => {
                   <Icon name={'user'} />
                 </Center>
 
-                <Text>{user.name}</Text>
+                <Text>{currentUser.name}</Text>
               </HStack>
 
-              <Menu items={menuOptions} currentItem={user} />
+              {currentUser.id !== user?.id && <Menu items={menuOptions} currentItem={currentUser} />}
             </HStack>
           ))}
 
