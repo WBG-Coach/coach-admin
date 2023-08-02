@@ -1,8 +1,8 @@
-import _axios from "..";
-import { IUser } from "../../types";
+import _axios from '..';
+import { IUser } from '../../types';
 
 type UserLoginParams = {
-  email: IUser["email"];
+  email: IUser['email'];
   password: string;
 };
 
@@ -16,8 +16,9 @@ export type UserSignUpParams = {
 };
 
 export const AuthService = {
-  login: (body: UserLoginParams): Promise<any> => _axios.post("auth", body),
-  getGuestToken: () => _axios.get<string>("auth/superset"),
+  login: (body: UserLoginParams): Promise<any> => _axios.post('auth', body),
+  signup: (body: IUser): Promise<IUser> => _axios.post('users/admin/sign-up', body),
+  getGuestToken: () => _axios.get<string>('auth/superset'),
 };
 
 export default AuthService;

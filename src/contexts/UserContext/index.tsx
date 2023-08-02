@@ -1,18 +1,19 @@
-import React, { useContext, useState, useEffect } from "react";
-import StorageService from "@/services/storage/storage.service";
-import { redirect } from "react-router-dom";
-import AuthService from "@/services/auth";
-import { IUser } from "../../types";
+import React, { useContext, useState, useEffect } from 'react';
+import StorageService from '@/services/storage/storage.service';
+import { redirect } from 'react-router-dom';
+import AuthService from '@/services/auth';
+import { IUser } from '../../types';
+import { toast } from 'react-toastify';
+import UserService from '@/services/user';
 
 export type UserContextProps = {
   login: (prop: { email: string; password: string }) => Promise<void>;
+  handleUpdateUser: (user: Partial<IUser>) => Promise<void>;
   logout: () => void;
   user?: IUser;
 };
 
-export const UserContext = React.createContext<UserContextProps>(
-  {} as UserContextProps
-);
+export const UserContext = React.createContext<UserContextProps>({} as UserContextProps);
 
 interface Props {
   children: React.ReactNode;
@@ -33,11 +34,23 @@ const UserContextProvider = ({ children }: Props) => {
 
     setUser(response.data);
     StorageService.setUser(response.data);
-    StorageService.setAccessToken(response.headers.token || "");
+    StorageService.setAccessToken(response.headers.token || '');
+  };
+
+  const handleUpdateUser = async (userToUpdate: Partial<IUser>) => {
+    try {
+      if (user) {
+        const newUser = { ...user, ...userToUpdate };
+        await UserService.updateUser(newUser.id || user?.id, newUser);
+        setUser(newUser);
+      }
+    } catch (err) {
+      toast.error('An error as ocurred on update user');
+    }
   };
 
   const logout = () => {
-    console.log("saindo");
+    console.log('saindo');
     setUser(undefined);
     StorageService.cleanStorage();
   };
@@ -45,6 +58,7 @@ const UserContextProvider = ({ children }: Props) => {
   return (
     <UserContext.Provider
       value={{
+        handleUpdateUser,
         login: handleLogin,
         logout,
         user,
@@ -60,7 +74,7 @@ export const useUserContext = () => {
 
   if (context) return context;
 
-  throw new Error("useUserContext must be used within a UserContextProvider.");
+  throw new Error('useUserContext must be used within a UserContextProvider.');
 };
 
 export default UserContextProvider;

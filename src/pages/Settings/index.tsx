@@ -12,6 +12,8 @@ import { UserContext } from '@/contexts/UserContext';
 const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useContext(UserContext);
+
+  console.log(user);
   const [currentOption, setCurrentOption] = useState(0);
   const options = [
     {
@@ -31,11 +33,6 @@ const SettingsPage: React.FC = () => {
             icon: 'user',
             component: <Users />,
           },
-        ]
-      : []),
-
-    ...(user?.role === 'admin'
-      ? [
           {
             label: t('settings.tabs.logs.title'),
             icon: 'receipt-alt',

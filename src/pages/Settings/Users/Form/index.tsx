@@ -13,14 +13,16 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  Select,
 } from '@chakra-ui/react';
+import { userRoles } from '@/common/user';
 
 const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClose }) => {
   const {
     reset,
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isLoading },
   } = useForm({ defaultValues });
 
   useEffect(() => {
@@ -67,13 +69,52 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
             <FormErrorMessage>
               {errors.email && errors.email.type === 'required' && 'Email is required'}
             </FormErrorMessage>
+
+            {defaultValues && !('id' in defaultValues) && (
+              <>
+                <FormLabel htmlFor="name" style={{ marginTop: '8px' }}>
+                  Password
+                </FormLabel>
+                <Controller
+                  rules={{ required: true }}
+                  control={control}
+                  name="password"
+                  render={({ field, fieldState }) => (
+                    <Input id="password" {...field} value={field.value} isInvalid={!!fieldState.error} />
+                  )}
+                />
+                <FormErrorMessage>
+                  {errors.password && errors.password.type === 'required' && 'Password is required'}
+                </FormErrorMessage>
+              </>
+            )}
+
+            <FormLabel htmlFor="name" style={{ marginTop: '8px' }}>
+              Role
+            </FormLabel>
+            <Controller
+              rules={{ required: true }}
+              control={control}
+              name="role"
+              render={({ field, fieldState }) => (
+                <Select id={'role'} {...field} isInvalid={!!fieldState.error}>
+                  {userRoles.map((user, index) => (
+                    <option key={index} value={user.value}>
+                      {user.label}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            />
+
+            <FormErrorMessage>{errors.role && errors.role.type === 'required' && 'Role is required'}</FormErrorMessage>
           </DrawerBody>
 
           <DrawerFooter mt="auto">
-            <Button colorScheme="blue" mr={3} type="submit">
+            <Button colorScheme="blue" mr={3} type="submit" isLoading={isLoading}>
               Save
             </Button>
-            <Button variant="outline" mr={'auto'} onClick={handleClose}>
+            <Button variant="outline" mr={'auto'} onClick={handleClose} isLoading={isLoading}>
               Cancel
             </Button>
           </DrawerFooter>
