@@ -21,6 +21,7 @@ import TeacherForm from "./TeacherForm";
 import TeacherList from "./TeacherList";
 import HeaderPage from "@/components/HeaderPage";
 import { useTranslation } from "react-i18next";
+import handleDownloadJSON from "@/common/download";
 
 const TeachersPage: React.FC = () => {
   const { t } = useTranslation();
@@ -74,7 +75,16 @@ const TeachersPage: React.FC = () => {
 
   return (
     <Box p={4} minH="100vh" flex={1}>
-      <HeaderPage title={t("Navbar.teachers")} subtitle={t("Navbar.data")} />
+      <HeaderPage
+        title={t("Navbar.teachers")}
+        subtitle={t("Navbar.data")}
+        onClickDownload={() =>
+          handleDownloadJSON(
+            teachers,
+            t("Navbar.teachers").toLowerCase().replaceAll(" ", "-")
+          )
+        }
+      />
       <TeacherForm
         onClose={closeForm}
         onSubmit={saveTeacher}
@@ -98,7 +108,7 @@ const TeachersPage: React.FC = () => {
         <ModalContent>
           <ModalHeader>Confirm Deletion</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>Are you sure you want to delete this school?</ModalBody>
+          <ModalBody>Are you sure you want to delete this teacher?</ModalBody>
           <ModalFooter>
             <Button variant="ghost" mr={3} onClick={onCloseDeleteModal}>
               Cancel

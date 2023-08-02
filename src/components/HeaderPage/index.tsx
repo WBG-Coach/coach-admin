@@ -1,12 +1,14 @@
 import React from "react";
 import { Button, HStack, Text, VStack } from "@chakra-ui/react";
 import Icon from "../Base/Icon";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   title: string;
   subtitle: string;
   newButtonValue?: string | null;
   onClickNew?: () => void;
+  onClickDownload?: () => void;
 };
 
 const HeaderPage: React.FC<Props> = ({
@@ -14,7 +16,10 @@ const HeaderPage: React.FC<Props> = ({
   subtitle,
   newButtonValue,
   onClickNew,
+  onClickDownload,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <HStack flex={1}>
       <VStack flex={1} alignItems="start" mt="60px" mb="24px">
@@ -37,16 +42,29 @@ const HeaderPage: React.FC<Props> = ({
           {title}
         </Text>
       </VStack>
-      {newButtonValue && onClickNew && (
-        <Button
-          variant="solid"
-          colorScheme="blue"
-          onClick={onClickNew}
-          gap="8px"
-        >
-          <Icon name="plus" color="#fff" size={24} /> {newButtonValue}
-        </Button>
-      )}
+      <HStack>
+        {onClickDownload && (
+          <Button
+            variant="solid"
+            colorScheme="blue"
+            onClick={onClickDownload}
+            gap="8px"
+          >
+            {t("general.download-data")}
+          </Button>
+        )}
+
+        {newButtonValue && onClickNew && (
+          <Button
+            variant="solid"
+            colorScheme="blue"
+            onClick={onClickNew}
+            gap="8px"
+          >
+            <Icon name="plus" color="#fff" size={24} /> {newButtonValue}
+          </Button>
+        )}
+      </HStack>
     </HStack>
   );
 };

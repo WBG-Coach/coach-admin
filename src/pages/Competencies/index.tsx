@@ -7,6 +7,7 @@ import CompetenceForm from "./CompetenceForm";
 import CompetenceList from "./CompetenceList";
 import HeaderPage from "@/components/HeaderPage";
 import { useTranslation } from "react-i18next";
+import handleDownloadJSON from "@/common/download";
 
 const CompetenciesPage: React.FC = () => {
   const { t } = useTranslation();
@@ -59,6 +60,12 @@ const CompetenciesPage: React.FC = () => {
         title={t("Navbar.teaching-practices")}
         newButtonValue={t("competence.new-competence")}
         onClickNew={() => setNewCompetence(true)}
+        onClickDownload={() =>
+          handleDownloadJSON(
+            competencies,
+            t("Navbar.teaching-practices").toLowerCase().replaceAll(" ", "-")
+          )
+        }
       />
 
       <CompetenceForm
