@@ -80,7 +80,7 @@ const TeachersPage: React.FC = () => {
         subtitle={t('Navbar.data')}
         newButtonValue={t('teacher.new-teacher')}
         onClickNew={() => setNewTeacher(true)}
-        onClickDownload={() => handleDownloadJSON(teachers, t('Navbar.teachers').toLowerCase().replaceAll(' ', '-'))}
+        onClickDownload={() => handleDownloadJSON(teachers, t('Navbar.teachers').toLowerCase().replace(' ', '-'))}
       />
       <TeacherForm
         onClose={closeForm}

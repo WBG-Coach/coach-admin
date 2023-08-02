@@ -77,7 +77,7 @@ const CoachesPage: React.FC = () => {
         title={t('Navbar.coaches')}
         newButtonValue={t('coach.new-coach')}
         onClickNew={() => setNewCoach(true)}
-        onClickDownload={() => handleDownloadJSON(coaches, t('Navbar.coaches').toLowerCase().replaceAll(' ', '-'))}
+        onClickDownload={() => handleDownloadJSON(coaches, t('Navbar.coaches').toLowerCase().replace(' ', '-'))}
       />
       <CoachForm
         onClose={closeForm}
