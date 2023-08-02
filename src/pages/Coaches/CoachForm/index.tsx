@@ -1,4 +1,4 @@
-import { ICoach } from "@/types";
+import { ICoach } from '@/types';
 import {
   Input,
   Button,
@@ -12,24 +12,18 @@ import {
   DrawerHeader,
   DrawerBody,
   DrawerFooter,
-} from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+} from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
 
 type Props = {
   isOpen: boolean;
   isSubmitting: boolean;
   coachToEdit?: ICoach;
-  onSubmit: (coach: Partial<ICoach>) => void;
   onClose: () => void;
+  onSubmit: (coach: Partial<ICoach>) => void;
 };
 
-const CoachForm: React.FC<Props> = ({
-  isOpen,
-  isSubmitting,
-  coachToEdit,
-  onClose,
-  onSubmit,
-}) => {
+const CoachForm: React.FC<Props> = ({ isOpen, isSubmitting, coachToEdit, onClose, onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -40,28 +34,24 @@ const CoachForm: React.FC<Props> = ({
     <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
       <DrawerOverlay />
       <DrawerContent roundedLeft={14}>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          style={{ height: "100%", display: "flex", flexDirection: "column" }}
-        >
+        <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
           <DrawerCloseButton mt={2} color="Primary.$200" />
 
-          <DrawerHeader>
-            {coachToEdit ? "New Teacher" : "Update teacher"}
-          </DrawerHeader>
+          <DrawerHeader>{coachToEdit ? 'Update teacher' : 'New Teacher'}</DrawerHeader>
 
           <DrawerBody>
             <FormControl isInvalid={!!errors.name}>
               <FormLabel htmlFor="name">Nome</FormLabel>
-              <Input
-                id="name"
-                defaultValue={coachToEdit?.name}
-                {...register("name", { required: true })}
-              />
+              <Input id="name" defaultValue={coachToEdit?.name} {...register('name', { required: true })} />
               <FormErrorMessage>
-                {errors.name &&
-                  errors.name.type === "required" &&
-                  "Name is required"}
+                {errors.name && errors.name.type === 'required' && 'Name is required'}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl mt="16px" isInvalid={!!errors.surname}>
+              <FormLabel htmlFor="surname">Surname</FormLabel>
+              <Input id="surname" defaultValue={coachToEdit?.surname} {...register('surname', { required: true })} />
+              <FormErrorMessage>
+                {errors.surname && errors.surname.type === 'required' && 'Surname is required'}
               </FormErrorMessage>
             </FormControl>
           </DrawerBody>
@@ -70,7 +60,7 @@ const CoachForm: React.FC<Props> = ({
             <Button colorScheme="blue" mr={3} type="submit">
               Save
             </Button>
-            <Button variant="outline" mr={"auto"} onClick={onClose}>
+            <Button variant="outline" mr={'auto'} onClick={onClose}>
               Cancel
             </Button>
           </DrawerFooter>

@@ -6,6 +6,7 @@ import ChangePassword from './ChangePassword';
 import Users from './Users';
 import Icon from '@/components/Base/Icon';
 import HeaderPage from '@/components/HeaderPage';
+import Logs from './Logs';
 
 const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -25,6 +26,11 @@ const SettingsPage: React.FC = () => {
       label: t('settings.tabs.users.title'),
       icon: 'user',
       component: <Users />,
+    },
+    {
+      label: t('settings.tabs.logs.title'),
+      icon: 'receipt-alt',
+      component: <Logs />,
     },
   ];
 

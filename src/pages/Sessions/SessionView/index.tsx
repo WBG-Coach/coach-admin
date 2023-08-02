@@ -1,5 +1,5 @@
-import Icon from "@/components/Base/Icon";
-import { IAnswer, ICompetence, ISession } from "@/types";
+import Icon from '@/components/Base/Icon';
+import { IAnswer, ICompetence, ISession } from '@/types';
 import {
   Drawer,
   DrawerOverlay,
@@ -11,8 +11,8 @@ import {
   Text,
   VStack,
   Divider,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
 type Props = {
   session?: ISession;
@@ -27,20 +27,15 @@ const SessionView: React.FC<Props> = ({ session, onClose }) => {
       setCompetencies(
         session.answers
           .reduce((acc: ICompetence[], item: IAnswer) => {
-            const competence = acc.find(
-              (competence) => competence.id === item.question.competence_id
-            );
+            const competence = acc.find((competence) => competence.id === item.question.competence_id);
             if (competence) {
               competence.answers?.push(item);
               return acc;
             } else {
-              return [
-                ...acc,
-                { ...(item.question.competence as any), answers: [item] },
-              ];
+              return [...acc, { ...(item.question.competence as any), answers: [item] }];
             }
           }, [] as ICompetence[])
-          .reverse()
+          .reverse(),
       );
     } else {
       setCompetencies([]);
@@ -52,25 +47,25 @@ const SessionView: React.FC<Props> = ({ session, onClose }) => {
       <DrawerOverlay />
       <DrawerContent roundedLeft={14}>
         <DrawerCloseButton mt={2} color="Primary.$200" />
-        <DrawerHeader>{"View session"}</DrawerHeader>
+        <DrawerHeader>{'View session'}</DrawerHeader>
 
         <DrawerBody>
           <HStack mb="4px" alignItems="center">
-            <Icon name="university" size={20} />
+            <Icon name="university" size={16} />
             <Text fontWeight="semibold">School</Text>
           </HStack>
           <Text>{session?.school.name}</Text>
           <Divider my="8px" />
 
           <HStack mb="4px" alignItems="center">
-            <Icon name="user-alt" size={20} />
+            <Icon name="user" size={16} />
             <Text fontWeight="semibold">Coach</Text>
           </HStack>
           <Text>{session?.coach.name}</Text>
           <Divider my="8px" />
 
           <HStack mb="4px" alignItems="center">
-            <Icon name="graduation-cap" size={20} />
+            <Icon name="graduation-cap" size={16} />
             <Text fontWeight="semibold">Teacher</Text>
           </HStack>
           <Text>{session?.teacher.name}</Text>
@@ -88,7 +83,7 @@ const SessionView: React.FC<Props> = ({ session, onClose }) => {
             <div>
               <Text fontSize={20} fontWeight="semibold">
                 {index + 1}
-                {". "}
+                {'. '}
                 {competence.title}
               </Text>
               {competence.answers?.map((answer) => (
@@ -103,7 +98,7 @@ const SessionView: React.FC<Props> = ({ session, onClose }) => {
                         <Icon name="star-solid" color="#E89F0C" />
                       ) : (
                         <Icon name="star-solid" color="#C7CBD1" />
-                      )
+                      ),
                     )}
                   </HStack>
                 </div>

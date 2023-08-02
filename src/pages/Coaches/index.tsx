@@ -1,6 +1,6 @@
-import Loader from "@/components/Base/Loader";
-import CoachService from "@/services/coach";
-import { ICoach } from "@/types";
+import Loader from '@/components/Base/Loader';
+import CoachService from '@/services/coach';
+import { ICoach } from '@/types';
 import {
   Box,
   Button,
@@ -12,13 +12,13 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import CoachForm from "./CoachForm";
-import CoachList from "./CoachList";
-import HeaderPage from "@/components/HeaderPage";
-import { useTranslation } from "react-i18next";
-import handleDownloadJSON from "@/common/download";
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import CoachForm from './CoachForm';
+import CoachList from './CoachList';
+import HeaderPage from '@/components/HeaderPage';
+import { useTranslation } from 'react-i18next';
+import handleDownloadJSON from '@/common/download';
 
 const CoachesPage: React.FC = () => {
   const { t } = useTranslation();
@@ -73,14 +73,11 @@ const CoachesPage: React.FC = () => {
   return (
     <Box p={4} minH="100vh" flex={1}>
       <HeaderPage
-        subtitle={t("Navbar.data")}
-        title={t("Navbar.coaches")}
-        onClickDownload={() =>
-          handleDownloadJSON(
-            coaches,
-            t("Navbar.coaches").toLowerCase().replaceAll(" ", "-")
-          )
-        }
+        subtitle={t('Navbar.data')}
+        title={t('Navbar.coaches')}
+        newButtonValue={t('coach.new-coach')}
+        onClickNew={() => setNewCoach(true)}
+        onClickDownload={() => handleDownloadJSON(coaches, t('Navbar.coaches').toLowerCase().replaceAll(' ', '-'))}
       />
       <CoachForm
         onClose={closeForm}
@@ -90,15 +87,11 @@ const CoachesPage: React.FC = () => {
         isOpen={!!coachToEdit || newCoach}
       />
       {isLoadingList ? (
-        <Center minW={"350px"} h={"200px"}>
+        <Center minW={'350px'} h={'200px'}>
           <Loader />
         </Center>
       ) : (
-        <CoachList
-          coachs={coaches}
-          handleEdit={setCoachToEdit}
-          handleDelete={setCoachToDelete}
-        />
+        <CoachList coachs={coaches} handleEdit={setCoachToEdit} handleDelete={setCoachToDelete} />
       )}
       <Modal isOpen={!!coachToDelete} onClose={onCloseDeleteModal}>
         <ModalOverlay />
@@ -110,11 +103,7 @@ const CoachesPage: React.FC = () => {
             <Button variant="ghost" mr={3} onClick={onCloseDeleteModal}>
               Cancel
             </Button>
-            <Button
-              colorScheme="red"
-              onClick={deleteCoach}
-              isLoading={isLoadingDelete}
-            >
+            <Button colorScheme="red" onClick={deleteCoach} isLoading={isLoadingDelete}>
               Delete
             </Button>
           </ModalFooter>

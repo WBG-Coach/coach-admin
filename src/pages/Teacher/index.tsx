@@ -1,6 +1,6 @@
-import Loader from "@/components/Base/Loader";
-import SyncService from "@/services/teacher";
-import { ITeacher } from "@/types";
+import Loader from '@/components/Base/Loader';
+import SyncService from '@/services/teacher';
+import { ITeacher } from '@/types';
 import {
   Box,
   Button,
@@ -15,13 +15,13 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import TeacherForm from "./TeacherForm";
-import TeacherList from "./TeacherList";
-import HeaderPage from "@/components/HeaderPage";
-import { useTranslation } from "react-i18next";
-import handleDownloadJSON from "@/common/download";
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import TeacherForm from './TeacherForm';
+import TeacherList from './TeacherList';
+import HeaderPage from '@/components/HeaderPage';
+import { useTranslation } from 'react-i18next';
+import handleDownloadJSON from '@/common/download';
 
 const TeachersPage: React.FC = () => {
   const { t } = useTranslation();
@@ -76,14 +76,11 @@ const TeachersPage: React.FC = () => {
   return (
     <Box p={4} minH="100vh" flex={1}>
       <HeaderPage
-        title={t("Navbar.teachers")}
-        subtitle={t("Navbar.data")}
-        onClickDownload={() =>
-          handleDownloadJSON(
-            teachers,
-            t("Navbar.teachers").toLowerCase().replaceAll(" ", "-")
-          )
-        }
+        title={t('Navbar.teachers')}
+        subtitle={t('Navbar.data')}
+        newButtonValue={t('teacher.new-teacher')}
+        onClickNew={() => setNewTeacher(true)}
+        onClickDownload={() => handleDownloadJSON(teachers, t('Navbar.teachers').toLowerCase().replaceAll(' ', '-'))}
       />
       <TeacherForm
         onClose={closeForm}
@@ -93,15 +90,11 @@ const TeachersPage: React.FC = () => {
         isOpen={!!teacherToEdit || newTeacher}
       />
       {isLoadingList ? (
-        <Center minW={"350px"} h={"200px"}>
+        <Center minW={'350px'} h={'200px'}>
           <Loader />
         </Center>
       ) : (
-        <TeacherList
-          teachers={teachers}
-          handleEdit={setTeacherToEdit}
-          handleDelete={setTeacherToDelete}
-        />
+        <TeacherList teachers={teachers} handleEdit={setTeacherToEdit} handleDelete={setTeacherToDelete} />
       )}
       <Modal isOpen={!!teacherToDelete} onClose={onCloseDeleteModal}>
         <ModalOverlay />
@@ -113,11 +106,7 @@ const TeachersPage: React.FC = () => {
             <Button variant="ghost" mr={3} onClick={onCloseDeleteModal}>
               Cancel
             </Button>
-            <Button
-              colorScheme="red"
-              onClick={deleteTeacher}
-              isLoading={isLoadingDelete}
-            >
+            <Button colorScheme="red" onClick={deleteTeacher} isLoading={isLoadingDelete}>
               Delete
             </Button>
           </ModalFooter>
