@@ -5,8 +5,6 @@ import {
   Box,
   Button,
   Center,
-  Flex,
-  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
