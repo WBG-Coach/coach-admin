@@ -21,7 +21,7 @@ const EditUser = () => {
         General
       </Text>
       <Text fontWeight={400} mt={'4px'} color={'Gray.$700'}>
-        Update your photo and your information.
+        Update your information.
       </Text>
 
       <Center w={'100%'} my={'40px'}>

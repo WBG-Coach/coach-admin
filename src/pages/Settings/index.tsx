@@ -1,14 +1,16 @@
 import { Box, HStack, Text, VStack } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import EditUser from './EditUser';
 import ChangePassword from './ChangePassword';
 import Users from './Users';
 import Icon from '@/components/Base/Icon';
 import HeaderPage from '@/components/HeaderPage';
+import { UserContext } from '@/contexts/UserContext';
 
 const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
+  const { user } = useContext(UserContext);
   const [currentOption, setCurrentOption] = useState(0);
   const options = [
     {
@@ -21,11 +23,15 @@ const SettingsPage: React.FC = () => {
       icon: 'lock',
       component: <ChangePassword />,
     },
-    {
-      label: t('settings.tabs.users.title'),
-      icon: 'user',
-      component: <Users />,
-    },
+    ...(user?.role === 'admin'
+      ? [
+          {
+            label: t('settings.tabs.users.title'),
+            icon: 'user',
+            component: <Users />,
+          },
+        ]
+      : []),
   ];
 
   return (
