@@ -37,20 +37,21 @@ const UserContextProvider = ({ children }: Props) => {
     StorageService.setAccessToken(response.headers.token || '');
   };
 
-  const handleUpdateUser = async (userToUpdate: Partial<IUser>) => {
+  const handleUpdateUser = async (userToUpdate: Partial<IUser & { currentPassword?: string }>) => {
     try {
       if (user) {
         const newUser = { ...user, ...userToUpdate };
-        await UserService.updateUser(newUser.id || user?.id, newUser);
+        await UserService.updateUser(newUser.id || user?.id, userToUpdate);
         setUser(newUser);
       }
     } catch (err) {
-      toast.error('An error as ocurred on update user');
+      toast.error(
+        !!userToUpdate.currentPassword ? 'Your current password is wrong' : 'An error as ocurred on update user',
+      );
     }
   };
 
   const logout = () => {
-    console.log('saindo');
     setUser(undefined);
     StorageService.cleanStorage();
   };

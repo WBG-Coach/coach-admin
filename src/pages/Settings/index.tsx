@@ -13,7 +13,6 @@ const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useContext(UserContext);
 
-  console.log(user);
   const [currentOption, setCurrentOption] = useState(0);
   const options = [
     {

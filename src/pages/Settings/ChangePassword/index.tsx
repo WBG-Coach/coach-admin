@@ -2,23 +2,36 @@ import Icon from '@/components/Base/Icon';
 import Loader from '@/components/Base/Loader';
 import { UserContext } from '@/contexts/UserContext';
 import { IUser } from '@/types';
-import { Button, Center, FormControl, FormErrorMessage, FormLabel, Input, Text, VStack } from '@chakra-ui/react';
+import { Button, Center, FormControl, FormLabel, Input, Text, VStack } from '@chakra-ui/react';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 const ChangePassword = () => {
-  const { user, handleUpdateUser } = useContext(UserContext);
+  const { handleUpdateUser } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
+
+  const schema = yup
+    .object({
+      currentPassword: yup.string().required('This field is required'),
+      password: yup.string().required('This field is required'),
+      confirmPassword: yup
+        .string()
+        .required('This field is required')
+        .oneOf([yup.ref('password')], 'Password not equals'),
+    })
+    .required();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: yupResolver(schema) });
 
-  const handleSubmitForm = (user: Partial<IUser>) => {
+  const handleSubmitForm = async (user: Partial<IUser & { repassword: string; currentPassword: string }>) => {
     setIsLoading(true);
-    handleUpdateUser(user);
+    await handleUpdateUser({ password: user.password, currentPassword: user.currentPassword } as any);
     setIsLoading(false);
   };
 
@@ -41,28 +54,42 @@ const ChangePassword = () => {
             onSubmit={handleSubmit(handleSubmitForm)}
             style={{ width: '100%', display: 'flex', flexDirection: 'column', marginTop: '40px' }}
           >
-            <FormControl isInvalid={!!errors.name}>
+            <FormControl>
               <FormLabel htmlFor="name">Current password</FormLabel>
-              <Input {...register('name', { required: true })} />
-              <FormErrorMessage>
-                {errors.name && errors.name.type === 'required' && 'Name is required'}
-              </FormErrorMessage>
+              <Input
+                isInvalid={!!errors.currentPassword}
+                type="password"
+                {...register('currentPassword', { required: true })}
+              />
+              <Text mt={'8px'} color={'red'}>
+                {errors.currentPassword?.message}
+              </Text>
             </FormControl>
 
-            <FormControl isInvalid={!!errors.email} style={{ marginTop: '16px' }}>
+            <FormControl style={{ marginTop: '16px' }}>
               <FormLabel htmlFor="name">New password</FormLabel>
-              <Input id="password" {...register('password', { required: true })} />
-              <FormErrorMessage>
-                {errors.email && errors.email.type === 'required' && 'Email is required'}
-              </FormErrorMessage>
+              <Input
+                isInvalid={!!errors.password}
+                id="password"
+                type="password"
+                {...register('password', { required: true })}
+              />
+              <Text mt={'8px'} color={'red'}>
+                {errors.password?.message}
+              </Text>
             </FormControl>
 
-            <FormControl isInvalid={!!errors.email} style={{ marginTop: '16px' }}>
-              <FormLabel htmlFor="name">Confirm password</FormLabel>
-              <Input id="password" {...register('re-password', { required: true })} />
-              <FormErrorMessage>
-                {errors.email && errors.email.type === 'required' && 'Email is required'}
-              </FormErrorMessage>
+            <FormControl style={{ marginTop: '16px' }}>
+              <FormLabel htmlFor="repassword">Confirm password</FormLabel>
+              <Input
+                isInvalid={!!errors.confirmPassword}
+                id="password"
+                type="password"
+                {...register('confirmPassword', { required: true })}
+              />
+              <Text mt={'8px'} color={'red'}>
+                {errors.confirmPassword?.message}
+              </Text>
             </FormControl>
 
             <Button colorScheme="blue" type="submit" w={'100%'} mt={'40px'}>
