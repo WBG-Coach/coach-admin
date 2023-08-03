@@ -24,6 +24,12 @@ const enTranslation = {
   school: {
     'new-school': 'New school',
   },
+  coach: {
+    'new-coach': 'New coach',
+  },
+  teacher: {
+    'new-teacher': 'New teacher',
+  },
   common: {
     actions: 'Actions',
     activate: 'Activate',
