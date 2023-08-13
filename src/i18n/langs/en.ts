@@ -37,6 +37,7 @@ const enTranslation = {
     edit: 'Edit',
     view: 'View',
     delete: 'Delete',
+    generateQRCode: 'Generate QRCode',
   },
   general: {
     'download-data': 'Download data',

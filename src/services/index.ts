@@ -1,5 +1,5 @@
-import axios from "axios";
-import StorageService from "./storage/storage.service";
+import axios from 'axios';
+import StorageService from './storage/storage.service';
 
 const config = {
   baseURL: import.meta.env.VITE_API_URL,
@@ -9,13 +9,13 @@ const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
   (config: any) => {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem('accessToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => error
+  (error) => error,
 );
 
 _axios.interceptors.response.use(
@@ -23,9 +23,10 @@ _axios.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       StorageService.cleanStorage();
+      location.reload();
     }
     throw new Error(error);
-  }
+  },
 );
 
 export default _axios;
