@@ -6,7 +6,7 @@ export const DASHBOARD = {
         stars: { needsWork: 20, keepWorking: 30, needsAttention: 45, almostThere: 25, doingGreat: 35 },
         teachers: 40,
         teachersShowingImprovement: 25,
-        teacherOverdue: 35,
+        teacherWithoutFeedback: 35,
       },
     },
     {
@@ -15,7 +15,7 @@ export const DASHBOARD = {
         stars: { needsWork: 20, keepWorking: 30, needsAttention: 45, almostThere: 25, doingGreat: 35 },
         teachers: 40,
         teachersShowingImprovement: 25,
-        teacherOverdue: 35,
+        teacherWithoutFeedback: 35,
       },
     },
     {
@@ -24,7 +24,7 @@ export const DASHBOARD = {
         stars: { needsWork: 20, keepWorking: 30, needsAttention: 45, almostThere: 25, doingGreat: 35 },
         teachers: 40,
         teachersShowingImprovement: 25,
-        teacherOverdue: 35,
+        teacherWithoutFeedback: 35,
       },
     },
     {
@@ -33,7 +33,7 @@ export const DASHBOARD = {
         stars: { needsWork: 20, keepWorking: 30, needsAttention: 45, almostThere: 25, doingGreat: 35 },
         teachers: 40,
         teachersShowingImprovement: 25,
-        teacherOverdue: 35,
+        teacherWithoutFeedback: 35,
       },
     },
     {
@@ -42,7 +42,7 @@ export const DASHBOARD = {
         stars: { needsWork: 20, keepWorking: 30, needsAttention: 45, almostThere: 25, doingGreat: 35 },
         teachers: 40,
         teachersShowingImprovement: 25,
-        teacherOverdue: 35,
+        teacherWithoutFeedback: 35,
       },
     },
   ],
