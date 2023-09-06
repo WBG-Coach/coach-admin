@@ -124,3 +124,32 @@ export interface ILogs {
   description: string;
   created_at: string;
 }
+
+export interface ITeachingPractices {
+  name: string;
+  data: {
+    stars: {
+      needsWork: number;
+      keepWorking: number;
+      needsAttention: number;
+      almostThere: number;
+      doingGreat: number;
+    };
+    teachers: number;
+    teachersShowingImprovement: number;
+    teacherWithoutFeedback: number;
+  };
+}
+
+export interface IDashboard {
+  teachingPractices: ITeachingPractices[];
+  engagement: {
+    teachersCoached: number;
+    activeCoaches: number;
+    coachingSessions: number;
+    coachingSessionPerTeacher: number;
+    coachingSessionPerTeacherGoal: number;
+    teacherThatCompletedSecondSession: number;
+  };
+  targetedImprovementAreas: {};
+}
