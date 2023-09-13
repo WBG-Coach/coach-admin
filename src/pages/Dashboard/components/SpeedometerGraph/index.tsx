@@ -30,15 +30,7 @@ export const SpeedometerGraph: React.FC<Props> = ({ maxValue, value, label }) =>
           height="200px"
           width="200px"
         />
-        <VStack
-          top="55px"
-          position="absolute"
-          borderRadius="50%"
-          w="100%"
-          h="calc(100% - 90px)"
-          justifyContent="center"
-          gap={0}
-        >
+        <VStack top="55px" position="absolute" borderRadius="50%" h="calc(100% - 90px)" justifyContent="center" gap={0}>
           <Text fontSize="42px" fontWeight={600} color="#111417">
             {value}
           </Text>

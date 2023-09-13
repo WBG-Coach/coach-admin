@@ -1,9 +1,5 @@
-import { Button, Center, HStack, Text, VStack } from '@chakra-ui/react';
-import { Chart as ChartJS, ChartData, CategoryScale, LinearScale, BarElement } from 'chart.js';
-import { Bar, Doughnut } from 'react-chartjs-2';
-
 import { useEffect, useState } from 'react';
-import { DASHBOARD } from './mock';
+import { Button, Center, HStack, Text, VStack } from '@chakra-ui/react';
 import { IDashboard, ITeachingPractices } from '@/types';
 import DashboardService from '@/services/dashboard';
 import Loader from '@/components/Base/Loader';
@@ -59,12 +55,15 @@ const DashboardPage: React.FC = () => {
               maxValue={dashboard.engagement.coachingSessionPerTeacherGoal}
             />
             <DoughnutGraph
-              labels={dashboard.teachingPractices.map((item) => item.name)}
-              values={[dashboard.engagement.teacherThatCompletedSecondSession, DASHBOARD.engagement.teachersCoached]}
+              labels={['Completed a second coach session', 'Without a second coach sessions']}
+              values={[
+                dashboard.engagement.teacherThatCompletedSecondSession,
+                dashboard.engagement.teachersCoached - dashboard.engagement.teacherThatCompletedSecondSession,
+              ]}
               label="Completed a second coach session"
               title={
                 (
-                  (DASHBOARD.engagement.teacherThatCompletedSecondSession / DASHBOARD.engagement.teachersCoached) *
+                  (dashboard.engagement.teacherThatCompletedSecondSession / dashboard.engagement.teachersCoached) *
                   100
                 ).toFixed(0) + '%'
               }
@@ -81,7 +80,10 @@ const DashboardPage: React.FC = () => {
             Teaching practices teachers and coaches agreed to work on between coaching sessions
           </Text>
 
-          <DoughnutGraph values={dashboard.teachingPractices.map((item) => item.data.teachers)} />
+          <DoughnutGraph
+            labels={dashboard.teachingPractices.map((item) => item.name)}
+            values={dashboard.teachingPractices.map((item) => item.data.teachers)}
+          />
         </VStack>
       </HStack>
 
@@ -90,7 +92,7 @@ const DashboardPage: React.FC = () => {
       </Text>
 
       <HStack mb="56px">
-        {DASHBOARD.teachingPractices.map((item) => (
+        {dashboard.teachingPractices.map((item) => (
           <Button
             py="8px"
             px="12px"
