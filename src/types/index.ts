@@ -19,6 +19,7 @@ export interface ICoach {
   id: string;
   name: string;
   surname: string;
+  coachSchools?: ICoachSchool[];
 }
 
 export interface IUser {
@@ -74,9 +75,17 @@ export interface IAnswer {
   question: IQuestion;
 }
 
+export interface ICoachSchool {
+  id?: string;
+  coach: ICoach;
+  school: ISchool;
+}
+
 export interface ISchool {
   id?: string;
   name: string;
+  coachSchools?: ICoachSchool[];
+  teachers?: ITeacher[];
 }
 
 export interface ITeacher {

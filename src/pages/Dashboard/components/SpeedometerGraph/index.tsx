@@ -12,7 +12,7 @@ export const SpeedometerGraph: React.FC<Props> = ({ maxValue, value, label }) =>
   const coachingSessionPerTeacher: ChartData<'doughnut', number[], string> = {
     datasets: [
       {
-        data: [4.3, 0.7],
+        data: [value, maxValue - value],
         backgroundColor: ['#3373CC', '#C7CBD1'],
         borderWidth: 0,
         circumference: 270,

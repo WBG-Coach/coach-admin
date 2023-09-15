@@ -62,9 +62,9 @@ const DashboardPage: React.FC = () => {
               ]}
               label="Completed a second coach session"
               title={
-                (
-                  (dashboard.engagement.teacherThatCompletedSecondSession / dashboard.engagement.teachersCoached) *
-                  100
+                (dashboard.engagement.teachersCoached
+                  ? dashboard.engagement.teacherThatCompletedSecondSession / dashboard.engagement.teachersCoached
+                  : 0 * 100
                 ).toFixed(0) + '%'
               }
               subTitle="Of teachers"

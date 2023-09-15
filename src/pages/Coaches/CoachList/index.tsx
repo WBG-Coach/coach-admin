@@ -26,6 +26,10 @@ const CoachList: React.FC<Props> = ({ coachs, handleDelete, handleEdit }) => {
           title: 'Surname',
         },
         {
+          renderColumn: (item: ICoach) => item.coachSchools?.length || '0',
+          title: 'Schools count',
+        },
+        {
           renderColumn: (item: ICoach) => (
             <Flex justifyContent="center">
               <Menu>

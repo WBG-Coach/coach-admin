@@ -38,7 +38,6 @@ const SchoolList: React.FC<Props> = ({ schools, handleDelete, handleEdit }) => {
   }, [schoolToQrCode]);
 
   const closeModal = () => {
-    console.log(key);
     setKey(undefined);
     setSchoolToQrCode(undefined);
   };
@@ -52,6 +51,14 @@ const SchoolList: React.FC<Props> = ({ schools, handleDelete, handleEdit }) => {
           {
             renderColumn: (item: ISchool) => item.name,
             title: 'Name',
+          },
+          {
+            renderColumn: (item: ISchool) => item.coachSchools?.length || '0',
+            title: 'Coaches count',
+          },
+          {
+            renderColumn: (item: ISchool) => item.teachers?.length || '0',
+            title: 'Teachers count',
           },
           {
             renderColumn: (item: ISchool) => (
@@ -91,7 +98,7 @@ const SchoolList: React.FC<Props> = ({ schools, handleDelete, handleEdit }) => {
           <ModalBody>
             <Center my="16px">
               {schoolToQrCode && key ? (
-                <QRCode size={300} value={JSON.stringify({ ...schoolToQrCode, key })} />
+                <QRCode size={300} value={JSON.stringify({ id: schoolToQrCode.id, name: schoolToQrCode.name, key })} />
               ) : (
                 <Spinner />
               )}
