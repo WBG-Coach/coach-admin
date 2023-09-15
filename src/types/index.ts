@@ -84,6 +84,7 @@ export interface ICoachSchool {
 export interface ISchool {
   id?: string;
   name: string;
+  emis_number: string;
   coachSchools?: ICoachSchool[];
   teachers?: ITeacher[];
 }

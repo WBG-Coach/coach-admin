@@ -2,6 +2,7 @@ import {
   Button,
   Center,
   Flex,
+  HStack,
   Menu,
   MenuButton,
   MenuItem,
@@ -10,9 +11,10 @@ import {
   ModalBody,
   ModalContent,
   ModalFooter,
-  ModalHeader,
   ModalOverlay,
   Spinner,
+  Text,
+  VStack,
 } from '@chakra-ui/react';
 import { ISchool } from '@/types';
 import Table from '@/components/Table';
@@ -21,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import QRCode from 'qrcode.react';
 import { useEffect, useState } from 'react';
 import SchoolService from '@/services/school';
+import QRCodeModal from './QRCodeModal';
 
 type Props = {
   schools: ISchool[];
@@ -89,28 +92,7 @@ const SchoolList: React.FC<Props> = ({ schools, handleDelete, handleEdit }) => {
           },
         ]}
       />
-      <Modal isOpen={!!schoolToQrCode} onClose={closeModal}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Center>{schoolToQrCode?.name}</Center>
-          </ModalHeader>
-          <ModalBody>
-            <Center my="16px">
-              {schoolToQrCode && key ? (
-                <QRCode size={300} value={JSON.stringify({ id: schoolToQrCode.id, name: schoolToQrCode.name, key })} />
-              ) : (
-                <Spinner />
-              )}
-            </Center>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" w="full" onClick={closeModal}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <QRCodeModal school={schoolToQrCode} handleClose={closeModal} schoolKey={key} />
     </>
   );
 };

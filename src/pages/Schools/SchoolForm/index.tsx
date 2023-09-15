@@ -1,4 +1,4 @@
-import { ISchool } from "@/types";
+import { ISchool } from '@/types';
 import {
   Input,
   Button,
@@ -13,9 +13,10 @@ import {
   FormLabel,
   Text,
   useToast,
-} from "@chakra-ui/react";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+  VStack,
+} from '@chakra-ui/react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   isOpen: boolean;
@@ -25,17 +26,12 @@ type Props = {
   readonly?: boolean;
 };
 
-const SchoolForm: React.FC<Props> = ({
-  isOpen,
-  school,
-  onClose,
-  onSubmit,
-  readonly,
-}) => {
+const SchoolForm: React.FC<Props> = ({ isOpen, school, onClose, onSubmit, readonly }) => {
   const { t } = useTranslation();
   const toast = useToast();
   const [schoolValues, setSchoolValues] = useState<ISchool>({
-    name: "",
+    name: '',
+    emis_number: '',
   });
 
   useEffect(() => {
@@ -43,7 +39,8 @@ const SchoolForm: React.FC<Props> = ({
       setSchoolValues(school);
     } else {
       setSchoolValues({
-        name: "",
+        name: '',
+        emis_number: '',
       });
     }
   }, [isOpen, school]);
@@ -60,11 +57,11 @@ const SchoolForm: React.FC<Props> = ({
 
     if (!schoolValues.name) {
       toast({
-        title: "School name is required.",
-        status: "warning",
+        title: 'School name is required.',
+        status: 'warning',
         duration: 9000,
         isClosable: true,
-        position: "top-left",
+        position: 'top-left',
       });
       return;
     }
@@ -76,35 +73,36 @@ const SchoolForm: React.FC<Props> = ({
     <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
       <DrawerOverlay />
       <DrawerContent roundedLeft={14}>
-        <form
-          onSubmit={handleSubmit}
-          style={{ height: "100%", display: "flex", flexDirection: "column" }}
-        >
+        <form onSubmit={handleSubmit} style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
           <DrawerCloseButton mt={2} color="Primary.$200" />
 
-          <DrawerHeader>
-            {school
-              ? readonly
-                ? "View School"
-                : "Update school"
-              : "New School"}
-          </DrawerHeader>
+          <DrawerHeader>{school ? (readonly ? 'View School' : 'Update school') : 'New School'}</DrawerHeader>
 
           <DrawerBody>
             <FormControl id="name" isRequired>
               <FormLabel fontSize="16px" lineHeight="24px" fontWeight={500}>
                 School name
               </FormLabel>
-              {readonly ? (
-                <Text>{schoolValues.name}</Text>
-              ) : (
-                <Input
-                  type="text"
-                  name="name"
-                  value={schoolValues.name}
-                  onChange={handleInputChange}
-                />
-              )}
+              <Input
+                readOnly={readonly}
+                disabled={readonly}
+                type="text"
+                name="name"
+                value={schoolValues.name}
+                onChange={handleInputChange}
+              />
+
+              <FormLabel mt={'14px'} fontSize="16px" lineHeight="24px" fontWeight={500}>
+                Emis number
+              </FormLabel>
+              <Input
+                readOnly={readonly}
+                disabled={readonly}
+                type="number"
+                name="emis_number"
+                value={schoolValues.emis_number}
+                onChange={handleInputChange}
+              />
             </FormControl>
           </DrawerBody>
 
@@ -113,7 +111,7 @@ const SchoolForm: React.FC<Props> = ({
               <Button colorScheme="blue" mr={3} type="submit">
                 Save
               </Button>
-              <Button variant="outline" mr={"auto"} onClick={onClose}>
+              <Button variant="outline" mr={'auto'} onClick={onClose}>
                 Cancel
               </Button>
             </DrawerFooter>
