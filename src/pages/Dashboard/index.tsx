@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Center, HStack, Text, VStack } from '@chakra-ui/react';
+import { Button, Center, HStack, Select, Text, VStack } from '@chakra-ui/react';
 import { IDashboard, ITeachingPractices } from '@/types';
 import DashboardService from '@/services/dashboard';
 import Loader from '@/components/Base/Loader';
@@ -9,32 +9,54 @@ import { DoughnutGraph } from './components/DoughnutGraph';
 import { BarGraph } from './components/BarGraph';
 
 const DashboardPage: React.FC = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [dashboard, setDashboard] = useState<IDashboard>();
+  const [region, setRegion] = useState<string>();
   const [selected, setSelected] = useState<ITeachingPractices>();
 
   useEffect(() => {
-    DashboardService.getData().then((data) => {
-      setDashboard(data);
-      setSelected(data.teachingPractices[0]);
-      setLoading(false);
-    });
-  }, []);
+    if (!loading) {
+      setLoading(true);
+      DashboardService.getData(region).then((data) => {
+        setDashboard(data);
+        setSelected(data.teachingPractices[0]);
+        setLoading(false);
+      });
+    }
+  }, [region]);
 
   useEffect(() => {
     if (dashboard) {
     }
   }, [dashboard]);
 
-  if (loading || !dashboard || !selected)
+  if (loading || !dashboard || !selected) {
     return (
       <Center>
         <Loader />
       </Center>
     );
+  }
 
   return (
     <VStack mx="auto" minH="100vh" maxW="1200px" position="relative" overflow="scroll" alignItems="flex-start" p="56px">
+      <HStack>
+        <VStack alignItems="start" mb="12px" minW={250}>
+          <Text fontWeight="600">Select region</Text>
+          <Select placeholder="..." onChange={(e) => setRegion(e.target.value)} value={region}>
+            <option value="EASTERN SOUTHERN">EASTERN SOUTHERN</option>
+            <option value="NORTHERN">NORTHERN</option>
+            <option value="NORTH WESTERN">NORTH WESTERN</option>
+            <option value="WESTERN">WESTERN</option>
+          </Select>
+        </VStack>
+        {region && (
+          <VStack alignItems="start" mb="12px" minW={250}>
+            <Text fontWeight="600">Select school</Text>
+            <Select placeholder="..." onChange={(e) => setRegion(e.target.value)} value={region}></Select>
+          </VStack>
+        )}
+      </HStack>
       <HStack w="100%" gap="16px" mb="56px" alignItems="stretch">
         <VStack flex={3} gap="16px" alignItems="stretch">
           <Text color="#111417" fontSize="24px" fontWeight={600}>
