@@ -152,6 +152,7 @@ export interface ITeachingPractices {
 }
 
 export interface IDashboard {
+  schools?: ISchool[];
   teachingPractices: ITeachingPractices[];
   engagement: {
     teachersCoached: number;

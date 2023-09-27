@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, Center, HStack, Select, Text, VStack } from '@chakra-ui/react';
-import { IDashboard, ITeachingPractices } from '@/types';
+import { IDashboard, ISchool, ITeachingPractices } from '@/types';
 import DashboardService from '@/services/dashboard';
 import Loader from '@/components/Base/Loader';
 import { CardValue } from './components/CardValue';
@@ -12,18 +12,29 @@ const DashboardPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [dashboard, setDashboard] = useState<IDashboard>();
   const [region, setRegion] = useState<string>();
+  const [schoolName, setSchoolName] = useState<string>();
+  const [schoolList, setSchoolList] = useState<ISchool[]>([]);
   const [selected, setSelected] = useState<ITeachingPractices>();
 
   useEffect(() => {
     if (!loading) {
       setLoading(true);
-      DashboardService.getData(region).then((data) => {
-        setDashboard(data);
-        setSelected(data.teachingPractices[0]);
+      let schoolId: string | undefined;
+      if (schoolName) {
+        schoolId = schoolList.find((school) => school.name === schoolName)?.id;
+      }
+
+      DashboardService.getData(region, schoolId).then((data) => {
+        const { schools, ...dash } = data;
+        if (schools) {
+          setSchoolList(schools);
+        }
+        setDashboard(dash);
+        setSelected(dash.teachingPractices[0]);
         setLoading(false);
       });
     }
-  }, [region]);
+  }, [region, schoolName]);
 
   useEffect(() => {
     if (dashboard) {
@@ -38,22 +49,32 @@ const DashboardPage: React.FC = () => {
     );
   }
 
+  const handleRegion = (newRegion: string) => {
+    setRegion(newRegion);
+    setSchoolName(undefined);
+  };
+
   return (
     <VStack mx="auto" minH="100vh" maxW="1200px" position="relative" overflow="scroll" alignItems="flex-start" p="56px">
       <HStack>
         <VStack alignItems="start" mb="12px" minW={250}>
           <Text fontWeight="600">Select region</Text>
-          <Select placeholder="..." onChange={(e) => setRegion(e.target.value)} value={region}>
-            <option value="EASTERN SOUTHERN">EASTERN SOUTHERN</option>
+          <Select placeholder="..." onChange={(e) => handleRegion(e.target.value)} value={region}>
             <option value="NORTHERN">NORTHERN</option>
             <option value="NORTH WESTERN">NORTH WESTERN</option>
+            <option value="EASTERN">EASTERN</option>
+            <option value="SOUTHERN">SOUTHERN</option>
             <option value="WESTERN">WESTERN</option>
           </Select>
         </VStack>
         {region && (
           <VStack alignItems="start" mb="12px" minW={250}>
             <Text fontWeight="600">Select school</Text>
-            <Select placeholder="..." onChange={(e) => setRegion(e.target.value)} value={region}></Select>
+            <Select placeholder="..." onChange={(e) => setSchoolName(e.target.value)} value={schoolName}>
+              {schoolList.map((school) => (
+                <option value={school.name}>{school.name}</option>
+              ))}
+            </Select>
           </VStack>
         )}
       </HStack>
