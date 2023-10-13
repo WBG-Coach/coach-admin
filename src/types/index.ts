@@ -163,4 +163,9 @@ export interface IDashboard {
     teacherThatCompletedSecondSession: number;
   };
   targetedImprovementAreas: {};
+  avg: {
+    national: number;
+    regional: number;
+    school: number;
+  };
 }

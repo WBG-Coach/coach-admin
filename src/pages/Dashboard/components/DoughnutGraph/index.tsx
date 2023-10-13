@@ -1,10 +1,11 @@
-import { Center, Text, VStack } from '@chakra-ui/react';
+import { Box, Center, HStack, Text, VStack } from '@chakra-ui/react';
 import { Chart as ChartJS, ChartData, ArcElement, Tooltip, LabelItem } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip);
 
 type Props = {
+  showLegend?: boolean;
   title?: string;
   subTitle?: string;
   label?: string;
@@ -12,9 +13,20 @@ type Props = {
   labels?: string[];
 };
 
-export const DoughnutGraph: React.FC<Props> = ({ values, label, subTitle, title, labels }) => {
+const COLORS = ['#4C9AF7', '#69D6C7', '#297A7A', '#264673', '#D1F0F0', '#C2E0FF'];
+
+export const DoughnutGraph: React.FC<Props> = ({ showLegend, values, label, subTitle, title, labels }) => {
   return (
     <VStack flex={1} justifyContent="center" alignItems="stretch" p="16px" bg="#F2F4F7" borderRadius="16px">
+      {showLegend && (
+        <VStack>
+          {labels?.map((item, index) => (
+            <HStack w="100%">
+              <Box bg={COLORS[index]} w="20px" h="20px" /> <Text>{item}</Text>
+            </HStack>
+          ))}
+        </VStack>
+      )}
       <Center position="relative">
         <Doughnut
           data={{
@@ -22,7 +34,7 @@ export const DoughnutGraph: React.FC<Props> = ({ values, label, subTitle, title,
             datasets: [
               {
                 data: values,
-                backgroundColor: ['#3373CC', '#66CCCC', '#297A7A', '#264673', '#D1F0F0', '#C2E0FF'],
+                backgroundColor: COLORS,
                 borderWidth: 0,
               },
             ],

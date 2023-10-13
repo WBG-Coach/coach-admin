@@ -7,6 +7,7 @@ import { CardValue } from './components/CardValue';
 import { SpeedometerGraph } from './components/SpeedometerGraph';
 import { DoughnutGraph } from './components/DoughnutGraph';
 import { BarGraph } from './components/BarGraph';
+import { HorizontalBar } from './components/HorizontalBar';
 
 const DashboardPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -125,6 +126,7 @@ const DashboardPage: React.FC = () => {
           </Text>
 
           <DoughnutGraph
+            showLegend={true}
             labels={dashboard.teachingPractices.map((item) => item.name)}
             values={dashboard.teachingPractices.map((item) => item.data.teachers)}
           />
@@ -190,7 +192,12 @@ const DashboardPage: React.FC = () => {
             bg="#F2F4F7"
             borderRadius="16px"
             gap="0px"
-          ></VStack>
+          >
+            <HorizontalBar
+              labels={['School rating', 'Regional average', 'National average']}
+              values={[dashboard.avg.school, dashboard.avg.regional, dashboard.avg.national]}
+            />
+          </VStack>
         </VStack>
       </HStack>
     </VStack>
