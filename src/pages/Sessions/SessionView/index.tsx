@@ -71,14 +71,15 @@ const SessionView: React.FC<Props> = ({ session, onClose }) => {
           <Text>{session?.teacher.name}</Text>
           <Divider my="8px" />
 
-          {session?.feedbacks[0] && (
+          {session?.feedback_id && (
             <VStack w="100%" mb="20px" py="16px" borderBottom="1px solid #eee">
               <Text w="100%" mb="16px" fontSize={20} fontWeight="semibold">
                 Feedback annotation
               </Text>
-              <Text w="100%">{session?.feedbacks[0].value}</Text>
+              <Text w="100%">{session?.feedback_id}</Text>
             </VStack>
           )}
+
           {competencies.map((competence, index) => (
             <div>
               <Text fontSize={20} fontWeight="semibold">
