@@ -13,7 +13,7 @@ export const SpeedometerGraph: React.FC<Props> = ({ maxValue, value, label }) =>
     datasets: [
       {
         data: [value, maxValue - value],
-        backgroundColor: ['#3373CC', '#C7CBD1'],
+        backgroundColor: ['#4C9AF7', '#C7CBD1'],
         borderWidth: 0,
         circumference: 270,
         rotation: 225,

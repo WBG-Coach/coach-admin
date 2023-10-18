@@ -1,19 +1,9 @@
-import {
-  Box,
-  Flex,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Tag,
-  Text,
-} from "@chakra-ui/react";
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { ISession } from "@/types";
-import Table from "@/components/Table";
-import Icon from "@/components/Base/Icon";
-import { useTranslation } from "react-i18next";
+import { Box, Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, Tag, Text } from '@chakra-ui/react';
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
+import { ISession } from '@/types';
+import Table from '@/components/Table';
+import Icon from '@/components/Base/Icon';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   sessions: ISession[];
@@ -29,24 +19,24 @@ const SessionList: React.FC<Props> = ({ sessions, handleOpen }) => {
       columns={[
         {
           renderColumn: (item: ISession) => item.school.name,
-          title: "School",
+          title: 'School',
         },
         {
           renderColumn: (item: ISession) => item.coach.name,
-          title: "Coach",
+          title: 'Coach',
         },
         {
           renderColumn: (item: ISession) => item.teacher.name,
-          title: "Teacher",
+          title: 'Teacher',
         },
         {
           renderColumn: (item: ISession) => item.subject,
-          title: "Subject",
+          title: 'Subject',
         },
 
         {
           renderColumn: (item: ISession) =>
-            item.feedbacks.length > 0 ? (
+            item?.feedback_id ? (
               <Tag color="green.700" bg="green.100">
                 Complete
               </Tag>
@@ -55,7 +45,7 @@ const SessionList: React.FC<Props> = ({ sessions, handleOpen }) => {
                 Incomplete
               </Tag>
             ),
-          title: "Feedback",
+          title: 'Feedback',
         },
         {
           renderColumn: (item: ISession) => (
@@ -65,20 +55,16 @@ const SessionList: React.FC<Props> = ({ sessions, handleOpen }) => {
                   <Icon name="ellipsis-v" size={16} />
                 </MenuButton>
                 <MenuList>
-                  <MenuItem
-                    gap="8px"
-                    alignItems="center"
-                    onClick={() => handleOpen(item)}
-                  >
+                  <MenuItem gap="8px" alignItems="center" onClick={() => handleOpen(item)}>
                     <Icon name="eye" />
-                    {t("common.view")}
+                    {t('common.view')}
                   </MenuItem>
                 </MenuList>
               </Menu>
             </Flex>
           ),
-          width: "85px",
-          title: "common.actions",
+          width: '85px',
+          title: 'common.actions',
         },
       ]}
     />

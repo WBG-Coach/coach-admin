@@ -104,10 +104,9 @@ export interface ISession {
   school_id: ISchool['id'];
   teacher_id: ITeacher['id'];
   subject: string;
+  feedback_id?: string;
 
   answers: IAnswer[];
-
-  feedbacks: IFeedback[];
 
   coach: ICoach;
   school: ISchool;
@@ -125,7 +124,7 @@ export interface IFeedback {
   id: string;
   name: string;
   value: string;
-  session_id: ISession['id'];
+  answer_id: IAnswer['id'];
 }
 
 export interface ILogs {

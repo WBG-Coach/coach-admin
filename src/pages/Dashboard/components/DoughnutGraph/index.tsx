@@ -13,7 +13,7 @@ type Props = {
   labels?: string[];
 };
 
-const COLORS = ['#4C9AF7', '#69D6C7', '#297A7A', '#264673', '#D1F0F0', '#C2E0FF'];
+const COLORS = ['#69D6C7', '#4C9AF7', '#6A5CE2', '#A2CF57', '#D96684'];
 
 export const DoughnutGraph: React.FC<Props> = ({ showLegend, values, label, subTitle, title, labels }) => {
   return (
