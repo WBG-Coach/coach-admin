@@ -12,6 +12,8 @@ const enTranslation = {
     settings: 'Settings',
     logout: 'Logout',
     syncs: 'Sync',
+    'coaches-over-time': 'Coach over time',
+    'session-data': 'Session data',
   },
   competence: {
     title: 'Name',

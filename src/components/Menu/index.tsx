@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Props } from './types';
-import { Center, Text, VStack, useOutsideClick, useTheme } from '@chakra-ui/react';
+import { Center, Text, VStack, useOutsideClick } from '@chakra-ui/react';
 import Icon from '../Base/Icon';
 
 const Menu: React.FC<Props<any>> = ({ items, currentItem }) => {

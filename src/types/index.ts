@@ -26,7 +26,9 @@ export interface IUser {
   id: string;
   email: string;
   name: string;
-  role: 'analist' | 'admin';
+  role: 'region-analyst' | 'district-analyst' | 'admin';
+  region?: string;
+  district?: string;
   password: string;
 }
 

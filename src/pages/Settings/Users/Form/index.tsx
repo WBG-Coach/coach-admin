@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Props } from './types';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -10,19 +10,25 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  FormErrorMessage,
   FormLabel,
   Input,
   Select,
+  Spinner,
 } from '@chakra-ui/react';
-import { userRoles } from '@/common/user';
+import { ROLES, userRoles } from '@/common/user';
+import { REGIONS } from '@/common/constants';
+import SchoolService from '@/services/school';
+import Loader from '@/components/Base/Loader';
+import SelectDistrict from '@/components/SelectDistrict';
 
 const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClose }) => {
+  const [role, setRole] = useState<string>();
+  const [region, setRegion] = useState<string>();
   const {
     reset,
     control,
     handleSubmit,
-    formState: { errors, isLoading },
+    formState: { isLoading },
   } = useForm({ defaultValues });
 
   useEffect(() => {
@@ -52,8 +58,6 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
               )}
             />
 
-            <FormErrorMessage>{errors.name && errors.name.type === 'required' && 'Name is required'}</FormErrorMessage>
-
             <FormLabel htmlFor="name" style={{ marginTop: '8px' }}>
               Email
             </FormLabel>
@@ -66,10 +70,6 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
               )}
             />
 
-            <FormErrorMessage>
-              {errors.email && errors.email.type === 'required' && 'Email is required'}
-            </FormErrorMessage>
-
             {defaultValues && !('id' in defaultValues) && (
               <>
                 <FormLabel htmlFor="name" style={{ marginTop: '8px' }}>
@@ -80,24 +80,37 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
                   control={control}
                   name="password"
                   render={({ field, fieldState }) => (
-                    <Input id="password" {...field} value={field.value} isInvalid={!!fieldState.error} />
+                    <Input
+                      id="password"
+                      type="password"
+                      {...field}
+                      value={field.value}
+                      isInvalid={!!fieldState.error}
+                    />
                   )}
                 />
-                <FormErrorMessage>
-                  {errors.password && errors.password.type === 'required' && 'Password is required'}
-                </FormErrorMessage>
               </>
             )}
 
             <FormLabel htmlFor="name" style={{ marginTop: '8px' }}>
               Role
             </FormLabel>
+
             <Controller
               rules={{ required: true }}
               control={control}
               name="role"
               render={({ field, fieldState }) => (
-                <Select id={'role'} {...field} isInvalid={!!fieldState.error}>
+                <Select
+                  id={'role'}
+                  {...field}
+                  isInvalid={!!fieldState.error}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    setRole(e.target.value);
+                  }}
+                >
+                  <option value={undefined}>{''}</option>
                   {userRoles.map((user, index) => (
                     <option key={index} value={user.value}>
                       {user.label}
@@ -107,7 +120,52 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
               )}
             />
 
-            <FormErrorMessage>{errors.role && errors.role.type === 'required' && 'Role is required'}</FormErrorMessage>
+            {role && role !== ROLES.admin && (
+              <>
+                <FormLabel htmlFor="region" style={{ marginTop: '8px' }}>
+                  Region
+                </FormLabel>
+                <Controller
+                  rules={{ required: true }}
+                  control={control}
+                  name="region"
+                  render={({ field, fieldState, formState }) => (
+                    <Select
+                      id={'region'}
+                      {...field}
+                      isInvalid={!!fieldState.error}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        setRegion(e.target.value);
+                      }}
+                    >
+                      <option value={undefined}>{''}</option>
+                      {REGIONS.map((region) => (
+                        <option key={region} value={region}>
+                          {region}
+                        </option>
+                      ))}
+                    </Select>
+                  )}
+                />
+              </>
+            )}
+
+            {role && role === ROLES['district-analyst'] && (
+              <>
+                <FormLabel htmlFor="region" style={{ marginTop: '8px' }}>
+                  District
+                </FormLabel>
+                <Controller
+                  rules={{ required: true }}
+                  control={control}
+                  name="district"
+                  render={({ field, fieldState }) => (
+                    <SelectDistrict role={role} region={region} {...field} isInvalid={!!fieldState.error} />
+                  )}
+                />
+              </>
+            )}
           </DrawerBody>
 
           <DrawerFooter mt="auto">

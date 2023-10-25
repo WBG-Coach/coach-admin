@@ -41,7 +41,7 @@ export const HorizontalBar: React.FC<Props> = ({ labels, values }) => {
     <VStack flex={1} gap="2px">
       {labels.map((label, index) => {
         return (
-          <HStack w="100%" my="0px" justifyContent="flex-start">
+          <HStack key={index} w="100%" my="0px" justifyContent="flex-start">
             <Text fontSize="14px" w="120px" textAlign="right">
               {label}
             </Text>

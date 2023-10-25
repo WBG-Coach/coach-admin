@@ -7,6 +7,8 @@ export const SchoolService = {
   updateSchool: async (school: ISchool): Promise<ISchool> => (await _axios.put('school', school)).data,
   DeleteSchool: async (schoolId: string): Promise<void> => await _axios.delete(`school/${schoolId}`),
   generateQrCode: async (schoolId: string): Promise<string> => (await _axios.get(`school/qrcode/${schoolId}`)).data,
+  findAllDistrictsByRegion: async (region: string): Promise<string[]> =>
+    (await _axios.get(`school/${region}/districts`)).data,
 };
 
 export default SchoolService;

@@ -21,7 +21,7 @@ export const DoughnutGraph: React.FC<Props> = ({ showLegend, values, label, subT
       {showLegend && (
         <VStack>
           {labels?.map((item, index) => (
-            <HStack w="100%">
+            <HStack key={item} w="100%">
               <Box bg={COLORS[index]} w="20px" h="20px" /> <Text>{item}</Text>
             </HStack>
           ))}
@@ -61,9 +61,11 @@ export const DoughnutGraph: React.FC<Props> = ({ showLegend, values, label, subT
           </VStack>
         )}
       </Center>
-      <Text mt="16px" textAlign="center" color="#111417">
-        {label}
-      </Text>
+      {label && (
+        <Text mt="16px" textAlign="center" color="#111417">
+          {label}
+        </Text>
+      )}
     </VStack>
   );
 };
