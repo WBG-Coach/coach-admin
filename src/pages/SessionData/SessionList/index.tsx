@@ -1,70 +1,66 @@
-import { Box, Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, Tag, Text } from '@chakra-ui/react';
-import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
-import { ISession } from '@/types';
 import Table from '@/components/Table';
-import Icon from '@/components/Base/Icon';
-import { useTranslation } from 'react-i18next';
+import { ReactNode } from 'react';
 
-type Props = {
-  sessions: ISession[];
-  handleOpen: (session: ISession) => void;
+export type ISessionData = {
+  id: string;
+  'School Name': string;
+  'Number of Coaches': number;
+  'Number of Feedbacks': number;
+  'Teachers with at least 1 Session': number;
+  'Average Value for Critical Thinking': number;
+  'Effective teaching': number;
+  'Positive behavioral expectations': number;
+  'Supportive learning environment': number;
+  'Time on learning': number;
 };
 
-const SessionList: React.FC<Props> = ({ sessions, handleOpen }) => {
-  const { t } = useTranslation();
+type Props = {
+  sessions: ISessionData[];
+  filters?: ReactNode;
+};
 
+const SessionList: React.FC<Props> = ({ sessions, filters }) => {
   return (
     <Table
       data={sessions}
+      topSession={filters}
       columns={[
         {
-          renderColumn: (item: ISession) => item.school.name,
+          renderColumn: (item: ISessionData) => item['School Name'],
           title: 'School',
+          width: '350px',
         },
         {
-          renderColumn: (item: ISession) => item.coach.name,
-          title: 'Coach',
+          renderColumn: (item: ISessionData) => item['Number of Coaches'],
+          title: 'Number of coaches',
         },
         {
-          renderColumn: (item: ISession) => item.teacher.name,
-          title: 'Teacher',
+          renderColumn: (item: ISessionData) => item['Teachers with at least 1 Session'],
+          title: 'Number of teachers coached',
         },
         {
-          renderColumn: (item: ISession) => item.subject,
-          title: 'Subject',
-        },
-
-        {
-          renderColumn: (item: ISession) =>
-            item?.feedback_id ? (
-              <Tag color="green.700" bg="green.100">
-                Complete
-              </Tag>
-            ) : (
-              <Tag color="red.700" bg="red.100">
-                Incomplete
-              </Tag>
-            ),
-          title: 'Feedback',
+          renderColumn: (item: ISessionData) => item['Number of Feedbacks'],
+          title: 'Feedback sessions',
         },
         {
-          renderColumn: (item: ISession) => (
-            <Flex justifyContent="center">
-              <Menu>
-                <MenuButton p="8px">
-                  <Icon name="ellipsis-v" size={16} />
-                </MenuButton>
-                <MenuList>
-                  <MenuItem gap="8px" alignItems="center" onClick={() => handleOpen(item)}>
-                    <Icon name="eye" />
-                    {t('common.view')}
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            </Flex>
-          ),
-          width: '85px',
-          title: 'common.actions',
+          renderColumn: (item: ISessionData) => Number(item['Supportive learning environment'] || 0)?.toFixed(1),
+          title: 'Supportive Learning Environment',
+        },
+        {
+          renderColumn: (item: ISessionData) => Number(item['Average Value for Critical Thinking'] || 0)?.toFixed(1),
+          title: 'Critical Thinking',
+        },
+        {
+          renderColumn: (item: ISessionData) => Number(item['Effective teaching']) || (0)?.toFixed(1),
+          title: 'Effective Teaching',
+        },
+        {
+          renderColumn: (item: ISessionData) => Number(item['Time on learning'] || 0)?.toFixed(1),
+          title: 'Time on Learning',
+        },
+        {
+          renderColumn: (item: ISessionData) => Number(item['Positive behavioral expectations'] || 0)?.toFixed(1),
+          title: 'Positive Behavioral Expectations',
         },
       ]}
     />

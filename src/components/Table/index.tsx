@@ -15,11 +15,12 @@ type Props = {
   data: any[];
   columns: Column[];
   filters?: { label: string; prop: string }[];
+  topSession?: React.ReactNode;
 };
 
 const SIZE_OPTIONS = [5, 10, 15, 20];
 
-const Table: React.FC<Props> = ({ columns, data, filters }) => {
+const Table: React.FC<Props> = ({ columns, data, filters, topSession }) => {
   const [page, setPage] = useState(0);
   const { t } = useTranslation();
   const [filter, setFilter] = useState<any>({});
@@ -58,6 +59,7 @@ const Table: React.FC<Props> = ({ columns, data, filters }) => {
           ))}
         </HStack>
       )}
+      {topSession}
 
       <VStack
         w="100%"
@@ -71,8 +73,8 @@ const Table: React.FC<Props> = ({ columns, data, filters }) => {
               mt="0"
               px="12px"
               py="16px"
-              fontWeight={700}
-              fontSize={'16px'}
+              fontWeight={600}
+              fontSize={'14px'}
               {...(column?.width ? { width: column.width } : { flex: 1 })}
             >
               {t(column?.title)}
