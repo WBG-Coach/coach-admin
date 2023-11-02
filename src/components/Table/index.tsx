@@ -1,4 +1,4 @@
-import { Box, Center, HStack, Input, Select, Text, VStack } from '@chakra-ui/react';
+import { Box, Center, HStack, IconButton, Input, Select, Spinner, Text, VStack } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import Icon from '../Base/Icon';
@@ -7,6 +7,8 @@ import { ChangeEvent, useEffect, useState } from 'react';
 
 type Column = {
   renderColumn: (item: any) => React.ReactNode;
+  getOrderProp?: (item: any) => any;
+  isNumber?: boolean;
   title: string;
   width?: string;
 };
@@ -23,9 +25,11 @@ const SIZE_OPTIONS = [5, 10, 15, 20];
 const Table: React.FC<Props> = ({ columns, data, filters, topSession }) => {
   const [page, setPage] = useState(0);
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
   const [filter, setFilter] = useState<any>({});
   const [filteredData, setFilteredData] = useState(data);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [sortedBy, setSortedBy] = useState({ title: '', getProp: (item: any) => item, order: '', isNumber: false });
 
   const handleFilterValue = (e: ChangeEvent<HTMLInputElement>) => {
     setFilter({ ...filter, [e.target.name]: e.target.value.toUpperCase() });
@@ -46,6 +50,25 @@ const Table: React.FC<Props> = ({ columns, data, filters, topSession }) => {
       );
     }
   }, [data, filter]);
+
+  useEffect(() => {
+    if (sortedBy.title && filteredData) {
+      setPage(0);
+      setFilteredData(
+        filteredData.sort((a, b) => {
+          const propA = sortedBy.getProp(a);
+          const propB = sortedBy.getProp(b);
+          if (sortedBy.order === 'ASC') {
+            if (sortedBy.isNumber) return parseInt(propA) - parseInt(propB);
+            return `${propA}`.localeCompare(`${propB}`);
+          }
+          if (sortedBy.isNumber) return parseInt(propB) - parseInt(propA);
+          return `${propB}`.localeCompare(`${propA}`);
+        }),
+      );
+      setIsLoading(false);
+    }
+  }, [sortedBy, filteredData]);
 
   return (
     <VStack w="100%" borderRadius="16px" overflow="hidden" border="1px solid #DCE0E5">
@@ -69,18 +92,65 @@ const Table: React.FC<Props> = ({ columns, data, filters, topSession }) => {
       >
         <HStack mt="0" w="100%" bg="#F2F4F7">
           {columns.map((column) => (
-            <Box
-              mt="0"
-              px="12px"
-              py="16px"
-              fontWeight={600}
-              fontSize={'14px'}
-              {...(column?.width ? { width: column.width } : { flex: 1 })}
-            >
-              {t(column?.title)}
-            </Box>
+            <HStack w={column.width}>
+              <Box
+                mt="0"
+                px="12px"
+                py="16px"
+                flex={1}
+                fontWeight={600}
+                fontSize={'14px'}
+                {...(column?.width ? { width: column.width } : { flex: 1 })}
+              >
+                {t(column?.title)}
+              </Box>
+              {column.getOrderProp && (
+                <VStack gap={0} mr="8px">
+                  <IconButton
+                    mb={0}
+                    size="xs"
+                    aria-label="test"
+                    bg={sortedBy.title === column.title && sortedBy.order === 'DESC' ? '#3373CC' : 'gray.200'}
+                    icon={<Icon name="angle-up" size={16} color="#000" />}
+                    onClick={() => {
+                      if (column.getOrderProp && (sortedBy.title !== column.title || sortedBy.order !== 'DESC')) {
+                        setIsLoading(true);
+                        setSortedBy({
+                          order: 'DESC',
+                          getProp: column.getOrderProp,
+                          title: column.title,
+                          isNumber: !!column.isNumber,
+                        });
+                      }
+                    }}
+                  />
+
+                  <IconButton
+                    mt={0}
+                    size="xs"
+                    aria-label="test"
+                    bg={sortedBy.title === column.title && sortedBy.order === 'ASC' ? '#3373CC' : 'gray.200'}
+                    icon={<Icon name="angle-down" size={16} color="#000" />}
+                    onClick={() => {
+                      console.log(1);
+                      if (column.getOrderProp && (sortedBy.title !== column.title || sortedBy.order !== 'ASC')) {
+                        console.log(2);
+                        setIsLoading(true);
+                        setSortedBy({
+                          order: 'ASC',
+                          getProp: column.getOrderProp,
+                          title: column.title,
+                          isNumber: !!column.isNumber,
+                        });
+                      }
+                    }}
+                  />
+                </VStack>
+              )}
+            </HStack>
           ))}
         </HStack>
+
         <VStack w="100%">
           {filteredData.slice(page * itemsPerPage, page * itemsPerPage + itemsPerPage).map((item) => (
             <HStack w="100%">

@@ -4,67 +4,84 @@ import { ISession } from '@/types';
 import Table from '@/components/Table';
 import Icon from '@/components/Base/Icon';
 import { useTranslation } from 'react-i18next';
+import { ReactNode } from 'react';
 
+export type ISessionOverTime = {
+  id: string;
+  'School Name': string;
+  'Number of Coaches': number;
+  'Number of Feedbacks': number;
+  'Teachers with at least 1 Session': number;
+  'Last 30 days': number;
+  'Last 30 and 60 days': number;
+  'Last 60 and 90 days': number;
+  'More than 90 days ago': number;
+};
 type Props = {
-  sessions: ISession[];
-  handleOpen: (session: ISession) => void;
+  sessions: ISessionOverTime[];
+  filters?: ReactNode;
 };
 
-const SessionList: React.FC<Props> = ({ sessions, handleOpen }) => {
-  const { t } = useTranslation();
-
+const SessionList: React.FC<Props> = ({ sessions, filters }) => {
   return (
     <Table
       data={sessions}
+      topSession={filters}
       columns={[
         {
-          renderColumn: (item: ISession) => item.school.name,
+          renderColumn: (item: ISessionOverTime) => item['School Name'],
+          getOrderProp: (item: ISessionOverTime) => item['School Name'],
           title: 'School',
+          width: '30%',
         },
         {
-          renderColumn: (item: ISession) => item.coach.name,
-          title: 'Coach',
+          renderColumn: (item: ISessionOverTime) => item['Number of Coaches'],
+          getOrderProp: (item: ISessionOverTime) => item['Number of Coaches'],
+          title: 'Number of coaches',
+          isNumber: true,
+          width: '10%',
         },
         {
-          renderColumn: (item: ISession) => item.teacher.name,
-          title: 'Teacher',
+          renderColumn: (item: ISessionOverTime) => item['Teachers with at least 1 Session'],
+          getOrderProp: (item: ISessionOverTime) => item['Teachers with at least 1 Session'],
+          title: 'Number of teachers coached',
+          isNumber: true,
+          width: '10%',
         },
         {
-          renderColumn: (item: ISession) => item.subject,
-          title: 'Subject',
-        },
-
-        {
-          renderColumn: (item: ISession) =>
-            item?.feedback_id ? (
-              <Tag color="green.700" bg="green.100">
-                Complete
-              </Tag>
-            ) : (
-              <Tag color="red.700" bg="red.100">
-                Incomplete
-              </Tag>
-            ),
-          title: 'Feedback',
+          renderColumn: (item: ISessionOverTime) => item['Number of Feedbacks'],
+          getOrderProp: (item: ISessionOverTime) => item['Number of Feedbacks'],
+          title: 'Feedback sessions',
+          isNumber: true,
+          width: '10%',
         },
         {
-          renderColumn: (item: ISession) => (
-            <Flex justifyContent="center">
-              <Menu>
-                <MenuButton p="8px">
-                  <Icon name="ellipsis-v" size={16} />
-                </MenuButton>
-                <MenuList>
-                  <MenuItem gap="8px" alignItems="center" onClick={() => handleOpen(item)}>
-                    <Icon name="eye" />
-                    {t('common.view')}
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            </Flex>
-          ),
-          width: '85px',
-          title: 'common.actions',
+          renderColumn: (item: ISessionOverTime) => item['Last 30 days'],
+          getOrderProp: (item: ISessionOverTime) => item['Last 30 days'],
+          title: 'Teachers coached (last 30 days)',
+          isNumber: true,
+          width: '10%',
+        },
+        {
+          renderColumn: (item: ISessionOverTime) => item['Last 30 and 60 days'],
+          getOrderProp: (item: ISessionOverTime) => item['Last 30 and 60 days'],
+          title: 'Teachers coached (30-60 days)',
+          isNumber: true,
+          width: '10%',
+        },
+        {
+          renderColumn: (item: ISessionOverTime) => item['Last 60 and 90 days'],
+          getOrderProp: (item: ISessionOverTime) => item['Last 60 and 90 days'],
+          title: 'Teachers coached (60-90 days)',
+          isNumber: true,
+          width: '10%',
+        },
+        {
+          renderColumn: (item: ISessionOverTime) => item['More than 90 days ago'],
+          getOrderProp: (item: ISessionOverTime) => item['More than 90 days ago'],
+          title: 'Teachers coached (90+ days)',
+          isNumber: true,
+          width: '150px',
         },
       ]}
     />

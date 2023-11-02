@@ -1,7 +1,7 @@
 import Loader from '@/components/Base/Loader';
 import SessionService from '@/services/session';
 import { ISession } from '@/types';
-import { Box, Center, FormLabel, HStack, Select, VStack } from '@chakra-ui/react';
+import { Box, Center, FormLabel, HStack, Select, Switch, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import SessionView from './SessionView';
 import SessionList, { ISessionData } from './SessionList';
@@ -18,15 +18,16 @@ const SessionDataPage: React.FC = () => {
   const [period, setPeriod] = useState<string>();
   const [region, setRegion] = useState<string>();
   const [schoolId, setSchoolId] = useState<string>();
+  const [showOnlyWithValues, setShowOnlyWithValues] = useState(false);
 
   useEffect(() => {
-    loadSessions(period, region, schoolId);
-  }, [period, region, schoolId]);
+    loadSessions(period, region, schoolId, showOnlyWithValues);
+  }, [region, schoolId, showOnlyWithValues]);
 
-  const loadSessions = async (period?: string, region?: string, schoolId?: string) => {
+  const loadSessions = async (period?: string, region?: string, schoolId?: string, showOnlyWithValues?: boolean) => {
     if (!isLoadingList) {
       setIsLoadingList(true);
-      const data = await SessionService.getSessionData(period, region, schoolId);
+      const data = await SessionService.getSessionData(period, region, schoolId, showOnlyWithValues);
       setSessionData(data);
       setIsLoadingList(false);
     }
@@ -77,6 +78,17 @@ const SessionDataPage: React.FC = () => {
                     <option value={item.id}>{item['School Name']}</option>
                   ))}
                 </Select>
+              </VStack>
+
+              <VStack alignItems="start" ml="12px">
+                <FormLabel htmlFor="onlyWithValues" mb="0" cursor="pointer">
+                  Only schools with sessions?
+                </FormLabel>
+                <Switch
+                  id="onlyWithValues"
+                  isChecked={showOnlyWithValues}
+                  onChange={(e) => setShowOnlyWithValues(Boolean(e.target.checked))}
+                />
               </VStack>
             </HStack>
           }

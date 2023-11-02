@@ -27,40 +27,65 @@ const SessionList: React.FC<Props> = ({ sessions, filters }) => {
       columns={[
         {
           renderColumn: (item: ISessionData) => item['School Name'],
+          getOrderProp: (item: ISessionData) => item['School Name'],
           title: 'School',
-          width: '350px',
+          width: '30%',
         },
         {
           renderColumn: (item: ISessionData) => item['Number of Coaches'],
+          getOrderProp: (item: ISessionData) => item['Number of Coaches'],
           title: 'Number of coaches',
+          isNumber: true,
+          width: '10%',
         },
         {
           renderColumn: (item: ISessionData) => item['Teachers with at least 1 Session'],
+          getOrderProp: (item: ISessionData) => item['Teachers with at least 1 Session'],
           title: 'Number of teachers coached',
+          isNumber: true,
+          width: '10%',
         },
         {
           renderColumn: (item: ISessionData) => item['Number of Feedbacks'],
+          getOrderProp: (item: ISessionData) => item['Number of Feedbacks'],
           title: 'Feedback sessions',
+          isNumber: true,
+          width: '10%',
         },
         {
           renderColumn: (item: ISessionData) => Number(item['Supportive learning environment'] || 0)?.toFixed(1),
+          getOrderProp: (item: ISessionData) => Number(item['Supportive learning environment'] || 0)?.toFixed(1),
           title: 'Supportive Learning Environment',
+          isNumber: true,
+          width: '10%',
         },
         {
           renderColumn: (item: ISessionData) => Number(item['Average Value for Critical Thinking'] || 0)?.toFixed(1),
+          getOrderProp: (item: ISessionData) => Number(item['Average Value for Critical Thinking'] || 0)?.toFixed(1),
           title: 'Critical Thinking',
+          isNumber: true,
+          width: '10%',
         },
         {
-          renderColumn: (item: ISessionData) => Number(item['Effective teaching']) || (0)?.toFixed(1),
+          renderColumn: (item: ISessionData) => Number(item['Effective teaching'] || 0)?.toFixed(1),
+          getOrderProp: (item: ISessionData) => Number(item['Effective teaching'] || 0)?.toFixed(1),
           title: 'Effective Teaching',
+          isNumber: true,
+          width: '10%',
         },
         {
           renderColumn: (item: ISessionData) => Number(item['Time on learning'] || 0)?.toFixed(1),
+          getOrderProp: (item: ISessionData) => Number(item['Time on learning'] || 0)?.toFixed(1),
           title: 'Time on Learning',
+          isNumber: true,
+          width: '10%',
         },
         {
           renderColumn: (item: ISessionData) => Number(item['Positive behavioral expectations'] || 0)?.toFixed(1),
+          getOrderProp: (item: ISessionData) => Number(item['Positive behavioral expectations'] || 0)?.toFixed(1),
           title: 'Positive Behavioral Expectations',
+          isNumber: true,
+          width: '10%',
         },
       ]}
     />
