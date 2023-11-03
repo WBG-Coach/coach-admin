@@ -29,7 +29,16 @@ const SessionsPage: React.FC = () => {
   const formatToSimpleJson = (sessions: ISession[]): any[] => {
     return sessions.map((session) => ({
       ...session,
+      school_name: session.school.name,
+      school_emis_number: session.school.emis_number,
       coach_name: session.coach.name,
+      coach_surname: session.coach.surname,
+      teacher_name: session.teacher.name,
+      teacher_surname: session.teacher.surname,
+      teacher_subject: session.teacher.subject,
+      teacher_birthdate: session.teacher.birthdate,
+      teacher_emis_number: session.teacher.emis_number,
+      ...session.answers.reduce((acc, item) => ({ ...acc, [`answer_question_${item.question_id}`]: item.value }), {}),
     }));
   };
 

@@ -1,18 +1,7 @@
 import Loader from '@/components/Base/Loader';
 import SessionService from '@/services/session';
 import { ISession } from '@/types';
-import {
-  Box,
-  Center,
-  Checkbox,
-  CheckboxIcon,
-  FormControl,
-  FormLabel,
-  HStack,
-  Select,
-  Switch,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Center, FormLabel, HStack, Select, Switch, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import SessionView from './SessionView';
 import SessionList, { ISessionOverTime } from './SessionList';
