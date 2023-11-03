@@ -91,7 +91,7 @@ const CoachOverTimePage: React.FC = () => {
                 <Switch
                   id="onlyWithValues"
                   isChecked={!showOnlyWithValues}
-                  onChange={(e) => setShowOnlyWithValues(Boolean(e.target.checked))}
+                  onChange={(e) => setShowOnlyWithValues(!Boolean(e.target.checked))}
                 />
               </VStack>
             </HStack>
