@@ -18,7 +18,7 @@ const SessionDataPage: React.FC = () => {
   const [period, setPeriod] = useState<string>();
   const [region, setRegion] = useState<string>();
   const [schoolId, setSchoolId] = useState<string>();
-  const [showOnlyWithValues, setShowOnlyWithValues] = useState(false);
+  const [showOnlyWithValues, setShowOnlyWithValues] = useState(true);
 
   useEffect(() => {
     loadSessions(period, region, schoolId, showOnlyWithValues);
@@ -82,11 +82,11 @@ const SessionDataPage: React.FC = () => {
 
               <VStack alignItems="start" ml="12px">
                 <FormLabel htmlFor="onlyWithValues" mb="0" cursor="pointer">
-                  Only schools with sessions?
+                  Include schools with no data
                 </FormLabel>
                 <Switch
                   id="onlyWithValues"
-                  isChecked={showOnlyWithValues}
+                  isChecked={!showOnlyWithValues}
                   onChange={(e) => setShowOnlyWithValues(Boolean(e.target.checked))}
                 />
               </VStack>

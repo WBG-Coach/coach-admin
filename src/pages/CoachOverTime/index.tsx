@@ -26,7 +26,7 @@ const CoachOverTimePage: React.FC = () => {
   const [sessionOverTime, setSessionOverTime] = useState<ISessionOverTime[]>([]);
   const [isLoadingList, setIsLoadingList] = useState(false);
   const [sessionToView, setSessionToView] = useState<ISession>();
-  const [showOnlyWithValues, setShowOnlyWithValues] = useState(false);
+  const [showOnlyWithValues, setShowOnlyWithValues] = useState(true);
   const [region, setRegion] = useState<string>();
   const [schoolId, setSchoolId] = useState<string>();
 
@@ -86,11 +86,11 @@ const CoachOverTimePage: React.FC = () => {
 
               <VStack alignItems="start" ml="12px">
                 <FormLabel htmlFor="onlyWithValues" mb="0" cursor="pointer">
-                  Only schools with sessions?
+                  Include schools with no data
                 </FormLabel>
                 <Switch
                   id="onlyWithValues"
-                  isChecked={showOnlyWithValues}
+                  isChecked={!showOnlyWithValues}
                   onChange={(e) => setShowOnlyWithValues(Boolean(e.target.checked))}
                 />
               </VStack>
