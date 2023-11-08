@@ -1,4 +1,4 @@
-import { Box, HStack } from '@chakra-ui/react';
+import { Box, Flex, HStack, useBreakpointValue } from '@chakra-ui/react';
 import { Outlet, Navigate, useNavigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,14 +13,15 @@ export const ProtectedLayout = () => {
     if (!user) navigate('/login');
   }, [user, navigate]);
 
+  const flexDir = useBreakpointValue({ base: 'column', md: 'row' }) as 'column' | 'row';
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
   return (
-    <HStack w="100%">
-      <Box w="240px">
-        <Navbar />
-      </Box>
-      <Box maxH="100vh" w="100%" overflow="scroll">
+    <Flex w="100%" flexDir={flexDir}>
+      <Navbar />
+      <Box maxH="100vh" w="100%" overflow="scroll" mt={isMobile ? '100px' : '0'}>
         <Outlet />
       </Box>
-    </HStack>
+    </Flex>
   );
 };

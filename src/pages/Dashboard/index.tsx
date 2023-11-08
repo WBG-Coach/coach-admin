@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Center, HStack, Select, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, HStack, Select, Spinner, Text, VStack, useBreakpointValue } from '@chakra-ui/react';
 import { IDashboard, ISchool, ITeachingPractices } from '@/types';
 import DashboardService from '@/services/dashboard';
 import Loader from '@/components/Base/Loader';
@@ -23,6 +23,7 @@ const DashboardPage: React.FC = () => {
   const [schoolName, setSchoolName] = useState<string>();
   const [schoolList, setSchoolList] = useState<ISchool[]>([]);
   const [selected, setSelected] = useState<ITeachingPractices>();
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   useEffect(() => {
     if (!loading) {
@@ -58,8 +59,8 @@ const DashboardPage: React.FC = () => {
 
   return (
     <VStack mx="auto" minH="100vh" maxW="1200px" position="relative" overflow="scroll" alignItems="flex-start" p="56px">
-      <HStack>
-        <VStack alignItems="start" mb="12px" minW={250}>
+      <Flex flexDir={isMobile ? 'column' : 'row'} w="full">
+        <VStack alignItems="start" mb="12px" mr="12px" minW={250}>
           <Text fontWeight="600">Select region</Text>
           {user?.role === ROLES.admin ? (
             <Select placeholder="..." onChange={(e) => handleRegion(e.target.value)} value={region}>
@@ -74,7 +75,7 @@ const DashboardPage: React.FC = () => {
           )}
         </VStack>
 
-        <VStack alignItems="start" mb="12px" minW={250}>
+        <VStack alignItems="start" mb="12px" mr="12px" minW={250}>
           <Text fontWeight="600">Select district</Text>
           {user?.role === ROLES.admin || user?.role === ROLES['region-analyst'] ? (
             <SelectDistrict
@@ -88,7 +89,7 @@ const DashboardPage: React.FC = () => {
           )}
         </VStack>
 
-        <VStack alignItems="start" mb="12px" minW={250}>
+        <VStack alignItems="start" mb="12px" mr="12px" minW={250}>
           <Text fontWeight="600">Select school</Text>
           {loading ? (
             <Spinner />
@@ -103,7 +104,7 @@ const DashboardPage: React.FC = () => {
             </Select>
           )}
         </VStack>
-      </HStack>
+      </Flex>
 
       {loading || !dashboard || !selected ? (
         <Center w={'100%'} mt="80px">
@@ -111,7 +112,7 @@ const DashboardPage: React.FC = () => {
         </Center>
       ) : (
         <>
-          <HStack w="100%" gap="16px" mb="56px" alignItems="stretch">
+          <Flex flexDir={isMobile ? 'column' : 'row'} w="full" gap="16px" mb="56px" alignItems="stretch">
             <VStack flex={3} gap="16px" alignItems="stretch">
               <Text color="#111417" fontSize="24px" fontWeight={600}>
                 Engagement
@@ -164,36 +165,38 @@ const DashboardPage: React.FC = () => {
                 values={dashboard.teachingPractices.map((item) => item.data.teachers)}
               />
             </VStack>
-          </HStack>
+          </Flex>
 
           <Text mb="8px" color="#111417" fontWeight={500} fontSize={'16px'}>
             Select Teaching Practices to show
           </Text>
 
-          <HStack mb="56px">
-            {dashboard.teachingPractices.map((item) => (
-              <Button
-                py="8px"
-                px="12px"
-                key={item.name}
-                fontWeight={400}
-                fontSize={'16px'}
-                borderRadius="full"
-                border="1px solid #DCE0E5"
-                onClick={() => setSelected(item)}
-                bg={selected.name === item.name ? '#C2E0FF' : '#ffffff'}
-                color={selected.name === item.name ? '#264673' : '#111417'}
-              >
-                {item.name}
-              </Button>
-            ))}
-          </HStack>
+          <Box maxW="full" overflow="scroll">
+            <HStack mb="56px" w="1200px">
+              {dashboard.teachingPractices.map((item) => (
+                <Button
+                  py="8px"
+                  px="12px"
+                  key={item.name}
+                  fontWeight={400}
+                  fontSize={'16px'}
+                  borderRadius="full"
+                  border="1px solid #DCE0E5"
+                  onClick={() => setSelected(item)}
+                  bg={selected.name === item.name ? '#C2E0FF' : '#ffffff'}
+                  color={selected.name === item.name ? '#264673' : '#111417'}
+                >
+                  {item.name}
+                </Button>
+              ))}
+            </HStack>
+          </Box>
 
           <Text color="#111417" fontSize="24px" fontWeight={600}>
             {selected.name}
           </Text>
 
-          <HStack w="100%" mt="24px" alignItems="stretch">
+          <Flex flexDir={isMobile ? 'column' : 'row'} w="full" mt="24px" alignItems="stretch">
             <BarGraph
               labels={['Needs work', 'Keep working', 'Needs attention', 'Almost there', 'Doing great']}
               values={[
@@ -205,7 +208,7 @@ const DashboardPage: React.FC = () => {
               ]}
             />
 
-            <VStack flex={3} alignItems="stretch">
+            <VStack mt={isMobile ? 4 : 0} flex={3} alignItems="stretch">
               <HStack alignItems="stretch">
                 <CardValue
                   label={'Teachers showing improvement or mastery'}
@@ -236,7 +239,7 @@ const DashboardPage: React.FC = () => {
                 />
               </VStack>
             </VStack>
-          </HStack>
+          </Flex>
         </>
       )}
     </VStack>
