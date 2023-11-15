@@ -33,5 +33,5 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          source: dist/*
+          source: "dist/index.html,dist/assets"
           target: /usr/share/nginx/html/sl/admin/
