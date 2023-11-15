@@ -13,7 +13,7 @@ import { BrowserRouter } from "react-router-dom";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ChakraProvider theme={lightTheme}>
-      <BrowserRouter>
+      <BrowserRouter basename="/sl/admin">
         <UserContextProvider>
           <ToastContainer
             position="top-center"
