@@ -27,7 +27,7 @@ export const Router = () => {
             <Route path="/" element={<Login />} />
           </>
         ) : (
-          <Route path="/" element={<ProtectedLayout />}>
+          <Route path="/sl/admin" element={<ProtectedLayout />}>
             <Route index element={<DashboardPage />} />
             <Route path="teaching-practices" element={<CompetenciesPage />} />
             <Route path="coaching-sessions" element={<SessionsPage />} />
