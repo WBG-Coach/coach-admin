@@ -26,7 +26,7 @@ const UserCard: React.FC<Props> = ({ name, email, logout }) => {
   }, [name]);
 
   const handleSettings = () => {
-    navigate("/settings");
+    navigate("/sl/admin/settings");
   };
 
   return (
