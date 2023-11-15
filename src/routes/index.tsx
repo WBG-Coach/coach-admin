@@ -24,10 +24,10 @@ export const Router = () => {
       <Routes location={location} key={location.pathname}>
         {!user ? (
           <>
-            <Route path="/" element={<Login />} />
+            <Route path="/sl/admin" element={<Login />} />
           </>
         ) : (
-          <Route path="/" element={<ProtectedLayout />}>
+          <Route path="/sl/admin" element={<ProtectedLayout />}>
             <Route index element={<DashboardPage />} />
             <Route path="teaching-practices" element={<CompetenciesPage />} />
             <Route path="coaching-sessions" element={<SessionsPage />} />
@@ -41,7 +41,7 @@ export const Router = () => {
             <Route path="syncs" element={<SyncsPage />} />
           </Route>
         )}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/sl/admin" replace />} />
       </Routes>
     </AnimatePresence>
   );

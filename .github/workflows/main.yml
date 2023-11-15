@@ -9,15 +9,30 @@ jobs:
   build:
     name: Deploy to server
     runs-on: ubuntu-latest
+    env:
+      VITE_API_URL: https://coachdigital.org/sl/api/
+      BASE_URL: /sl/admin/
     steps:
-      - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@v0.1.8
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v3
+
+      - name: 🛠️ Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: 🛠️ Install dependencies
+        run: npm install
+    
+      - name: 🚀 Build
+        run: npm run build
+
+      - name: 🕵🏻 Copy file via ssh key
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          script: |
-            cd containers/coach-admin-sl
-            git pull
-            sudo docker build -t coach-admin-sl .
-            sudo docker-compose up -d
+          source: "dist"
+          target: "/usr/share/nginx/html/sl/admin"
+          strip_components: 1
