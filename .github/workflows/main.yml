@@ -33,5 +33,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          source: "dist/index.html,dist/assets"
+          source: "dist"
           target: "/usr/share/nginx/html/sl/admin"
+          strip_components: 1
