@@ -58,7 +58,7 @@ const CompetenciesPage: React.FC = () => {
       <HeaderPage
         subtitle={t('Navbar.questionnaire')}
         title={t('Navbar.teaching-practices')}
-        newButtonValue={t('competence.new-competence')}
+        newButtonValue={t('teacher-practices.new')}
         onClickNew={() => setNewCompetence(true)}
         onClickDownload={() =>
           handleDownloadJSON(competencies, t('Navbar.teaching-practices').toLowerCase().replace(' ', '-'))
