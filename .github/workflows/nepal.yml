@@ -1,4 +1,4 @@
-name: Deploy
+name: Nepal - Deploy
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Deploy to server
+    name: Deploy to Nepal server
     runs-on: ubuntu-latest
     env:
       VITE_API_URL: https://coachdigital.org/np/api/
