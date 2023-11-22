@@ -54,7 +54,7 @@ const CoachOverTimePage: React.FC = () => {
           filters={
             <HStack w="100%" minH={'40px'} mb="0" bg="#F2F4F7" p="16px">
               <VStack alignItems="start">
-                <FormLabel htmlFor="region">Region</FormLabel>
+                <FormLabel htmlFor="region">{t('coach-over-time.filters.region')}</FormLabel>
                 <Select id="region" value={region} onChange={(e) => setRegion(e.target.value)} bg="#fff">
                   <option value={''}>All regions</option>
                   {REGIONS.map((item) => (
@@ -64,7 +64,7 @@ const CoachOverTimePage: React.FC = () => {
               </VStack>
 
               <VStack alignItems="start" ml="12px">
-                <FormLabel htmlFor="schoolId">School</FormLabel>
+                <FormLabel htmlFor="schoolId">{t('coach-over-time.filters.school')}</FormLabel>
                 <Select id="schoolId" value={schoolId} onChange={(e) => setSchoolId(e.target.value)} bg="#fff">
                   <option value={''}>All schools</option>
                   {sessionOverTime.map((item) => (
@@ -75,7 +75,7 @@ const CoachOverTimePage: React.FC = () => {
 
               <VStack alignItems="start" ml="12px">
                 <FormLabel htmlFor="onlyWithValues" mb="0" cursor="pointer">
-                  Include schools with no data
+                  {t('coach-over-time.filters.with-no-data')}
                 </FormLabel>
                 <Switch
                   id="onlyWithValues"

@@ -27,7 +27,7 @@ const HeaderPage: React.FC<Props> = ({ title, subtitle, newButtonValue, onClickN
       <HStack>
         {onClickDownload && (
           <Button variant="solid" colorScheme="blue" onClick={onClickDownload} gap="8px">
-            {t('general.download-data')}
+            {t('common.download')}
           </Button>
         )}
 

@@ -48,20 +48,23 @@ const SchoolList: React.FC<Props> = ({ schools, handleDelete, handleEdit }) => {
   return (
     <>
       <Table
-        filters={[{ label: 'School name', prop: 'name' }]}
+        filters={[{ label: t('school.table.name'), prop: 'name' }]}
         data={schools}
         columns={[
           {
             renderColumn: (item: ISchool) => item.name,
-            title: 'Name',
+            title: t('school.table.name'),
+            width: '30%',
           },
           {
             renderColumn: (item: ISchool) => item.coachSchools?.length || '0',
-            title: 'Coaches count',
+            title: t('school.table.coaches-count'),
+            width: '30%',
           },
           {
             renderColumn: (item: ISchool) => item.teachers?.length || '0',
-            title: 'Teachers count',
+            title: t('school.table.teachers-count'),
+            width: '30%',
           },
           {
             renderColumn: (item: ISchool) => (
@@ -87,7 +90,7 @@ const SchoolList: React.FC<Props> = ({ schools, handleDelete, handleEdit }) => {
                 </Menu>
               </Flex>
             ),
-            width: '85px',
+            width: '10%',
             title: 'common.actions',
           },
         ]}

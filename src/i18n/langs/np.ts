@@ -25,6 +25,11 @@ const npTranslation = {
     schools: 'विद्यालयहरू',
   },
   dashboard: {
+    filters: {
+      region: 'क्षेत्र चयन गर्नुहोस्',
+      district: 'जिल्ला चयन गर्नुहोस्',
+      school: 'विद्यालय चयन गर्नुहोस्',
+    },
     engagement: {
       title: 'संलग्नता',
       'coaching-sessions': 'कोचिङ सत्रहरू',
@@ -38,8 +43,20 @@ const npTranslation = {
       title: 'लक्षित सुधार क्षेत्रहरू',
       description: 'शिक्षण अभ्यासहरू जसको लागि शिक्षक र प्रशिक्षकहरू कोचिङ सत्रहरू बीचमा काम गर्न सहमत भए',
     },
+    'needs-work': 'काम चाहिन्छ',
+    'keep-working': 'काम गर्दै गर्नुहोस्',
+    'needs-attention': 'ध्यान चाहिन्छ',
+    'almost-there': 'लगभग त्यहाँ',
+    'doing-great': 'राम्रो गर्दै हुनुहुन्छ',
+    'school-rating': 'विद्यालय मूल्याङ्कन',
+    'regional-average': 'क्षेत्रीय औसत',
+    'national-average': 'राष्ट्रिय औसत',
     'select-teaching-practices-to-show': 'तपाईंले हेर्न चाहनुभएको शिक्षण अभ्यासहरू चयन गर्नुहोस्',
     'supportive-learning-environment': 'सहयोगी सिकाइ वातावरण',
+    'teachers-showing-improvement-or-mastery': 'सुधार वा निपुणता देखाउने शिक्षकहरू',
+    'teachers-and-coaches-chose-to-work-on-improving-this-practice':
+      'शिक्षक र प्रशिक्षकहरूले यो अभ्यास सुधार गर्न काम गर्न रोजे',
+    'teachers-did-not-have-a-feedback-session': 'शिक्षकहरूको प्रतिक्रिया सत्र थिएन',
   },
   'teacher-practices': {
     new: 'शिक्षण अभ्यास थप्नुहोस्',
@@ -93,6 +110,17 @@ const npTranslation = {
       'Teachers coached (last 30 days)': 'कुल प्रशिक्षित शिक्षक  (पछिल्लो 30 दिन)',
     },
   },
+
+  session: {
+    table: {
+      school: 'विद्यालय',
+      coach: 'प्रशिक्षक',
+      teacher: 'शिक्षक',
+      subject: 'विषय',
+      feedback: 'प्रतिक्रिया',
+    },
+  },
+
   'session-data': {
     filters: {
       period: 'अवधि',
@@ -112,6 +140,16 @@ const npTranslation = {
       'supportive-learning Environment': 'सहयोगी सिकाइ वातावरण',
     },
   },
+
+  sync: {
+    table: {
+      'android-version': 'एन्ड्रोइड संस्करण',
+      model: 'मोडेल',
+      'device-id': 'यन्त्र ID',
+      'last-update': 'अन्तिम अपडेट',
+    },
+  },
+
   settings: {
     title: 'सेटिङ',
     tabs: {

@@ -19,19 +19,23 @@ const SessionList: React.FC<Props> = ({ sessions, handleOpen }) => {
       columns={[
         {
           renderColumn: (item: ISession) => item.school.name,
-          title: 'School',
+          title: t('session.table.school'),
+          width: '20%',
         },
         {
           renderColumn: (item: ISession) => item.coach.name,
-          title: 'Coach',
+          title: t('session.table.coach'),
+          width: '20%',
         },
         {
           renderColumn: (item: ISession) => item.teacher.name,
-          title: 'Teacher',
+          title: t('session.table.teacher'),
+          width: '20%',
         },
         {
           renderColumn: (item: ISession) => item.subject,
-          title: 'Subject',
+          title: t('session.table.subject'),
+          width: '20%',
         },
 
         {
@@ -45,7 +49,8 @@ const SessionList: React.FC<Props> = ({ sessions, handleOpen }) => {
                 Incomplete
               </Tag>
             ),
-          title: 'Feedback',
+          title: t('session.table.feedback'),
+          width: '10%',
         },
         {
           renderColumn: (item: ISession) => (
@@ -63,8 +68,8 @@ const SessionList: React.FC<Props> = ({ sessions, handleOpen }) => {
               </Menu>
             </Flex>
           ),
-          width: '85px',
-          title: 'common.actions',
+          width: '10%',
+          title: t('common.actions'),
         },
       ]}
     />

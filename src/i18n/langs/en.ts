@@ -27,6 +27,11 @@ const enTranslation = {
   },
 
   dashboard: {
+    filters: {
+      region: 'Select region',
+      district: 'Select district',
+      school: 'Select school',
+    },
     engagement: {
       title: 'Engagement',
       description: 'The numbers that represent coach engagement using the Coach platform in the selected period.',
@@ -40,12 +45,26 @@ const enTranslation = {
       title: 'Targeted improvement areas',
       description: 'Teaching practices teachers and coaches agreed to work on between coaching sessions',
     },
+    'needs-work': 'Needs work',
+    'keep-working': 'Keep working',
+    'needs-attention': 'Needs attention',
+    'almost-there': 'Almost there',
+    'doing-great': 'Doing great',
+    'school-rating': 'School rating',
+    'regional-average': 'Regional average',
+    'national-average': 'National average',
     'select-teaching-practices-to-show': 'Select Teaching Practices to show',
     'supportive-learning-environment': 'Supportive learning environment',
+    'teachers-showing-improvement-or-mastery': 'Teachers showing improvement or mastery',
+    'teachers-and-coaches-chose-to-work-on-improving-this-practice':
+      'Teachers and coaches chose to work on improving this practice',
+    'teachers-did-not-have-a-feedback-session': 'Teachers didn’t have a feedback session',
   },
 
   'teacher-practices': {
     new: 'Add teaching practice',
+    active: 'Active',
+    inactive: 'Inactive',
     table: {
       name: 'Name',
       'number-of-questions': 'Number of questions',
@@ -100,6 +119,16 @@ const enTranslation = {
     },
   },
 
+  session: {
+    table: {
+      school: 'School',
+      coach: 'Coach',
+      teacher: 'Teacher',
+      subject: 'Subject',
+      feedback: 'Feedback',
+    },
+  },
+
   'session-data': {
     filters: {
       period: 'Period',
@@ -117,6 +146,15 @@ const enTranslation = {
       'effective-teaching': 'Effective Teaching',
       'time-on-learning': 'Time on Learning',
       'positive-behavioral-expectations': 'Positive Behavioral Expectations',
+    },
+  },
+
+  sync: {
+    table: {
+      'android-version': 'Android version',
+      model: 'Model',
+      'device-id': 'DeviceID',
+      'last-update': 'Last Update',
     },
   },
 

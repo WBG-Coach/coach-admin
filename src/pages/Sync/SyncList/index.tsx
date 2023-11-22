@@ -1,6 +1,7 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
-import { ISync } from "@/types";
-import Table from "@/components/Table";
+import { Box, Flex, Text } from '@chakra-ui/react';
+import { ISync } from '@/types';
+import Table from '@/components/Table';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   syncs: ISync[];
@@ -9,29 +10,32 @@ type Props = {
 };
 
 const SyncList: React.FC<Props> = ({ syncs, handleDelete, handleEdit }) => {
+  const { t } = useTranslation();
+
   return (
     <Table
       data={syncs}
       columns={[
         {
           renderColumn: (item: ISync) => item.apiLevel,
-          title: "Android Version",
+          title: t('sync.table.android-version'),
+          width: '25%',
         },
         {
           renderColumn: (item: ISync) => item.model,
-          title: "Model",
+          title: t('sync.table.model'),
+          width: '25%',
         },
         {
           renderColumn: (item: ISync) => item.deviceId,
-          title: "DeviceID",
+          title: t('sync.table.device-id'),
+          width: '25%',
         },
         {
           renderColumn: (item: ISync) =>
-            new Date(item.lastPulledAt).toDateString() +
-            " " +
-            new Date(item.lastPulledAt).toLocaleTimeString(),
-          title: "Last update",
-          width: "280px",
+            new Date(item.lastPulledAt).toDateString() + ' ' + new Date(item.lastPulledAt).toLocaleTimeString(),
+          title: t('sync.table.last-update'),
+          width: '25%',
         },
       ]}
     />

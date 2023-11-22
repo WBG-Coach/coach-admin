@@ -192,7 +192,7 @@ const Table: React.FC<Props> = ({ columns, data, filters, topSession }) => {
         </Center>
         <VStack w="120px">
           <Text fontSize="14px" fontWeight="semibold" mr="auto">
-            Items per page:
+            {t('common.items-per-page')}
           </Text>
           <Select value={itemsPerPage} onChange={(e) => setItemsPerPage(Number(e.target.value))}>
             {SIZE_OPTIONS.map((value) => (

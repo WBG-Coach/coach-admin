@@ -12,10 +12,11 @@ import { REGIONS } from '@/common/constants';
 import { useUserContext } from '@/contexts/UserContext';
 import { ROLES } from '@/common/user';
 import SelectDistrict from '@/components/SelectDistrict';
+import { useTranslation } from 'react-i18next';
 
 const DashboardPage: React.FC = () => {
   const { user } = useUserContext();
-
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [dashboard, setDashboard] = useState<IDashboard>();
   const [region, setRegion] = useState(user?.region);
@@ -61,7 +62,7 @@ const DashboardPage: React.FC = () => {
     <VStack mx="auto" minH="100vh" maxW="1200px" position="relative" overflow="scroll" alignItems="flex-start" p="56px">
       <Flex flexDir={isMobile ? 'column' : 'row'} w="full">
         <VStack alignItems="start" mb="12px" mr="12px" minW={250}>
-          <Text fontWeight="600">Select region</Text>
+          <Text fontWeight="600">{t('dashboard.filters.region')}</Text>
           {user?.role === ROLES.admin ? (
             <Select placeholder="..." onChange={(e) => handleRegion(e.target.value)} value={region}>
               {REGIONS.map((region) => (
@@ -76,7 +77,7 @@ const DashboardPage: React.FC = () => {
         </VStack>
 
         <VStack alignItems="start" mb="12px" mr="12px" minW={250}>
-          <Text fontWeight="600">Select district</Text>
+          <Text fontWeight="600">{t('dashboard.filters.district')}</Text>
           {user?.role === ROLES.admin || user?.role === ROLES['region-analyst'] ? (
             <SelectDistrict
               role={user.role}
@@ -90,7 +91,7 @@ const DashboardPage: React.FC = () => {
         </VStack>
 
         <VStack alignItems="start" mb="12px" mr="12px" minW={250}>
-          <Text fontWeight="600">Select school</Text>
+          <Text fontWeight="600">{t('dashboard.filters.school')}</Text>
           {loading ? (
             <Spinner />
           ) : (
@@ -115,29 +116,41 @@ const DashboardPage: React.FC = () => {
           <Flex flexDir={isMobile ? 'column' : 'row'} w="full" gap="16px" mb="56px" alignItems="stretch">
             <VStack flex={3} gap="16px" alignItems="stretch">
               <Text color="#111417" fontSize="24px" fontWeight={600}>
-                Engagement
+                {t('dashboard.engagement.title')}
               </Text>
               <Text color="#111417" fontSize="16px" lineHeight="24px">
-                The numbers that represent coach engagement using the Coach platform in the selected period.
+                {t('dashboard.engagement.description')}
               </Text>
               <HStack gap="16px" alignItems="stretch">
-                <CardValue label={'Teachers coached'} value={dashboard.engagement.teachersCoached} />
-                <CardValue label={'Active coaches'} value={dashboard.engagement.activeCoaches} />
-                <CardValue label={'Coaching sessions'} value={dashboard.engagement.coachingSessions} />
+                <CardValue
+                  label={t('dashboard.engagement.teachers-coached')}
+                  value={dashboard.engagement.teachersCoached}
+                />
+                <CardValue
+                  label={t('dashboard.engagement.active-coaches')}
+                  value={dashboard.engagement.activeCoaches}
+                />
+                <CardValue
+                  label={t('dashboard.engagement.coaching-sessions')}
+                  value={dashboard.engagement.coachingSessions}
+                />
               </HStack>
               <HStack gap="16px" alignItems="stretch">
                 <SpeedometerGraph
-                  label="Coaching sessions per teacher over last three months"
+                  label={t('dashboard.engagement.coaching-sessions-per-teacher-over-last-three-months')}
                   value={dashboard.engagement.coachingSessionPerTeacher}
                   maxValue={dashboard.engagement.coachingSessionPerTeacherGoal}
                 />
                 <DoughnutGraph
-                  labels={['Completed a second coach session', 'Without a second coach sessions']}
+                  labels={[
+                    t('dashboard.engagement.completed-a-second-coach-session'),
+                    'Without a second coach sessions',
+                  ]}
                   values={[
                     dashboard.engagement.teacherThatCompletedSecondSession,
                     dashboard.engagement.teachersCoached - dashboard.engagement.teacherThatCompletedSecondSession,
                   ]}
-                  label="Completed a second coach session"
+                  label={t('dashboard.engagement.completed-a-second-coach-session') || ''}
                   title={
                     (dashboard.engagement.teachersCoached
                       ? (dashboard.engagement.teacherThatCompletedSecondSession /
@@ -153,10 +166,10 @@ const DashboardPage: React.FC = () => {
 
             <VStack flex={2} alignItems="stretch">
               <Text color="#111417" fontSize="24px" fontWeight={600}>
-                Targeted improvement areas
+                {t('dashboard.targeted-improvement-areas.title')}
               </Text>
               <Text color="#111417" fontSize="16px" lineHeight="24px">
-                Teaching practices teachers and coaches agreed to work on between coaching sessions
+                {t('dashboard.targeted-improvement-areas.description')}
               </Text>
 
               <DoughnutGraph
@@ -168,11 +181,11 @@ const DashboardPage: React.FC = () => {
           </Flex>
 
           <Text mb="8px" color="#111417" fontWeight={500} fontSize={'16px'}>
-            Select Teaching Practices to show
+            {t('dashboard.select-teaching-practices-to-show')}
           </Text>
 
           <Box maxW="full" overflow="scroll">
-            <HStack mb="56px" w="1200px">
+            <HStack mb="56px" w="1300px">
               {dashboard.teachingPractices.map((item) => (
                 <Button
                   py="8px"
@@ -198,7 +211,13 @@ const DashboardPage: React.FC = () => {
 
           <Flex flexDir={isMobile ? 'column' : 'row'} w="full" mt="24px" alignItems="stretch">
             <BarGraph
-              labels={['Needs work', 'Keep working', 'Needs attention', 'Almost there', 'Doing great']}
+              labels={[
+                t('dashboard.needs-work'),
+                t('dashboard.keep-working'),
+                t('dashboard.needs-attention'),
+                t('dashboard.almost-there'),
+                t('dashboard.doing-great'),
+              ]}
               values={[
                 selected.data.stars.needsWork,
                 selected.data.stars.keepWorking,
@@ -208,18 +227,18 @@ const DashboardPage: React.FC = () => {
               ]}
             />
 
-            <VStack mt={isMobile ? 4 : 0} flex={3} alignItems="stretch">
+            <VStack mt={isMobile ? 4 : 0} ml={isMobile ? 0 : 4} flex={3} alignItems="stretch">
               <HStack alignItems="stretch">
                 <CardValue
-                  label={'Teachers showing improvement or mastery'}
+                  label={t('dashboard.teachers-showing-improvement-or-mastery')}
                   value={selected.data.teachersShowingImprovement}
                 />
                 <CardValue
-                  label={'Teachers and coaches chose to work on improving this practice'}
+                  label={t('dashboard.teachers-and-coaches-chose-to-work-on-improving-this-practice')}
                   value={selected.data.teachers}
                 />
                 <CardValue
-                  label={'Teachers didn’t have a feedback session'}
+                  label={t('dashboard.teachers-did-not-have-a-feedback-session')}
                   value={selected.data.teacherWithoutFeedback}
                 />
               </HStack>
@@ -234,7 +253,11 @@ const DashboardPage: React.FC = () => {
                 gap="0px"
               >
                 <HorizontalBar
-                  labels={['School rating', 'Regional average', 'National average']}
+                  labels={[
+                    t('dashboard.school-rating'),
+                    t('dashboard.regional-average'),
+                    t('dashboard.national-average'),
+                  ]}
                   values={[dashboard.avg.school, dashboard.avg.regional, dashboard.avg.national]}
                 />
               </VStack>
