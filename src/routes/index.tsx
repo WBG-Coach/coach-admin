@@ -24,10 +24,10 @@ export const Router = () => {
       <Routes location={location} key={location.pathname}>
         {!user ? (
           <>
-            <Route path="/sl/admin" element={<Login />} />
+            <Route path={`/${import.meta.env.VITE_COUNTRY}/admin`} element={<Login />} />
           </>
         ) : (
-          <Route path="/sl/admin" element={<ProtectedLayout />}>
+          <Route path={`/${import.meta.env.VITE_COUNTRY}/admin`} element={<ProtectedLayout />}>
             <Route index element={<DashboardPage />} />
             <Route path="teaching-practices" element={<CompetenciesPage />} />
             <Route path="coaching-sessions" element={<SessionsPage />} />
@@ -41,7 +41,7 @@ export const Router = () => {
             <Route path="syncs" element={<SyncsPage />} />
           </Route>
         )}
-        <Route path="*" element={<Navigate to="/sl/admin" replace />} />
+        <Route path="*" element={<Navigate to={`/${import.meta.env.VITE_COUNTRY}/admin`} replace />} />
       </Routes>
     </AnimatePresence>
   );

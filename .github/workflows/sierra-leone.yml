@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VITE_API_URL: https://coachdigital.org/sl/api/
-      BASE_URL: /sl/admin/
+      VITE_COUNTRY: sl
     steps:
       - name: 🛎️ Checkout
         uses: actions/checkout@v3
@@ -23,7 +23,7 @@ jobs:
 
       - name: 🛠️ Install dependencies
         run: npm install
-    
+
       - name: 🚀 Build
         run: npm run build
 
@@ -33,6 +33,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          source: "dist"
-          target: "/usr/share/nginx/html/sl/admin"
+          source: 'dist'
+          target: '/usr/share/nginx/html/sl/admin'
           strip_components: 1

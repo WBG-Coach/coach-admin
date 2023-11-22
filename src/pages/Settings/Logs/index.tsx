@@ -25,11 +25,12 @@ const Logs: React.FC = () => {
   ) : (
     <Table
       columns={[
-        { title: t('settings.tabs.logs.user'), renderColumn: (log: ILogs) => log.user.name },
-        { title: t('settings.tabs.logs.action'), renderColumn: (log: ILogs) => log.description },
+        { title: t('settings.tabs.logs.table.user'), renderColumn: (log: ILogs) => log.user.name, width: '30%' },
+        { title: t('settings.tabs.logs.table.action'), renderColumn: (log: ILogs) => log.description, width: '30%' },
         {
-          title: t('settings.tabs.logs.date'),
+          title: t('settings.tabs.logs.table.date'),
           renderColumn: (log: ILogs) => new Date(log.created_at).toLocaleString(),
+          width: '40%',
         },
       ]}
       data={logs}

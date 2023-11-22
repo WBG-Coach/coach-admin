@@ -9,7 +9,7 @@ const enTranslation = {
     generateQRCode: 'Generate QRCode',
     cancel: 'Cancel',
     download: 'Download data',
-    'items-per-page': 'Items per page'
+    'items-per-page': 'Items per page',
   },
 
   Navbar: {
@@ -148,6 +148,9 @@ const enTranslation = {
           action: 'Action',
           date: 'Date',
         },
+      },
+      language: {
+        title: 'Change language',
       },
     },
   },

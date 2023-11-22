@@ -38,7 +38,7 @@ const DashboardPage: React.FC = () => {
           setSchoolList(schools);
         }
         setDashboard(dash);
-        setSelected(dash.teachingPractices[0]);
+        setSelected(dash?.teachingPractices[0]);
         setLoading(false);
       });
     }

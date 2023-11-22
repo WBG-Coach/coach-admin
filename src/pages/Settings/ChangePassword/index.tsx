@@ -7,8 +7,10 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
 const ChangePassword = () => {
+  const { t } = useTranslation();
   const { handleUpdateUser } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,10 +46,10 @@ const ChangePassword = () => {
       ) : (
         <VStack alignItems={'flex-start'} width={'454px'} pl={'24px'}>
           <Text fontWeight={600} fontSize={'20px'}>
-            Change password
+            {t('settings.tabs.change-password.title')}
           </Text>
           <Text fontWeight={400} mt={'4px'} color={'Gray.$700'}>
-            Update your access password.
+            {t('settings.tabs.change-password.description')}
           </Text>
 
           <form
@@ -55,7 +57,7 @@ const ChangePassword = () => {
             style={{ width: '100%', display: 'flex', flexDirection: 'column', marginTop: '40px' }}
           >
             <FormControl>
-              <FormLabel htmlFor="name">Current password</FormLabel>
+              <FormLabel htmlFor="name">{t('settings.tabs.change-password.current-password')}</FormLabel>
               <Input
                 isInvalid={!!errors.currentPassword}
                 type="password"
@@ -67,7 +69,7 @@ const ChangePassword = () => {
             </FormControl>
 
             <FormControl style={{ marginTop: '16px' }}>
-              <FormLabel htmlFor="name">New password</FormLabel>
+              <FormLabel htmlFor="name">{t('settings.tabs.change-password.new-password')}</FormLabel>
               <Input
                 isInvalid={!!errors.password}
                 id="password"
@@ -80,7 +82,7 @@ const ChangePassword = () => {
             </FormControl>
 
             <FormControl style={{ marginTop: '16px' }}>
-              <FormLabel htmlFor="repassword">Confirm password</FormLabel>
+              <FormLabel htmlFor="repassword">{t('settings.tabs.change-password.confirm-password')}</FormLabel>
               <Input
                 isInvalid={!!errors.confirmPassword}
                 id="password"
@@ -93,7 +95,7 @@ const ChangePassword = () => {
             </FormControl>
 
             <Button colorScheme="blue" type="submit" w={'100%'} mt={'40px'}>
-              Change password
+              {t('settings.tabs.change-password.title')}
             </Button>
           </form>
         </VStack>

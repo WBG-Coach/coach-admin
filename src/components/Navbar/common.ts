@@ -2,7 +2,7 @@ export const MenuItems = [
   {
     icon: 'chart-line',
     label: 'dashboard',
-    route: '/sl/admin/',
+    route: `/${import.meta.env.VITE_COUNTRY}/admin/`,
   },
   {
     label: 'questionnaire',
@@ -10,12 +10,12 @@ export const MenuItems = [
       {
         icon: 'document-layout-right',
         label: 'teaching-practices',
-        route: '/sl/admin/teaching-practices',
+        route: `/${import.meta.env.VITE_COUNTRY}/admin/teaching-practices`,
       },
       {
         icon: 'clipboard-notes',
         label: 'coaching-sessions',
-        route: '/sl/admin/coaching-sessions',
+        route: `/${import.meta.env.VITE_COUNTRY}/admin/coaching-sessions`,
       },
     ],
   },
@@ -25,22 +25,22 @@ export const MenuItems = [
       {
         icon: 'university',
         label: 'schools',
-        route: '/sl/admin/schools',
+        route: `/${import.meta.env.VITE_COUNTRY}/admin/schools`,
       },
       {
         icon: 'calender',
         label: 'coaches-over-time',
-        route: '/sl/admin/coach-over-time',
+        route: `/${import.meta.env.VITE_COUNTRY}/admin/coach-over-time`,
       },
       {
         icon: 'folder',
         label: 'session-data',
-        route: '/sl/admin/session-data',
+        route: `/${import.meta.env.VITE_COUNTRY}/admin/session-data`,
       },
       {
         icon: 'sync',
         label: 'syncs',
-        route: '/sl/admin/syncs',
+        route: `/${import.meta.env.VITE_COUNTRY}/admin/syncs`,
       },
     ],
   },

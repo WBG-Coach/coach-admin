@@ -16,6 +16,7 @@
     "@chakra-ui/react": "^2.5.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@fontsource/noto-sans": "^5.0.17",
     "@hookform/resolvers": "^3.1.1",
     "@superset-ui/embedded-sdk": "^0.1.0-alpha.9",
     "@types/styled-system": "^5.1.16",

@@ -10,9 +10,11 @@ import { SubmitHandler } from 'react-hook-form';
 import { UserContext } from '@/contexts/UserContext';
 import AuthService from '@/services/auth';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 const Users = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const { user } = useContext(UserContext);
   const [currentUser, setCurrentUser] = useState<IUser>();
   const [users, setUsers] = useState({
@@ -104,7 +106,7 @@ const Users = () => {
 
           <HStack px={'16px'} py={'12px'} cursor={'pointer'} onClick={() => setCurrentUser({} as any)}>
             <Icon name={'plus'} color={theme.colors.Primary['$200']} />
-            <Text color={'Primary.$200'}>Criar usuário</Text>
+            <Text color={'Primary.$200'}>{t('settings.tabs.users.new')}</Text>
           </HStack>
         </VStack>
       )}

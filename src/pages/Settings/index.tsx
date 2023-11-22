@@ -8,6 +8,7 @@ import Icon from '@/components/Base/Icon';
 import HeaderPage from '@/components/HeaderPage';
 import Logs from './Logs';
 import { UserContext } from '@/contexts/UserContext';
+import ChangeLanguage from './ChangeLanguage';
 
 const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -33,12 +34,17 @@ const SettingsPage: React.FC = () => {
             component: <Users />,
           },
           {
-            label: t('settings.tabs.logs.title'),
+            label: t('settings.tabs.logs.table.title'),
             icon: 'receipt-alt',
             component: <Logs />,
           },
         ]
       : []),
+    {
+      label: t('settings.tabs.language.title'),
+      icon: 'globe',
+      component: <ChangeLanguage />,
+    },
   ];
 
   return (

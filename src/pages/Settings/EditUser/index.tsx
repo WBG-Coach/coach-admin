@@ -5,8 +5,10 @@ import { IUser } from '@/types';
 import { Button, Center, FormControl, FormErrorMessage, FormLabel, Input, Text, VStack } from '@chakra-ui/react';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 const EditUser = () => {
+  const { t } = useTranslation();
   const { user, handleUpdateUser } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -31,10 +33,10 @@ const EditUser = () => {
       ) : (
         <VStack alignItems={'flex-start'} width={'454px'} pl={'24px'}>
           <Text fontWeight={600} fontSize={'20px'}>
-            General
+            {t('settings.tabs.user.title')}
           </Text>
           <Text fontWeight={400} mt={'4px'} color={'Gray.$700'}>
-            Update your information.
+            {t('settings.tabs.user.description')}
           </Text>
 
           <Center w={'100%'} my={'40px'}>
@@ -48,7 +50,7 @@ const EditUser = () => {
             style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
           >
             <FormControl isInvalid={!!errors.name}>
-              <FormLabel htmlFor="name">Name</FormLabel>
+              <FormLabel htmlFor="name">{t('settings.tabs.user.name')}</FormLabel>
               <Input id="name" defaultValue={user?.name} {...register('name', { required: true })} />
               <FormErrorMessage>
                 {errors.name && errors.name.type === 'required' && 'Name is required'}
@@ -56,7 +58,7 @@ const EditUser = () => {
             </FormControl>
 
             <FormControl isInvalid={!!errors.email} style={{ marginTop: '16px' }}>
-              <FormLabel htmlFor="name">Email</FormLabel>
+              <FormLabel htmlFor="name">{t('settings.tabs.user.email')}</FormLabel>
               <Input id="name" defaultValue={user?.email} {...register('email', { required: true })} />
               <FormErrorMessage>
                 {errors.email && errors.email.type === 'required' && 'Email is required'}
@@ -64,7 +66,7 @@ const EditUser = () => {
             </FormControl>
 
             <Button colorScheme="blue" type="submit" w={'100%'} mt={'40px'}>
-              Save updates
+              {t('settings.tabs.user.save')}
             </Button>
           </form>
         </VStack>

@@ -10,7 +10,7 @@ export const ProtectedLayout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) navigate('/sl/admin/login');
+    if (!user) navigate(`/${import.meta.env.VITE_COUNTRY}/admin/login`);
   }, [user, navigate]);
 
   const flexDir = useBreakpointValue({ base: 'column', md: 'row' }) as 'column' | 'row';
