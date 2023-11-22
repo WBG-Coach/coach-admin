@@ -49,7 +49,7 @@ const SettingsPage: React.FC = () => {
 
   return (
     <Box p={4} minH="100vh" flex={1}>
-      <HeaderPage title={'Settings'} subtitle={''} />
+      <HeaderPage title={t('Navbar.settings')} subtitle={''} />
 
       <HStack width={'100%'} alignItems={'flex-start'}>
         <VStack flexDirection={'column'} minWidth={'266px'} pr={'8px'} borderRight={'1px solid #E3E6E9'}>
