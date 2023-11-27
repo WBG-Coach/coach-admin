@@ -3,6 +3,7 @@ const enTranslation = {
     actions: 'Actions',
     activate: 'Activate',
     deactivate: 'Deactivate',
+    save: 'Save',
     edit: 'Edit',
     view: 'View',
     delete: 'Delete',
@@ -189,6 +190,15 @@ const enTranslation = {
       },
       language: {
         title: 'Change language',
+      },
+      region: {
+        title: 'Regions',
+        new: 'New region',
+        edit: 'Edit',
+        total_schools: 'Total school: {{ value }}',
+        form: {
+          name: 'Name',
+        },
       },
     },
   },

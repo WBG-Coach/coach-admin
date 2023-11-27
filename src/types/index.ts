@@ -22,12 +22,18 @@ export interface ICoach {
   coachSchools?: ICoachSchool[];
 }
 
+export interface IRegion {
+  id: string;
+  name: string;
+  schoolsCount?: number;
+}
+
 export interface IUser {
   id: string;
   email: string;
   name: string;
   role: 'region-analyst' | 'district-analyst' | 'admin';
-  region?: string;
+  region_id?: string;
   district?: string;
   password: string;
 }
@@ -89,6 +95,8 @@ export interface ISchool {
   emis_number: string;
   coachSchools?: ICoachSchool[];
   teachers?: ITeacher[];
+  region_id?: string;
+  region?: IRegion;
 }
 
 export interface ITeacher {

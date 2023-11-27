@@ -17,7 +17,7 @@ export type UserSignUpParams = {
 
 export const AuthService = {
   login: (body: UserLoginParams): Promise<any> => _axios.post('auth', body),
-  signup: (body: IUser): Promise<IUser> => _axios.post('users/admin/sign-up', body),
+  sighup: (body: IUser): Promise<IUser> => _axios.post('users/admin/sign-up', body),
   getGuestToken: () => _axios.get<string>('auth/superset'),
 };
 

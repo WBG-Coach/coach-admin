@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Center, Flex, HStack, Select, Spinner, Text, VStack, useBreakpointValue } from '@chakra-ui/react';
-import { IDashboard, ISchool, ITeachingPractices } from '@/types';
+import { IDashboard, IRegion, ISchool, ITeachingPractices } from '@/types';
 import DashboardService from '@/services/dashboard';
 import Loader from '@/components/Base/Loader';
 import { CardValue } from './components/CardValue';
@@ -8,18 +8,19 @@ import { SpeedometerGraph } from './components/SpeedometerGraph';
 import { DoughnutGraph } from './components/DoughnutGraph';
 import { BarGraph } from './components/BarGraph';
 import { HorizontalBar } from './components/HorizontalBar';
-import { REGIONS } from '@/common/constants';
 import { useUserContext } from '@/contexts/UserContext';
 import { ROLES } from '@/common/user';
 import SelectDistrict from '@/components/SelectDistrict';
 import { useTranslation } from 'react-i18next';
+import RegionService from '@/services/region';
 
 const DashboardPage: React.FC = () => {
   const { user } = useUserContext();
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [dashboard, setDashboard] = useState<IDashboard>();
-  const [region, setRegion] = useState(user?.region);
+  const [regions, setRegions] = useState<IRegion[]>();
+  const [regionId, setRegionId] = useState(user?.region_id);
   const [district, setDistrict] = useState(user?.district);
   const [schoolName, setSchoolName] = useState<string>();
   const [schoolList, setSchoolList] = useState<ISchool[]>([]);
@@ -29,11 +30,18 @@ const DashboardPage: React.FC = () => {
   useEffect(() => {
     if (!loading) {
       setLoading(true);
+
+      if (!regions) {
+        RegionService.getRegions().then(setRegions);
+      }
+
       let schoolId: string | undefined;
+
       if (schoolName) {
         schoolId = schoolList.find((school) => school.name === schoolName)?.id;
       }
-      DashboardService.getData(region, district, schoolId).then((data) => {
+
+      DashboardService.getData(regionId, district, schoolId).then((data) => {
         const { schools, ...dash } = data;
         if (schools) {
           setSchoolList(schools);
@@ -43,10 +51,10 @@ const DashboardPage: React.FC = () => {
         setLoading(false);
       });
     }
-  }, [region, district, schoolName]);
+  }, [regionId, district, schoolName]);
 
-  const handleRegion = (newRegion: string) => {
-    setRegion(newRegion);
+  const handleRegion = (regionId: string) => {
+    setRegionId(regionId);
     setSchoolList([]);
     setSchoolName(undefined);
     setDistrict(undefined);
@@ -62,17 +70,21 @@ const DashboardPage: React.FC = () => {
     <VStack mx="auto" minH="100vh" maxW="1200px" position="relative" overflow="scroll" alignItems="flex-start" p="56px">
       <Flex flexDir={isMobile ? 'column' : 'row'} w="full">
         <VStack alignItems="start" mb="12px" mr="12px" minW={250}>
-          <Text fontWeight="600">{t('dashboard.filters.region')}</Text>
-          {user?.role === ROLES.admin ? (
-            <Select placeholder="..." onChange={(e) => handleRegion(e.target.value)} value={region}>
-              {REGIONS.map((region) => (
-                <option key={region} value={region}>
-                  {region}
-                </option>
-              ))}
-            </Select>
-          ) : (
-            <Text>{region}</Text>
+          {regions && (
+            <>
+              <Text fontWeight="600">{t('dashboard.filters.region')}</Text>
+              {user?.role === ROLES.admin ? (
+                <Select placeholder="..." onChange={(e) => handleRegion(e.target.value)} value={regionId}>
+                  {regions?.map((region) => (
+                    <option key={region.id} value={region.id}>
+                      {region.name}
+                    </option>
+                  ))}
+                </Select>
+              ) : (
+                <Text>{regions?.find((region) => region.id === regionId)?.name}</Text>
+              )}
+            </>
           )}
         </VStack>
 
@@ -81,7 +93,7 @@ const DashboardPage: React.FC = () => {
           {user?.role === ROLES.admin || user?.role === ROLES['region-analyst'] ? (
             <SelectDistrict
               role={user.role}
-              region={region}
+              region={regionId}
               onChange={(e) => handleDistrict(e.target.value)}
               value={district}
             />

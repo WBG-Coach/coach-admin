@@ -46,7 +46,7 @@ const Users = () => {
       if ('id' in user) {
         await UserService.updateUser(user.id, user);
       } else {
-        await AuthService.signup(user);
+        await AuthService.sighup(user);
       }
     } catch (err) {
       toast.error('An error as ocurred on management of user');
@@ -76,40 +76,45 @@ const Users = () => {
         handleSubmitForm={handleSubmitUser}
       />
 
-      {users.isLoading ? (
-        <Center minW={'400px'} h={'400px'}>
-          <Loader />
-        </Center>
-      ) : (
-        <VStack w={'100%'} flex={1} alignItems={'flex-start'}>
-          {users.data.map((currentUser) => (
-            <HStack
-              justifyContent={'space-between'}
-              borderBottom={'1px solid'}
-              borderColor={'Gray.$400'}
-              key={currentUser.id}
-              py={'12px'}
-              px={'16px'}
-              w={'100%'}
-            >
-              <HStack>
-                <Center w={'40px'} h={'40px'} borderRadius={'50%'} background={'Blue.$200'}>
-                  <Icon name={'user'} />
-                </Center>
+      <VStack alignItems={'flex-start'} width={'454px'} pl={'24px'}>
+        <Text fontWeight={600} fontSize={'20px'}>
+          {t('settings.tabs.users.title')}
+        </Text>
+        {users.isLoading ? (
+          <Center minW={'400px'} h={'400px'}>
+            <Loader />
+          </Center>
+        ) : (
+          <>
+            {users.data.map((currentUser) => (
+              <HStack
+                justifyContent={'space-between'}
+                borderBottom={'1px solid'}
+                borderColor={'Gray.$400'}
+                key={currentUser.id}
+                py={'12px'}
+                px={'16px'}
+                w={'100%'}
+              >
+                <HStack>
+                  <Center w={'40px'} h={'40px'} borderRadius={'50%'} background={'Blue.$200'}>
+                    <Icon name={'user'} />
+                  </Center>
 
-                <Text>{currentUser.name}</Text>
+                  <Text>{currentUser.name}</Text>
+                </HStack>
+
+                {currentUser.id !== user?.id && <Menu items={menuOptions} currentItem={currentUser} />}
               </HStack>
+            ))}
 
-              {currentUser.id !== user?.id && <Menu items={menuOptions} currentItem={currentUser} />}
+            <HStack px={'16px'} py={'12px'} cursor={'pointer'} onClick={() => setCurrentUser({} as any)}>
+              <Icon name={'plus'} color={theme.colors.Primary['$200']} />
+              <Text color={'Primary.$200'}>{t('settings.tabs.users.new')}</Text>
             </HStack>
-          ))}
-
-          <HStack px={'16px'} py={'12px'} cursor={'pointer'} onClick={() => setCurrentUser({} as any)}>
-            <Icon name={'plus'} color={theme.colors.Primary['$200']} />
-            <Text color={'Primary.$200'}>{t('settings.tabs.users.new')}</Text>
-          </HStack>
-        </VStack>
-      )}
+          </>
+        )}
+      </VStack>
     </>
   );
 };
