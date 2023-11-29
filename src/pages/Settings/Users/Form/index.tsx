@@ -128,7 +128,7 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
                 <Controller
                   rules={{ required: true }}
                   control={control}
-                  name="region"
+                  name="region_id"
                   render={({ field, fieldState, formState }) => (
                     <Select
                       id={'region'}
