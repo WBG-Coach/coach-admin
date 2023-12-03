@@ -26,7 +26,6 @@ import RegionFormChildren from '../FormChildren';
 
 const RegionForm: React.FC<Props> = ({ isOpen, regionId, handleSubmitForm, handleClose }) => {
   const { t } = useTranslation();
-  const theme = useTheme();
   const [loading, setLoading] = useState(true);
   const [region, setRegion] = useState<IRegion>();
 
@@ -50,6 +49,12 @@ const RegionForm: React.FC<Props> = ({ isOpen, regionId, handleSubmitForm, handl
 
   const handleUpdateRegionName = (name: string) => {
     setRegion({ ...region, name });
+  };
+
+  const onSubmit = () => {
+    if (region) {
+      handleSubmitForm({ ...region, level: 0 });
+    }
   };
 
   return (
@@ -80,7 +85,7 @@ const RegionForm: React.FC<Props> = ({ isOpen, regionId, handleSubmitForm, handl
         )}
 
         <DrawerFooter mt="auto">
-          <Button colorScheme="blue" mr={3} onClick={() => console.log({ region })}>
+          <Button colorScheme="blue" mr={3} onClick={onSubmit}>
             {t('common.save')}
           </Button>
           <Button variant="outline" mr={'auto'} onClick={handleClose}>

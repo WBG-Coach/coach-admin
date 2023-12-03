@@ -27,28 +27,29 @@ const Regions = () => {
     refreshRegions();
   }, [refreshRegions]);
 
-  const handleSubmitRegion = async (region: IRegion, parent_id?: string) => {
+  const handleSubmitRegion = async (region: IRegion) => {
     try {
       setRegions({ isLoading: true, data: [] });
       if (!!region.id) {
-        await RegionService.updateRegion(region.id, { ...region, parent_id });
+        await RegionService.updateRegion(region.id, region);
       } else {
-        await RegionService.saveRegion({ ...region, parent_id });
+        await RegionService.saveRegion(region);
       }
     } catch (err) {
       toast.error('An error as ocurred on management of user');
     }
 
-    if (!parent_id) {
-      setCurrentRegion(undefined);
-      refreshRegions();
-    }
+    handleClose();
+    await refreshRegions();
   };
 
   const menuOptions = [
     {
       label: t('settings.tabs.region.edit'),
-      handleClick: (user: IUser) => setCurrentRegion(user),
+      handleClick: (user: IUser) => {
+        setFormIsOpen(true);
+        setCurrentRegion(user);
+      },
     },
   ];
 
@@ -79,13 +80,13 @@ const Regions = () => {
           <>
             {regions.data.map((region) => (
               <HStack
-                justifyContent={'space-between'}
-                borderBottom={'1px solid'}
-                borderColor={'Gray.$400'}
-                key={region.id}
+                w={'100%'}
                 py={'12px'}
                 px={'16px'}
-                w={'100%'}
+                key={region.id}
+                borderColor={'Gray.$400'}
+                borderBottom={'1px solid'}
+                justifyContent={'space-between'}
               >
                 <HStack>
                   <Center w={'40px'} h={'40px'} borderRadius={'50%'} background={'Blue.$200'}>

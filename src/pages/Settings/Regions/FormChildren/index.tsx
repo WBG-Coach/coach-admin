@@ -15,7 +15,7 @@ const RegionFormChildren: React.FC<Props> = ({ level, children, handleUpdate }) 
   const theme = useTheme();
 
   const addChild = () => {
-    handleUpdate([...children, { name: '' }]);
+    handleUpdate([...children, { name: '', level }]);
   };
 
   const handleUpdateChildren = (childrenToUpdate: IRegion[], indexToUpdate: number) => {
@@ -31,7 +31,7 @@ const RegionFormChildren: React.FC<Props> = ({ level, children, handleUpdate }) 
   };
 
   const handleUpdateName = (name: string, indexToUpdate: number) => {
-    handleUpdate(children.map((item, index) => (index === indexToUpdate ? { ...item, name } : item)));
+    handleUpdate(children.map((item, index) => (index === indexToUpdate ? { ...item, name, level } : item)));
   };
 
   return (

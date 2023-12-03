@@ -25,10 +25,11 @@ export interface ICoach {
 export interface IRegion {
   id?: string;
   name: string;
-  schoolsCount?: number;
-  children?: IRegion[];
-  parent_id?: string;
+  level?: number;
   parent?: IRegion;
+  parent_id?: string;
+  children?: IRegion[];
+  schoolsCount?: number;
 }
 
 export interface IUser {
