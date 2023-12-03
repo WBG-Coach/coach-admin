@@ -1,10 +1,14 @@
-import React, { useEffect } from 'react';
-import { Props } from './types';
-import { Controller, useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import {
+  Text,
   Input,
+  VStack,
+  HStack,
   Button,
   Drawer,
+  Spinner,
+  useTheme,
   FormLabel,
   DrawerBody,
   DrawerFooter,
@@ -14,55 +18,75 @@ import {
   DrawerCloseButton,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
+import RegionService from '@/services/region';
+import Icon from '@/components/Base/Icon';
+import { IRegion } from '@/types';
+import { Props } from './types';
+import RegionFormChildren from '../FormChildren';
 
-const RegionForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClose }) => {
+const RegionForm: React.FC<Props> = ({ isOpen, regionId, handleSubmitForm, handleClose }) => {
   const { t } = useTranslation();
-  const {
-    reset,
-    control,
-    handleSubmit,
-    formState: { isLoading },
-  } = useForm({ defaultValues });
+  const theme = useTheme();
+  const [loading, setLoading] = useState(true);
+  const [region, setRegion] = useState<IRegion>();
 
   useEffect(() => {
-    reset(defaultValues);
-  }, [defaultValues]);
+    if (isOpen && regionId) {
+      RegionService.getRegion(regionId).then((data) => {
+        setRegion(data);
+        setLoading(false);
+      });
+    } else {
+      setRegion({ name: '', children: [] });
+      setLoading(false);
+    }
+  }, [isOpen, regionId]);
+
+  const handleUpdateChildren = (children: IRegion[]) => {
+    if (region) {
+      setRegion({ ...region, children });
+    }
+  };
+
+  const handleUpdateRegionName = (name: string) => {
+    setRegion({ ...region, name });
+  };
 
   return (
-    <Drawer isOpen={!!defaultValues} placement="right" onClose={handleClose} size="md">
+    <Drawer isOpen={isOpen} placement="right" onClose={handleClose} size="md">
       <DrawerOverlay />
       <DrawerContent roundedLeft={14}>
-        <form
-          onSubmit={handleSubmit(handleSubmitForm)}
-          style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-        >
-          <DrawerCloseButton mt={2} color="Primary.$200" />
+        <DrawerCloseButton mt={2} color="Primary.$200" />
 
-          <DrawerHeader>
-            {defaultValues && 'id' in defaultValues ? t('settings.tabs.region.edit') : t('settings.tabs.region.new')}
-          </DrawerHeader>
+        <DrawerHeader>{regionId ? t('settings.tabs.region.edit') : t('settings.tabs.region.new')}</DrawerHeader>
 
+        {loading ? (
           <DrawerBody>
-            <FormLabel htmlFor="name">{t('settings.tabs.region.form.name')}</FormLabel>
-            <Controller
-              rules={{ required: true }}
-              control={control}
-              name="name"
-              render={({ field, fieldState }) => (
-                <Input id="name" {...field} value={field.value} isInvalid={!!fieldState.error} />
-              )}
-            />
+            <Spinner />
           </DrawerBody>
+        ) : (
+          <DrawerBody gap={0}>
+            <Input
+              placeholder={t('settings.tabs.region.placeholder') || ''}
+              borderBottomRadius={0}
+              bg="#f5f5f5"
+              value={region?.name}
+              onChange={(e) => handleUpdateRegionName(e.target.value)}
+              border="2px solid #ddd"
+            />
 
-          <DrawerFooter mt="auto">
-            <Button colorScheme="blue" mr={3} type="submit" isLoading={isLoading}>
-              {t('common.save')}
-            </Button>
-            <Button variant="outline" mr={'auto'} onClick={handleClose} isLoading={isLoading}>
-              {t('common.cancel')}
-            </Button>
-          </DrawerFooter>
-        </form>
+            <RegionFormChildren level={1} children={region?.children || []} handleUpdate={handleUpdateChildren} />
+          </DrawerBody>
+        )}
+
+        <DrawerFooter mt="auto">
+          <Button colorScheme="blue" mr={3} onClick={() => console.log({ region })}>
+            {t('common.save')}
+          </Button>
+          <Button variant="outline" mr={'auto'} onClick={handleClose}>
+            {t('common.cancel')}
+          </Button>
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );

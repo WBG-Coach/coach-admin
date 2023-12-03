@@ -32,6 +32,7 @@ const Menu: React.FC<Props<any>> = ({ items, currentItem }) => {
         <VStack
           top={'44px'}
           right={0}
+          zIndex={999}
           boxShadow={'0px 0px 10.040825843811035px 0px rgba(0, 0, 0, 0.10);'}
           borderRadius={'12px'}
           position={'absolute'}

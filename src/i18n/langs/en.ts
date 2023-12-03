@@ -11,6 +11,14 @@ const enTranslation = {
     cancel: 'Cancel',
     download: 'Download data',
     'items-per-page': 'Items per page',
+    'all-time': 'All time',
+    'last-7-days': 'Last 7 days',
+    'last-30-days': 'Last 30 days',
+    'last-60-days': 'Last 60 days',
+    'last-90-days': 'Last 90 days',
+    'all-regions': 'All regions',
+    'all-schools': 'All schools',
+    'all-districts': 'All districts',
   },
 
   Navbar: {
@@ -194,10 +202,22 @@ const enTranslation = {
       region: {
         title: 'Regions',
         new: 'New region',
+        'sub-subregion-title': 'Municipalities',
+        'subregion-title': 'Districts',
+        'new-subregion': 'New district',
+        'new-sub-subregion': 'New municipality',
         edit: 'Edit',
         total_schools: 'Total school: {{ value }}',
-        form: {
-          name: 'Name',
+        placeholder: 'Region name',
+        1: {
+          title: 'Districts',
+          new: 'New district',
+          placeholder: 'District name',
+        },
+        2: {
+          title: 'Municipalities',
+          new: 'New Municipality',
+          placeholder: 'Municipality name',
         },
       },
     },

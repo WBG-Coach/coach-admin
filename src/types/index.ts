@@ -23,9 +23,12 @@ export interface ICoach {
 }
 
 export interface IRegion {
-  id: string;
+  id?: string;
   name: string;
   schoolsCount?: number;
+  children?: IRegion[];
+  parent_id?: string;
+  parent?: IRegion;
 }
 
 export interface IUser {

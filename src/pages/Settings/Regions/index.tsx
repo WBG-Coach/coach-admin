@@ -1,12 +1,10 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Icon from '@/components/Base/Icon';
 import Loader from '@/components/Base/Loader';
 import Menu from '@/components/Menu';
 import { IRegion, IUser } from '@/types';
 import { Center, HStack, Text, VStack, useTheme } from '@chakra-ui/react';
 import RegionForm from './Form';
-import { SubmitHandler } from 'react-hook-form';
-import { UserContext } from '@/contexts/UserContext';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import RegionService from '@/services/region';
@@ -14,7 +12,7 @@ import RegionService from '@/services/region';
 const Regions = () => {
   const theme = useTheme();
   const { t } = useTranslation();
-  const { user } = useContext(UserContext);
+  const [formIsOpen, setFormIsOpen] = useState(false);
   const [currentRegion, setCurrentRegion] = useState<IRegion>();
   const [regions, setRegions] = useState({
     isLoading: true,
@@ -29,20 +27,22 @@ const Regions = () => {
     refreshRegions();
   }, [refreshRegions]);
 
-  const handleSubmitRegion: SubmitHandler<IRegion> = async (region) => {
+  const handleSubmitRegion = async (region: IRegion, parent_id?: string) => {
     try {
       setRegions({ isLoading: true, data: [] });
-      if ('id' in region) {
-        await RegionService.updateRegion(region.id, region);
+      if (!!region.id) {
+        await RegionService.updateRegion(region.id, { ...region, parent_id });
       } else {
-        await RegionService.saveRegion(region);
+        await RegionService.saveRegion({ ...region, parent_id });
       }
     } catch (err) {
       toast.error('An error as ocurred on management of user');
     }
 
-    setCurrentRegion(undefined);
-    refreshRegions();
+    if (!parent_id) {
+      setCurrentRegion(undefined);
+      refreshRegions();
+    }
   };
 
   const menuOptions = [
@@ -52,15 +52,19 @@ const Regions = () => {
     },
   ];
 
+  const handleClose = () => {
+    setFormIsOpen(false);
+    setCurrentRegion(undefined);
+  };
+
   return (
     <>
-      {currentRegion && (
-        <RegionForm
-          handleClose={() => setCurrentRegion(undefined)}
-          defaultValues={currentRegion as IUser}
-          handleSubmitForm={handleSubmitRegion}
-        />
-      )}
+      <RegionForm
+        isOpen={formIsOpen}
+        handleClose={handleClose}
+        regionId={currentRegion?.id}
+        handleSubmitForm={handleSubmitRegion}
+      />
 
       <VStack alignItems={'flex-start'} width={'454px'} pl={'24px'}>
         <Text fontWeight={600} fontSize={'20px'}>
@@ -73,12 +77,12 @@ const Regions = () => {
           </Center>
         ) : (
           <>
-            {regions.data.map((currentUser) => (
+            {regions.data.map((region) => (
               <HStack
                 justifyContent={'space-between'}
                 borderBottom={'1px solid'}
                 borderColor={'Gray.$400'}
-                key={currentUser.id}
+                key={region.id}
                 py={'12px'}
                 px={'16px'}
                 w={'100%'}
@@ -88,18 +92,18 @@ const Regions = () => {
                     <Icon name={'user'} />
                   </Center>
                   <VStack justifyContent="center" gap={0} alignItems="flex-start">
-                    <Text>{currentUser.name}</Text>
+                    <Text>{region.name}</Text>
                     <Text fontSize={'12px'}>
-                      {t('settings.tabs.region.total_schools', { value: currentUser.schoolsCount })}
+                      {t('settings.tabs.region.total_schools', { value: region.schoolsCount })}
                     </Text>
                   </VStack>
                 </HStack>
 
-                {currentUser.id !== user?.id && <Menu items={menuOptions} currentItem={currentUser} />}
+                <Menu items={menuOptions} currentItem={region} />
               </HStack>
             ))}
 
-            <HStack px={'16px'} py={'12px'} cursor={'pointer'} onClick={() => setCurrentRegion({} as any)}>
+            <HStack px={'16px'} py={'12px'} cursor={'pointer'} onClick={() => setFormIsOpen(true)}>
               <Icon name={'plus'} color={theme.colors.Primary['$200']} />
               <Text color={'Primary.$200'}>{t('settings.tabs.region.new')}</Text>
             </HStack>
