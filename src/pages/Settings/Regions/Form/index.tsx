@@ -31,6 +31,7 @@ const RegionForm: React.FC<Props> = ({ isOpen, regionId, handleSubmitForm, handl
 
   useEffect(() => {
     if (isOpen && regionId) {
+      setLoading(true);
       RegionService.getRegion(regionId).then((data) => {
         setRegion(data);
         setLoading(false);
@@ -53,6 +54,7 @@ const RegionForm: React.FC<Props> = ({ isOpen, regionId, handleSubmitForm, handl
 
   const onSubmit = () => {
     if (region) {
+      setLoading(true);
       handleSubmitForm({ ...region, level: 0 });
     }
   };

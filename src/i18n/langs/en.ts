@@ -108,6 +108,13 @@ const enTranslation = {
       'teachers-count': 'Teachers count',
       actions: 'Actions',
     },
+    form: {
+      new: 'New school',
+      update: 'Update school',
+      region: 'Region: ',
+      name: 'School name',
+      emis: 'Emis number',
+    },
   },
 
   'coach-over-time': {
@@ -209,15 +216,23 @@ const enTranslation = {
         edit: 'Edit',
         total_schools: 'Total school: {{ value }}',
         placeholder: 'Region name',
+        0: {
+          title: 'Regions',
+          new: 'New region',
+          placeholder: 'Region name',
+          select: 'Select a region',
+        },
         1: {
           title: 'Districts',
           new: 'New district',
           placeholder: 'District name',
+          select: 'Select a district',
         },
         2: {
           title: 'Municipalities',
           new: 'New Municipality',
           placeholder: 'Municipality name',
+          select: 'Select a municipality',
         },
       },
     },

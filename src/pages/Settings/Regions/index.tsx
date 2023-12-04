@@ -92,6 +92,7 @@ const Regions = () => {
                   <Center w={'40px'} h={'40px'} borderRadius={'50%'} background={'Blue.$200'}>
                     <Icon name={'user'} />
                   </Center>
+
                   <VStack justifyContent="center" gap={0} alignItems="flex-start">
                     <Text>{region.name}</Text>
                     <Text fontSize={'12px'}>
