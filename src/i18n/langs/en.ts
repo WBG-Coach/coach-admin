@@ -22,7 +22,7 @@ const enTranslation = {
     'coaching-sessions': 'Coaching sessions',
     data: 'DATA',
     schools: 'Schools',
-    'coaches-over-time': 'Coach over time',
+    'coaches-over-time': 'Coaching activity',
     'session-data': 'Session data',
     syncs: 'Sync log',
   },
