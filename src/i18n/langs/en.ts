@@ -14,7 +14,7 @@ const enTranslation = {
   },
 
   Navbar: {
-    logout: 'Logout',
+    logout: 'Log out',
     settings: 'Settings',
     dashboard: 'Dashboard',
     questionnaire: 'QUESTIONNAIRE',
@@ -24,7 +24,7 @@ const enTranslation = {
     schools: 'Schools',
     'coaches-over-time': 'Coach over time',
     'session-data': 'Session data',
-    syncs: 'Sync',
+    syncs: 'Sync log',
   },
 
   dashboard: {
@@ -35,16 +35,16 @@ const enTranslation = {
     },
     engagement: {
       title: 'Engagement',
-      description: 'The numbers that represent coach engagement using the Coach platform in the selected period.',
+      description: 'Overview of coaching engagement on the Coach platform for the selected period.',
       'teachers-coached': 'Teachers coached',
       'active-coaches': 'Active coaches',
       'coaching-sessions': 'Coaching sessions',
-      'coaching-sessions-per-teacher-over-last-three-months': 'Coaching sessions per teacher over last three months',
-      'completed-a-second-coach-session': 'Completed a second coach session',
+      'coaching-sessions-per-teacher-over-last-three-months': 'Sessions per teacher (last 3 months)',
+      'completed-a-second-coach-session': 'Completed a second coaching session',
     },
     'targeted-improvement-areas': {
       title: 'Targeted improvement areas',
-      description: 'Teaching practices teachers and coaches agreed to work on between coaching sessions',
+      description: 'Fundamental teaching practices and skills teachers and coaches agreed to work on between coaching sessions',
     },
     'needs-work': 'Needs work',
     'keep-working': 'Keep working',
@@ -54,12 +54,12 @@ const enTranslation = {
     'school-rating': 'School rating',
     'regional-average': 'Regional average',
     'national-average': 'National average',
-    'select-teaching-practices-to-show': 'Select Teaching Practices to show',
+    'select-teaching-practices-to-show': 'Select teaching practices to show',
     'supportive-learning-environment': 'Supportive learning environment',
     'teachers-showing-improvement-or-mastery': 'Teachers showing improvement or mastery',
     'teachers-and-coaches-chose-to-work-on-improving-this-practice':
       'Teachers and coaches chose to work on improving this practice',
-    'teachers-did-not-have-a-feedback-session': 'Teachers didn’t have a feedback session',
+    'teachers-did-not-have-a-feedback-session': 'Teachers without feedback sessions',
   },
 
   'teacher-practices': {
@@ -175,7 +175,7 @@ const enTranslation = {
       },
       'change-password': {
         title: 'Change password',
-        description: 'Update your access password.',
+        description: 'Update your password.',
         'current-password': 'Current password',
         'new-password': 'New password',
         'confirm-password': 'Confirm password',
