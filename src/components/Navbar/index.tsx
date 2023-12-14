@@ -79,7 +79,7 @@ const Navbar: React.FC = () => {
           zIndex={9999}
         >
           <HStack w="full" justifyContent="space-between">
-            <HamburgerIcon w={8} h={8} mx="24px" onClick={() => setOpen(!open)} cursor="pointer" />
+            <HamburgerIcon w={8} h={8} mx="24px" onClick={() => setOpen(!open)} cursor="pointer" maxW="180px" />
             <Image mx="auto" src={CoachLogo} alt={'Logo do coach'} m="24px" mb="16px" />
             <Box w="72px" />
           </HStack>
@@ -87,7 +87,7 @@ const Navbar: React.FC = () => {
         </VStack>
       ) : (
         <>
-          <Image src={CoachLogo} alt={'Logo do coach'} m="24px" mb="16px" />
+          <Image src={CoachLogo} alt={'Logo do coach'} m="24px" mb="16px" maxW="180px" />
           {menu}
         </>
       )}

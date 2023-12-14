@@ -11,62 +11,78 @@ import {
   DrawerFooter,
   FormControl,
   FormLabel,
-  Text,
   useToast,
+  Text,
   VStack,
+  Spinner,
+  HStack,
+  IconButton,
 } from '@chakra-ui/react';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import RegionSelect from './RegionSelect';
+import SchoolService from '@/services/school';
+import Icon from '@/components/Base/Icon';
 
 type Props = {
   isOpen: boolean;
-  school?: ISchool;
-  onSubmit: (competence: ISchool) => void;
+  schoolId?: string;
+  onSubmit: (school: ISchool) => void;
   onClose: () => void;
-  readonly?: boolean;
 };
 
-const SchoolForm: React.FC<Props> = ({ isOpen, school, onClose, onSubmit, readonly }) => {
+const SchoolForm: React.FC<Props> = ({ isOpen, schoolId, onClose, onSubmit }) => {
   const { t } = useTranslation();
   const toast = useToast();
-  const [schoolValues, setSchoolValues] = useState<ISchool>({
-    name: '',
-    emis_number: '',
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [showSelectRegion, setShowSelectRegion] = useState(false);
+  const [schoolValues, setSchoolValues] = useState<ISchool>();
 
   useEffect(() => {
-    if (school) {
-      setSchoolValues(school);
+    setShowSelectRegion(false);
+    if (schoolId) {
+      setIsLoading(true);
+      SchoolService.getSchool(schoolId).then((value) => {
+        setSchoolValues(value);
+        setIsLoading(false);
+        if (!value.region_id) {
+          setShowSelectRegion(true);
+        }
+      });
     } else {
+      setShowSelectRegion(true);
       setSchoolValues({
         name: '',
         emis_number: '',
+        region_id: undefined,
       });
+      setIsLoading(false);
     }
-  }, [isOpen, school]);
+  }, [isOpen, schoolId]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSchoolValues({
-      ...schoolValues,
-      [e.target.name]: e.target.value.toUpperCase(),
-    });
+    if (schoolValues)
+      setSchoolValues({
+        ...schoolValues,
+        [e.target.name]: e.target.value.toUpperCase(),
+      });
+  };
+
+  const handleRegionChange = (region_id?: string) => {
+    if (schoolValues) {
+      setSchoolValues({
+        ...schoolValues,
+        region_id,
+      });
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!schoolValues.name) {
-      toast({
-        title: 'School name is required.',
-        status: 'warning',
-        duration: 9000,
-        isClosable: true,
-        position: 'top-left',
-      });
-      return;
+    if (schoolValues) {
+      setIsLoading(true);
+      onSubmit(schoolValues);
     }
-
-    onSubmit(schoolValues);
   };
 
   return (
@@ -76,46 +92,57 @@ const SchoolForm: React.FC<Props> = ({ isOpen, school, onClose, onSubmit, readon
         <form onSubmit={handleSubmit} style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
           <DrawerCloseButton mt={2} color="Primary.$200" />
 
-          <DrawerHeader>{school ? (readonly ? 'View School' : 'Update school') : 'New School'}</DrawerHeader>
+          <DrawerHeader>{t(schoolId ? 'school.form.new' : 'school.form.update')}</DrawerHeader>
 
-          <DrawerBody>
-            <FormControl id="name" isRequired>
-              <FormLabel fontSize="16px" lineHeight="24px" fontWeight={500}>
-                School name
-              </FormLabel>
-              <Input
-                readOnly={readonly}
-                disabled={readonly}
-                type="text"
-                name="name"
-                value={schoolValues.name}
-                onChange={handleInputChange}
-              />
+          {isLoading ? (
+            <DrawerBody>
+              <Spinner />
+            </DrawerBody>
+          ) : (
+            <DrawerBody>
+              <FormControl id="name" isRequired>
+                <FormLabel fontSize="16px" lineHeight="24px" fontWeight={500}>
+                  {t('school.form.name')}
+                </FormLabel>
+                <Input type="text" name="name" value={schoolValues?.name} onChange={handleInputChange} />
 
-              <FormLabel mt={'14px'} fontSize="16px" lineHeight="24px" fontWeight={500}>
-                Emis number
-              </FormLabel>
-              <Input
-                readOnly={readonly}
-                disabled={readonly}
-                type="number"
-                name="emis_number"
-                value={schoolValues.emis_number}
-                onChange={handleInputChange}
-              />
-            </FormControl>
-          </DrawerBody>
+                <FormLabel mt={'14px'} fontSize="16px" lineHeight="24px" fontWeight={500}>
+                  {t('school.form.emis')}
+                </FormLabel>
+                <Input
+                  type="number"
+                  name="emis_number"
+                  value={schoolValues?.emis_number}
+                  onChange={handleInputChange}
+                />
 
-          {!readonly && (
-            <DrawerFooter mt="auto">
-              <Button colorScheme="blue" mr={3} type="submit">
-                Save
-              </Button>
-              <Button variant="outline" mr={'auto'} onClick={onClose}>
-                Cancel
-              </Button>
-            </DrawerFooter>
+                {showSelectRegion ? (
+                  <RegionSelect direction="column" onSelect={handleRegionChange} level={0} />
+                ) : (
+                  <HStack mt="20px" justifyContent="center" alignItems="center">
+                    <VStack w="full" alignItems="flex-start">
+                      <Text fontWeight={600}>{t('school.form.region')}</Text>
+                      <Text>{schoolValues?.region?.name}</Text>
+                    </VStack>
+                    <IconButton
+                      my="auto"
+                      icon={<Icon name="pen" />}
+                      aria-label="Edit"
+                      onClick={() => setShowSelectRegion(true)}
+                    />
+                  </HStack>
+                )}
+              </FormControl>
+            </DrawerBody>
           )}
+          <DrawerFooter mt="auto">
+            <Button colorScheme="blue" mr={3} type="submit">
+              {t('common.save')}
+            </Button>
+            <Button variant="outline" mr={'auto'} onClick={onClose}>
+              {t('common.cancel')}
+            </Button>
+          </DrawerFooter>
         </form>
       </DrawerContent>
     </Drawer>

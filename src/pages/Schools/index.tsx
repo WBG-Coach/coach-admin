@@ -25,7 +25,6 @@ const SchoolsPage: React.FC = () => {
   const [newSchool, setNewSchool] = useState(false);
   const [schools, setSchools] = useState<ISchool[]>([]);
   const [isLoadingList, setIsLoadingList] = useState(true);
-  const [isLoadingForm, setIsLoadingForm] = useState(false);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const [schoolToEdit, setSchoolToEdit] = useState<ISchool>();
   const [schoolToDelete, setSchoolToDelete] = useState<ISchool>();
@@ -47,13 +46,11 @@ const SchoolsPage: React.FC = () => {
   };
 
   const saveSchool = async (school: Partial<ISchool>) => {
-    setIsLoadingForm(true);
     if (schoolToEdit) {
       await SchoolService.updateSchool({ ...schoolToEdit, ...school });
     } else {
       await SchoolService.saveSchool(school);
     }
-    setIsLoadingForm(false);
     loadSchools();
     closeForm();
   };
@@ -82,7 +79,7 @@ const SchoolsPage: React.FC = () => {
       <SchoolForm
         onClose={closeForm}
         onSubmit={saveSchool}
-        school={schoolToEdit}
+        schoolId={schoolToEdit?.id}
         isOpen={!!schoolToEdit || newSchool}
       />
       {isLoadingList ? (

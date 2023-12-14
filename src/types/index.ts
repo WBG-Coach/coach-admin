@@ -23,8 +23,12 @@ export interface ICoach {
 }
 
 export interface IRegion {
-  id: string;
+  id?: string;
   name: string;
+  level?: number;
+  parent?: IRegion;
+  parent_id?: string;
+  children?: IRegion[];
   schoolsCount?: number;
 }
 

@@ -1,8 +1,8 @@
-import { IUser } from '@/types';
-import { SubmitHandler } from 'react-hook-form';
+import { IRegion } from '@/types';
 
 export type Props = {
-  defaultValues: IUser;
+  isOpen: boolean;
   handleClose: () => void;
-  handleSubmitForm: SubmitHandler<IUser>;
+  regionId?: IRegion['id'];
+  handleSubmitForm: (region: IRegion) => Promise<void>;
 };

@@ -11,6 +11,14 @@ const enTranslation = {
     cancel: 'Cancel',
     download: 'Download data',
     'items-per-page': 'Items per page',
+    'all-time': 'All time',
+    'last-7-days': 'Last 7 days',
+    'last-30-days': 'Last 30 days',
+    'last-60-days': 'Last 60 days',
+    'last-90-days': 'Last 90 days',
+    'all-regions': 'All regions',
+    'all-schools': 'All schools',
+    'all-districts': 'All districts',
   },
 
   Navbar: {
@@ -99,6 +107,13 @@ const enTranslation = {
       'coaches-count': 'Coaches count',
       'teachers-count': 'Teachers count',
       actions: 'Actions',
+    },
+    form: {
+      new: 'New school',
+      update: 'Update school',
+      region: 'Region: ',
+      name: 'School name',
+      emis: 'Emis number',
     },
   },
 
@@ -194,10 +209,30 @@ const enTranslation = {
       region: {
         title: 'Regions',
         new: 'New region',
+        'sub-subregion-title': 'Municipalities',
+        'subregion-title': 'Districts',
+        'new-subregion': 'New district',
+        'new-sub-subregion': 'New municipality',
         edit: 'Edit',
         total_schools: 'Total school: {{ value }}',
-        form: {
-          name: 'Name',
+        placeholder: 'Region name',
+        0: {
+          title: 'Regions',
+          new: 'New region',
+          placeholder: 'Region name',
+          select: 'Select a region',
+        },
+        1: {
+          title: 'Districts',
+          new: 'New district',
+          placeholder: 'District name',
+          select: 'Select a district',
+        },
+        2: {
+          title: 'Municipalities',
+          new: 'New Municipality',
+          placeholder: 'Municipality name',
+          select: 'Select a municipality',
         },
       },
     },
