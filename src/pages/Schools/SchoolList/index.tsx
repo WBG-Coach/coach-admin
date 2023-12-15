@@ -1,29 +1,12 @@
-import {
-  Button,
-  Center,
-  Flex,
-  HStack,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalOverlay,
-  Spinner,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
-import { ISchool } from '@/types';
+import { Flex, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import { IRegion, ISchool } from '@/types';
 import Table from '@/components/Table';
 import Icon from '@/components/Base/Icon';
 import { useTranslation } from 'react-i18next';
-import QRCode from 'qrcode.react';
 import { useEffect, useState } from 'react';
 import SchoolService from '@/services/school';
 import QRCodeModal from './QRCodeModal';
+import { formatRegionPath } from '@/common/helper';
 
 type Props = {
   schools: ISchool[];
@@ -52,19 +35,19 @@ const SchoolList: React.FC<Props> = ({ schools, handleDelete, handleEdit }) => {
         data={schools}
         columns={[
           {
+            renderColumn: (item: ISchool) => item.emis_number,
+            title: t('school.table.emis_number'),
+            width: '150px',
+          },
+          {
             renderColumn: (item: ISchool) => item.name,
             title: t('school.table.name'),
-            width: '30%',
+            width: 'calc(40% - 115px)',
           },
           {
-            renderColumn: (item: ISchool) => item.coachSchools?.length || '0',
-            title: t('school.table.coaches-count'),
-            width: '30%',
-          },
-          {
-            renderColumn: (item: ISchool) => item.teachers?.length || '0',
-            title: t('school.table.teachers-count'),
-            width: '30%',
+            renderColumn: (item: ISchool) => formatRegionPath(item.region),
+            title: t('school.table.region'),
+            width: 'calc(60% - 115px)',
           },
           {
             renderColumn: (item: ISchool) => (
@@ -90,7 +73,7 @@ const SchoolList: React.FC<Props> = ({ schools, handleDelete, handleEdit }) => {
                 </Menu>
               </Flex>
             ),
-            width: '10%',
+            width: '80px',
             title: 'common.actions',
           },
         ]}

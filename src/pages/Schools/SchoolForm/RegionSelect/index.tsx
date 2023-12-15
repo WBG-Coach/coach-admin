@@ -6,37 +6,35 @@ import { useTranslation } from 'react-i18next';
 
 type Props = {
   direction: 'row' | 'column';
-  parentId?: string;
+  region?: IRegion;
   level: number;
   onSelect: (regionId?: string) => void;
 };
 
-const RegionSelect: React.FC<Props> = ({ level, direction, parentId, onSelect }) => {
+const RegionSelect: React.FC<Props> = ({ level, direction, region, onSelect }) => {
   const { t } = useTranslation();
-  const [hasChildren, setHasChildren] = useState(false);
-  const [regions, setRegions] = useState<IRegion[]>([]);
-  const [selectedId, setSelectedId] = useState<IRegion['id']>();
+  const [regions, setRegions] = useState<IRegion[]>(region?.children || []);
+  const [selectedRegion, setSelectedRegion] = useState<IRegion>();
 
   useEffect(() => {
-    setRegions([]);
-    setHasChildren(false);
-    setSelectedId(undefined);
-    onSelect(undefined);
-    RegionService.getRegionsByParentId(parentId).then(setRegions);
-  }, [parentId]);
-
-  useEffect(() => {
-    if (selectedId) {
-      const region = regions.find((item) => item.id === selectedId);
-      const canSubmitValue = !region?.children || region.children.length === 0;
-
-      if (canSubmitValue) {
-        onSelect(selectedId);
-      } else {
-        setHasChildren(true);
-      }
+    if (!region) {
+      RegionService.getRegionsTree().then(setRegions);
     }
-  }, [selectedId]);
+  }, [region]);
+
+  const handleSelect = (regionId?: string) => {
+    const region = regions.find((region) => region.id === regionId);
+
+    if (region) {
+      if (!!region.children?.length) {
+        setSelectedRegion(region);
+      } else {
+        onSelect(region.id);
+      }
+    } else {
+      setSelectedRegion(undefined);
+    }
+  };
 
   return (
     <Flex
@@ -48,7 +46,7 @@ const RegionSelect: React.FC<Props> = ({ level, direction, parentId, onSelect })
     >
       <VStack w="full" alignItems="flex-start">
         <Text fontWeight={600}>{t(`settings.tabs.region.${level}.select`)}</Text>
-        <Select placeholder="..." onChange={(e) => setSelectedId(e.target.value)} value={selectedId}>
+        <Select placeholder="..." onChange={(e) => handleSelect(e.target.value)} value={selectedRegion?.id}>
           {regions?.map((region) => (
             <option key={region.id} value={region.id}>
               {region.name}
@@ -56,8 +54,8 @@ const RegionSelect: React.FC<Props> = ({ level, direction, parentId, onSelect })
           ))}
         </Select>
       </VStack>
-      {hasChildren && (
-        <RegionSelect level={level + 1} parentId={selectedId} onSelect={onSelect} direction={direction} />
+      {!!selectedRegion?.children?.length && (
+        <RegionSelect level={level + 1} region={selectedRegion} onSelect={onSelect} direction={direction} />
       )}
     </Flex>
   );

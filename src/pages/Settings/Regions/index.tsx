@@ -19,8 +19,9 @@ const Regions = () => {
     data: [] as IRegion[],
   });
 
-  const refreshRegions = useCallback(() => {
-    RegionService.getRegions().then((regions) => setRegions({ isLoading: false, data: regions }));
+  const refreshRegions = useCallback(async () => {
+    const regions = await RegionService.getRegions();
+    setRegions({ isLoading: false, data: regions });
   }, []);
 
   useEffect(() => {
@@ -30,11 +31,7 @@ const Regions = () => {
   const handleSubmitRegion = async (region: IRegion) => {
     try {
       setRegions({ isLoading: true, data: [] });
-      if (!!region.id) {
-        await RegionService.updateRegion(region.id, region);
-      } else {
-        await RegionService.saveRegion(region);
-      }
+      await RegionService.saveRegion(region);
     } catch (err) {
       toast.error('An error as ocurred on management of user');
     }

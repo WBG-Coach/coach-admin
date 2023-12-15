@@ -52,7 +52,8 @@ const enTranslation = {
     },
     'targeted-improvement-areas': {
       title: 'Targeted improvement areas',
-      description: 'Fundamental teaching practices and skills teachers and coaches agreed to work on between coaching sessions',
+      description:
+        'Fundamental teaching practices and skills teachers and coaches agreed to work on between coaching sessions',
     },
     'needs-work': 'Needs work',
     'keep-working': 'Keep working',
@@ -104,8 +105,8 @@ const enTranslation = {
     filter: 'School name',
     table: {
       name: 'Name',
-      'coaches-count': 'Coaches count',
-      'teachers-count': 'Teachers count',
+      emis_number: 'Emis code',
+      region: 'Region',
       actions: 'Actions',
     },
     form: {

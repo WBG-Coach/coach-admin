@@ -11,7 +11,6 @@ import {
   DrawerFooter,
   FormControl,
   FormLabel,
-  useToast,
   Text,
   VStack,
   Spinner,
@@ -23,6 +22,7 @@ import { useTranslation } from 'react-i18next';
 import RegionSelect from './RegionSelect';
 import SchoolService from '@/services/school';
 import Icon from '@/components/Base/Icon';
+import { formatRegionPath } from '@/common/helper';
 
 type Props = {
   isOpen: boolean;
@@ -33,7 +33,6 @@ type Props = {
 
 const SchoolForm: React.FC<Props> = ({ isOpen, schoolId, onClose, onSubmit }) => {
   const { t } = useTranslation();
-  const toast = useToast();
   const [isLoading, setIsLoading] = useState(true);
   const [showSelectRegion, setShowSelectRegion] = useState(false);
   const [schoolValues, setSchoolValues] = useState<ISchool>();
@@ -122,7 +121,7 @@ const SchoolForm: React.FC<Props> = ({ isOpen, schoolId, onClose, onSubmit }) =>
                   <HStack mt="20px" justifyContent="center" alignItems="center">
                     <VStack w="full" alignItems="flex-start">
                       <Text fontWeight={600}>{t('school.form.region')}</Text>
-                      <Text>{schoolValues?.region?.name}</Text>
+                      <Text>{formatRegionPath(schoolValues?.region)}</Text>
                     </VStack>
                     <IconButton
                       my="auto"
