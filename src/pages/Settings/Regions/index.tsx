@@ -3,7 +3,21 @@ import Icon from '@/components/Base/Icon';
 import Loader from '@/components/Base/Loader';
 import Menu from '@/components/Menu';
 import { IRegion, IUser } from '@/types';
-import { Center, HStack, Text, VStack, useTheme } from '@chakra-ui/react';
+import {
+  Button,
+  Center,
+  HStack,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  VStack,
+  useTheme,
+} from '@chakra-ui/react';
 import RegionForm from './Form';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +27,7 @@ const Regions = () => {
   const theme = useTheme();
   const { t } = useTranslation();
   const [formIsOpen, setFormIsOpen] = useState(false);
+  const [deleteIsOpen, setDeleteIsOpen] = useState(false);
   const [currentRegion, setCurrentRegion] = useState<IRegion>();
   const [regions, setRegions] = useState({
     isLoading: true,
@@ -43,9 +58,9 @@ const Regions = () => {
   const menuOptions = [
     {
       label: t('settings.tabs.region.edit'),
-      handleClick: (user: IUser) => {
+      handleClick: (region: IRegion) => {
         setFormIsOpen(true);
-        setCurrentRegion(user);
+        setCurrentRegion(region);
       },
     },
   ];
@@ -53,6 +68,18 @@ const Regions = () => {
   const handleClose = () => {
     setFormIsOpen(false);
     setCurrentRegion(undefined);
+  };
+
+  const deleteRegion = async () => {
+    if (currentRegion?.id) {
+      setRegions({
+        isLoading: true,
+        data: [] as IRegion[],
+      });
+      setDeleteIsOpen(false);
+      await RegionService.deleteRegion(currentRegion.id);
+      refreshRegions();
+    }
   };
 
   return (
@@ -98,7 +125,23 @@ const Regions = () => {
                   </VStack>
                 </HStack>
 
-                <Menu items={menuOptions} currentItem={region} />
+                <Menu
+                  items={[
+                    ...menuOptions,
+                    ...(!!region?.schoolsCount
+                      ? []
+                      : [
+                          {
+                            label: t('settings.tabs.region.delete'),
+                            handleClick: (region: IRegion) => {
+                              setDeleteIsOpen(true);
+                              setCurrentRegion(region);
+                            },
+                          },
+                        ]),
+                  ]}
+                  currentItem={region}
+                />
               </HStack>
             ))}
 
@@ -109,6 +152,23 @@ const Regions = () => {
           </>
         )}
       </VStack>
+
+      <Modal isOpen={!!deleteIsOpen} onClose={() => setDeleteIsOpen(false)}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Confirm Deletion</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>Are you sure you want to delete this region?</ModalBody>
+          <ModalFooter>
+            <Button variant="ghost" mr={3} onClick={() => setDeleteIsOpen(false)}>
+              Cancel
+            </Button>
+            <Button colorScheme="red" onClick={deleteRegion}>
+              Delete
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };

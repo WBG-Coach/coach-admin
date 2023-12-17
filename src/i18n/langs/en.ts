@@ -10,6 +10,7 @@ const enTranslation = {
     generateQRCode: 'Generate QRCode',
     cancel: 'Cancel',
     download: 'Download data',
+    import: 'Import data',
     'items-per-page': 'Items per page',
     'all-time': 'All time',
     'last-7-days': 'Last 7 days',
@@ -215,6 +216,7 @@ const enTranslation = {
         'new-subregion': 'New district',
         'new-sub-subregion': 'New municipality',
         edit: 'Edit',
+        delete: 'Delete',
         total_schools: 'Total school: {{ value }}',
         placeholder: 'Region name',
         0: {

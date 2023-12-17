@@ -19,6 +19,7 @@ import HeaderPage from '@/components/HeaderPage';
 import { useTranslation } from 'react-i18next';
 import SchoolForm from './SchoolForm';
 import handleDownloadJSON from '@/common/download';
+import SchoolImportModal from './SchoolImportModal';
 
 const SchoolsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ const SchoolsPage: React.FC = () => {
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const [schoolToEdit, setSchoolToEdit] = useState<ISchool>();
   const [schoolToDelete, setSchoolToDelete] = useState<ISchool>();
+  const [showImportModal, setShowImportModal] = useState(false);
 
   useEffect(() => {
     loadSchools();
@@ -67,6 +69,11 @@ const SchoolsPage: React.FC = () => {
     setSchoolToDelete(undefined);
   };
 
+  const onCloseImport = (reload?: boolean) => {
+    setShowImportModal(false);
+    if (reload) loadSchools();
+  };
+
   return (
     <Box p={4} minH="100vh" flex={1}>
       <HeaderPage
@@ -74,6 +81,7 @@ const SchoolsPage: React.FC = () => {
         title={t('Navbar.schools')}
         newButtonValue={t('school.new-school')}
         onClickNew={() => setNewSchool(true)}
+        onClickImport={() => setShowImportModal(true)}
         onClickDownload={() => handleDownloadJSON(schools, t('Navbar.schools').toLowerCase().replace(' ', '-'))}
       />
       <SchoolForm
@@ -89,6 +97,9 @@ const SchoolsPage: React.FC = () => {
       ) : (
         <SchoolList schools={schools} handleEdit={setSchoolToEdit} handleDelete={setSchoolToDelete} />
       )}
+
+      <SchoolImportModal isOpen={showImportModal} onClose={onCloseImport} />
+
       <Modal isOpen={!!schoolToDelete} onClose={onCloseDeleteModal}>
         <ModalOverlay />
         <ModalContent>

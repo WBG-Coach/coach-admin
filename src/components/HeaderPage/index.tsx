@@ -9,9 +9,17 @@ type Props = {
   newButtonValue?: string | null;
   onClickNew?: () => void;
   onClickDownload?: () => void;
+  onClickImport?: () => void;
 };
 
-const HeaderPage: React.FC<Props> = ({ title, subtitle, newButtonValue, onClickNew, onClickDownload }) => {
+const HeaderPage: React.FC<Props> = ({
+  title,
+  subtitle,
+  newButtonValue,
+  onClickImport,
+  onClickNew,
+  onClickDownload,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -25,6 +33,12 @@ const HeaderPage: React.FC<Props> = ({ title, subtitle, newButtonValue, onClickN
         </Text>
       </VStack>
       <HStack>
+        {onClickImport && (
+          <Button variant="solid" colorScheme="blue" onClick={onClickImport} gap="8px">
+            {t('common.import')}
+          </Button>
+        )}
+
         {onClickDownload && (
           <Button variant="solid" colorScheme="blue" onClick={onClickDownload} gap="8px">
             {t('common.download')}
