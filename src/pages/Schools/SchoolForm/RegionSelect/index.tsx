@@ -1,17 +1,19 @@
 import RegionService from '@/services/region';
 import { IRegion } from '@/types';
 import { Flex, Select, Text, VStack } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
   direction: 'row' | 'column';
   region?: IRegion;
   level: number;
-  onSelect: (regionId?: string) => void;
+  onSelect?: (regionId?: string) => void;
+  onChangeEvent?: (e: ChangeEvent<HTMLSelectElement>) => void;
+  isInvalid?: boolean;
 };
 
-const RegionSelect: React.FC<Props> = ({ level, direction, region, onSelect }) => {
+const RegionSelect: React.FC<Props> = ({ level, direction, region, onSelect, onChangeEvent, ...otherProps }) => {
   const { t } = useTranslation();
   const [regions, setRegions] = useState<IRegion[]>(region?.children || []);
   const [selectedRegion, setSelectedRegion] = useState<IRegion>();
@@ -19,21 +21,27 @@ const RegionSelect: React.FC<Props> = ({ level, direction, region, onSelect }) =
   useEffect(() => {
     if (!region) {
       RegionService.getRegionsTree().then(setRegions);
+    } else {
+      setRegions(region.children || []);
+      setSelectedRegion(undefined);
     }
   }, [region]);
 
-  const handleSelect = (regionId?: string) => {
-    const region = regions.find((region) => region.id === regionId);
+  const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+    const region = regions.find((region) => region.id === e.target.value);
 
     if (region) {
       if (!!region.children?.length) {
         setSelectedRegion(region);
-      } else {
+        if (onSelect) onSelect(region.id);
+      } else if (onSelect) {
         onSelect(region.id);
       }
     } else {
       setSelectedRegion(undefined);
+      if (onSelect) onSelect(undefined);
     }
+    if (onChangeEvent) onChangeEvent(e);
   };
 
   return (
@@ -46,7 +54,12 @@ const RegionSelect: React.FC<Props> = ({ level, direction, region, onSelect }) =
     >
       <VStack w="full" alignItems="flex-start">
         <Text fontWeight={600}>{t(`settings.tabs.region.${level}.select`)}</Text>
-        <Select placeholder="..." onChange={(e) => handleSelect(e.target.value)} value={selectedRegion?.id}>
+        <Select
+          placeholder="..."
+          {...(!selectedRegion?.children?.length ? otherProps : {})}
+          value={selectedRegion?.id}
+          onChange={(e) => handleSelect(e)}
+        >
           {regions?.map((region) => (
             <option key={region.id} value={region.id}>
               {region.name}
@@ -55,7 +68,14 @@ const RegionSelect: React.FC<Props> = ({ level, direction, region, onSelect }) =
         </Select>
       </VStack>
       {!!selectedRegion?.children?.length && (
-        <RegionSelect level={level + 1} region={selectedRegion} onSelect={onSelect} direction={direction} />
+        <RegionSelect
+          {...otherProps}
+          level={level + 1}
+          onChangeEvent={onChangeEvent}
+          region={selectedRegion}
+          onSelect={onSelect}
+          direction={direction}
+        />
       )}
     </Flex>
   );

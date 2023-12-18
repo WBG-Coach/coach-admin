@@ -11,19 +11,23 @@ import {
   DrawerHeader,
   DrawerOverlay,
   FormLabel,
+  HStack,
+  IconButton,
   Input,
   Select,
-  Spinner,
+  Text,
+  VStack,
 } from '@chakra-ui/react';
 import { ROLES, userRoles } from '@/common/user';
-import { REGIONS } from '@/common/constants';
-import SchoolService from '@/services/school';
-import Loader from '@/components/Base/Loader';
-import SelectDistrict from '@/components/SelectDistrict';
+import RegionSelect from '@/pages/Schools/SchoolForm/RegionSelect';
+import { useTranslation } from 'react-i18next';
+import { formatRegionPath } from '@/common/helper';
+import Icon from '@/components/Base/Icon';
 
 const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClose }) => {
+  const { t } = useTranslation();
+  const [showSelectRegion, setShowSelectRegion] = useState(!defaultValues);
   const [role, setRole] = useState<string>();
-  const [region, setRegion] = useState<string>();
   const {
     reset,
     control,
@@ -33,6 +37,8 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
 
   useEffect(() => {
     reset(defaultValues);
+    setShowSelectRegion(!defaultValues);
+    setRole(defaultValues?.role);
   }, [defaultValues]);
 
   return (
@@ -120,52 +126,41 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
               )}
             />
 
-            {role && role !== ROLES.admin && (
-              <>
-                <FormLabel htmlFor="region" style={{ marginTop: '8px' }}>
-                  Region
-                </FormLabel>
-                <Controller
-                  rules={{ required: true }}
-                  control={control}
-                  name="region_id"
-                  render={({ field, fieldState, formState }) => (
-                    <Select
-                      id={'region'}
+            <Controller
+              rules={{ required: role && role === ROLES.analyst }}
+              control={control}
+              name="region_id"
+              render={({ field, fieldState }) =>
+                role && role === ROLES.analyst ? (
+                  showSelectRegion ? (
+                    <RegionSelect
                       {...field}
-                      isInvalid={!!fieldState.error}
-                      onChange={(e) => {
+                      level={0}
+                      direction="column"
+                      isInvalid={fieldState.invalid}
+                      onChangeEvent={(e) => {
                         field.onChange(e);
-                        setRegion(e.target.value);
                       }}
-                    >
-                      <option value={undefined}>{''}</option>
-                      {REGIONS.map((region) => (
-                        <option key={region} value={region}>
-                          {region}
-                        </option>
-                      ))}
-                    </Select>
-                  )}
-                />
-              </>
-            )}
-
-            {role && role === ROLES['district-analyst'] && (
-              <>
-                <FormLabel htmlFor="region" style={{ marginTop: '8px' }}>
-                  District
-                </FormLabel>
-                <Controller
-                  rules={{ required: true }}
-                  control={control}
-                  name="district"
-                  render={({ field, fieldState }) => (
-                    <SelectDistrict role={role} region={region} {...field} isInvalid={!!fieldState.error} />
-                  )}
-                />
-              </>
-            )}
+                    />
+                  ) : (
+                    <HStack mt="20px" justifyContent="center" alignItems="center">
+                      <VStack w="full" alignItems="flex-start">
+                        <Text fontWeight={600}>{t('school.form.region')}</Text>
+                        <Text>{formatRegionPath(defaultValues.region)}</Text>
+                      </VStack>
+                      <IconButton
+                        my="auto"
+                        icon={<Icon name="pen" />}
+                        aria-label="Edit"
+                        onClick={() => setShowSelectRegion(true)}
+                      />
+                    </HStack>
+                  )
+                ) : (
+                  <></>
+                )
+              }
+            />
           </DrawerBody>
 
           <DrawerFooter mt="auto">

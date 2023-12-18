@@ -36,8 +36,9 @@ export interface IUser {
   id: string;
   email: string;
   name: string;
-  role: 'region-analyst' | 'district-analyst' | 'admin';
+  role: 'analyst' | 'admin';
   region_id?: string;
+  region?: IRegion;
   district?: string;
   password: string;
 }

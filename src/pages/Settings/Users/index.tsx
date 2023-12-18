@@ -1,16 +1,16 @@
-import Icon from '@/components/Base/Icon';
-import Loader from '@/components/Base/Loader';
-import Menu from '@/components/Menu';
-import UserService from '@/services/user';
-import { IUser } from '@/types';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Center, HStack, Text, VStack, useTheme } from '@chakra-ui/react';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import UserForm from './Form';
-import { SubmitHandler } from 'react-hook-form';
 import { UserContext } from '@/contexts/UserContext';
-import AuthService from '@/services/auth';
-import { toast } from 'react-toastify';
+import { SubmitHandler } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import Loader from '@/components/Base/Loader';
+import UserService from '@/services/user';
+import AuthService from '@/services/auth';
+import Icon from '@/components/Base/Icon';
+import { toast } from 'react-toastify';
+import Menu from '@/components/Menu';
+import { IUser } from '@/types';
+import UserForm from './Form';
 
 const Users = () => {
   const theme = useTheme();
@@ -108,7 +108,12 @@ const Users = () => {
               </HStack>
             ))}
 
-            <HStack px={'16px'} py={'12px'} cursor={'pointer'} onClick={() => setCurrentUser({} as any)}>
+            <HStack
+              px={'16px'}
+              py={'12px'}
+              cursor={'pointer'}
+              onClick={() => setCurrentUser({ name: '', email: '', password: '', role: '' } as any)}
+            >
               <Icon name={'plus'} color={theme.colors.Primary['$200']} />
               <Text color={'Primary.$200'}>{t('settings.tabs.users.new')}</Text>
             </HStack>
