@@ -1,13 +1,6 @@
-import React, { useContext, useState } from 'react';
-import Loader from '@/components/Base/Loader';
-import { UserContext, useUserContext } from '@/contexts/UserContext';
-import { IUser } from '@/types';
-import { Button, Center, FormControl, FormLabel, HStack, Input, Radio, Text, VStack } from '@chakra-ui/react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { useUserContext } from '@/contexts/UserContext';
+import { HStack, Radio, Text, VStack } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import Icon from '@/components/Base/Icon';
 
 const ChangeLanguage = () => {
   const { user, updateLocalUser } = useUserContext();
