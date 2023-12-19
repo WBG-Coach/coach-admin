@@ -5,10 +5,12 @@ import AuthService from '@/services/auth';
 import { IUser } from '../../types';
 import { toast } from 'react-toastify';
 import UserService from '@/services/user';
+import { useTranslation } from 'react-i18next';
 
 export type UserContextProps = {
   login: (prop: { email: string; password: string }) => Promise<void>;
   handleUpdateUser: (user: Partial<IUser>) => Promise<void>;
+  updateLocalUser: (user: IUser) => void;
   logout: () => void;
   user?: IUser;
 };
@@ -21,11 +23,13 @@ interface Props {
 
 const UserContextProvider = ({ children }: Props) => {
   const [user, setUser] = useState<IUser>();
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     let storageUser = StorageService.getUser();
     if (storageUser) {
       setUser(storageUser);
+      if (storageUser.language) i18n.changeLanguage(storageUser.language);
     }
   }, []);
 
@@ -42,6 +46,8 @@ const UserContextProvider = ({ children }: Props) => {
       if (user) {
         const newUser = { ...user, ...userToUpdate };
         await UserService.updateUser(newUser.id || user?.id, userToUpdate);
+        StorageService.setUser(newUser);
+
         setUser(newUser);
       }
     } catch (err) {
@@ -56,12 +62,18 @@ const UserContextProvider = ({ children }: Props) => {
     StorageService.cleanStorage();
   };
 
+  const updateLocalUser = async (user: IUser) => {
+    StorageService.setUser(user);
+    setUser(user);
+  };
+
   return (
     <UserContext.Provider
       value={{
         handleUpdateUser,
         login: handleLogin,
         logout,
+        updateLocalUser,
         user,
       }}
     >

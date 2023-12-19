@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Loader from '@/components/Base/Loader';
-import { UserContext } from '@/contexts/UserContext';
+import { UserContext, useUserContext } from '@/contexts/UserContext';
 import { IUser } from '@/types';
 import { Button, Center, FormControl, FormLabel, HStack, Input, Radio, Text, VStack } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
@@ -10,10 +10,12 @@ import { useTranslation } from 'react-i18next';
 import Icon from '@/components/Base/Icon';
 
 const ChangeLanguage = () => {
+  const { user, updateLocalUser } = useUserContext();
   const { t, i18n } = useTranslation();
 
-  const changeLanguage = (lang: string) => {
-    i18n.changeLanguage(lang);
+  const changeLanguage = (language: string) => {
+    i18n.changeLanguage(language);
+    if (user) updateLocalUser({ ...user, language });
   };
 
   return (

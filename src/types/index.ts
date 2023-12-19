@@ -34,6 +34,7 @@ export interface IRegion {
 
 export interface IUser {
   id: string;
+  language?: string;
   email: string;
   name: string;
   role: 'analyst' | 'admin';
