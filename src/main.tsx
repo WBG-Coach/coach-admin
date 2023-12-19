@@ -11,6 +11,20 @@ import './i18n';
 import { BrowserRouter } from 'react-router-dom';
 import '@fontsource/noto-sans';
 
+const changeFavicon = () => {
+  const link = document.querySelector('link[rel="icon"]');
+  if (link && import.meta.env.VITE_COUNTRY === 'np') {
+    link.setAttribute('href', '/np/admin/src/assets/images/logos/CoachLogoNP.png');
+    document.title = 'Coach Nepal';
+  }
+
+  if (link && import.meta.env.VITE_COUNTRY === 'sl') {
+    document.title = 'Coach SL';
+  }
+};
+
+changeFavicon();
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ChakraProvider theme={lightTheme}>
