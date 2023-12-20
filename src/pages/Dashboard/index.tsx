@@ -21,34 +21,42 @@ const DashboardPage: React.FC = () => {
   const [dashboard, setDashboard] = useState<IDashboard>();
   const [regionId, setRegionId] = useState(user?.region_id);
   const [selected, setSelected] = useState<ITeachingPractices>();
-  const [dataRange, setDataRange] = useState<Range>();
+  const [dateRange, setDateRange] = useState<Range>();
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   useEffect(() => {
     if (!loading) {
       setLoading(true);
 
-      DashboardService.getData(regionId, dataRange).then((data) => {
+      DashboardService.getData(regionId, dateRange).then((data) => {
         setDashboard(data);
         setSelected(data?.teachingPractices[0]);
         setLoading(false);
       });
     }
-  }, [regionId, dataRange]);
+  }, [regionId, dateRange]);
 
   const handleRegion = (regionId?: string) => {
     setRegionId(regionId);
   };
 
   const calcAverageStars = (stars: IStars) => {
+    const total = stars.needsWork + stars.keepWorking + stars.needsAttention + stars.almostThere + stars.doingGreat;
+    if (total === 0) return 0;
     return (
       (stars.needsWork * 1 +
         stars.keepWorking * 2 +
         stars.needsAttention * 3 +
         stars.almostThere * 4 +
         stars.doingGreat * 5) /
-      (stars.needsWork + stars.keepWorking + stars.needsAttention + stars.almostThere + stars.doingGreat)
+      total
     );
+  };
+
+  const handleChangeDateRange = (range: Range) => {
+    if (dateRange?.startDate !== range.startDate || dateRange?.endDate !== range.endDate) {
+      setDateRange(range);
+    }
   };
 
   return (
@@ -58,7 +66,7 @@ const DashboardPage: React.FC = () => {
           <RegionSelect direction="row" level={0} onSelect={handleRegion} />
         </Flex>
         <Flex flex={1} maxW="220px" ml="12px">
-          <DataRangePicker onChange={setDataRange} />
+          <DataRangePicker onChange={handleChangeDateRange} />
         </Flex>
       </Flex>
 

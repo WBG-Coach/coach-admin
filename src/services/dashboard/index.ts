@@ -6,7 +6,7 @@ export const DashboardService = {
   getData: async (regionId?: string, dataRange?: Range): Promise<IDashboard> =>
     (
       await _axios.get<IDashboard>('dashboard', {
-        params: { regionId, startDate: dataRange?.startDate, endDate: dataRange?.endDate },
+        params: { regionId, startDate: dataRange?.startDate?.toJSON(), endDate: dataRange?.endDate?.toJSON() },
       })
     ).data,
 };
