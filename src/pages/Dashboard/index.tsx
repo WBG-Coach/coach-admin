@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Center, Flex, HStack, Text, VStack, useBreakpointValue } from '@chakra-ui/react';
-import { IDashboard, ITeachingPractices } from '@/types';
+import { IDashboard, IStars, ITeachingPractices } from '@/types';
 import DashboardService from '@/services/dashboard';
 import Loader from '@/components/Base/Loader';
 import { CardValue } from './components/CardValue';
@@ -11,6 +11,8 @@ import { HorizontalBar } from './components/HorizontalBar';
 import { useUserContext } from '@/contexts/UserContext';
 import { useTranslation } from 'react-i18next';
 import RegionSelect from '../Schools/SchoolForm/RegionSelect';
+import DataRangePicker from '@/components/DataRangePicker';
+import { Range } from 'react-date-range';
 
 const DashboardPage: React.FC = () => {
   const { user } = useUserContext();
@@ -18,32 +20,46 @@ const DashboardPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [dashboard, setDashboard] = useState<IDashboard>();
   const [regionId, setRegionId] = useState(user?.region_id);
-  const [district, setDistrict] = useState(user?.district);
   const [selected, setSelected] = useState<ITeachingPractices>();
+  const [dataRange, setDataRange] = useState<Range>();
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   useEffect(() => {
     if (!loading) {
       setLoading(true);
 
-      DashboardService.getData(regionId, district).then((data) => {
-        const { schools, ...dash } = data;
-        setDashboard(dash);
-        setSelected(dash?.teachingPractices[0]);
+      DashboardService.getData(regionId, dataRange).then((data) => {
+        setDashboard(data);
+        setSelected(data?.teachingPractices[0]);
         setLoading(false);
       });
     }
-  }, [regionId, district]);
+  }, [regionId, dataRange]);
 
   const handleRegion = (regionId?: string) => {
     setRegionId(regionId);
-    setDistrict(undefined);
+  };
+
+  const calcAverageStars = (stars: IStars) => {
+    return (
+      (stars.needsWork * 1 +
+        stars.keepWorking * 2 +
+        stars.needsAttention * 3 +
+        stars.almostThere * 4 +
+        stars.doingGreat * 5) /
+      (stars.needsWork + stars.keepWorking + stars.needsAttention + stars.almostThere + stars.doingGreat)
+    );
   };
 
   return (
     <VStack mx="auto" minH="100vh" maxW="1200px" position="relative" overflow="scroll" alignItems="flex-start" p="56px">
       <Flex mb="20px" ml={'-12px'} flexDir={isMobile ? 'column' : 'row'} w="full">
-        <RegionSelect direction="row" level={0} onSelect={handleRegion} />
+        <Flex flex={1}>
+          <RegionSelect direction="row" level={0} onSelect={handleRegion} />
+        </Flex>
+        <Flex flex={1} maxW="220px" ml="12px">
+          <DataRangePicker onChange={setDataRange} />
+        </Flex>
       </Flex>
 
       {loading || !dashboard || !selected ? (
@@ -182,23 +198,8 @@ const DashboardPage: React.FC = () => {
                 />
               </HStack>
 
-              <VStack
-                justifyContent="center"
-                flex={2}
-                alignItems="center"
-                p="16px"
-                bg="#F2F4F7"
-                borderRadius="16px"
-                gap="0px"
-              >
-                <HorizontalBar
-                  labels={[
-                    t('dashboard.school-rating'),
-                    t('dashboard.regional-average'),
-                    t('dashboard.national-average'),
-                  ]}
-                  values={[dashboard.avg.school, dashboard.avg.regional, dashboard.avg.national]}
-                />
+              <VStack justifyContent="center" flex={2} alignItems="center" bg="#F2F4F7" borderRadius="16px" p={'32px'}>
+                <HorizontalBar labels={[t('dashboard.average')]} values={[calcAverageStars(selected.data.stars)]} />
               </VStack>
             </VStack>
           </Flex>

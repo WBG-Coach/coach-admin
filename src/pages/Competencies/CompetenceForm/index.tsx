@@ -253,9 +253,11 @@ const CompetenceForm: React.FC<Props> = ({ isOpen, competence, onClose, onSubmit
 
               {showQuestionForm && editIndex === null && (
                 <Box w="full">
-                  <Text mb="24px" fontWeight={600}>{`Question ${
-                    (competenceValues?.questions && competenceValues?.questions?.length + 1) || 1
-                  }`}</Text>
+                  <Text mb="24px" fontWeight={600}>
+                    {t('teacher-practices.form.question-list', {
+                      value: (competenceValues?.questions && competenceValues?.questions?.length + 1) || 1,
+                    })}
+                  </Text>
                   <FormControl id="title" isRequired>
                     <FormLabel>{t('teacher-practices.form.question-title')}</FormLabel>
                     <Input type="text" name="title" value={question.title} onChange={handleQuestionChange} />

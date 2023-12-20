@@ -10,6 +10,8 @@ import React from 'react';
 import './i18n';
 import { BrowserRouter } from 'react-router-dom';
 import '@fontsource/noto-sans';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 
 const changeFavicon = () => {
   const link = document.querySelector('link[rel="icon"]');

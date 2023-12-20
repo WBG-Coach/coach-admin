@@ -150,16 +150,18 @@ export interface ILogs {
   created_at: string;
 }
 
+export interface IStars {
+  needsWork: number;
+  keepWorking: number;
+  needsAttention: number;
+  almostThere: number;
+  doingGreat: number;
+}
+
 export interface ITeachingPractices {
   name: string;
   data: {
-    stars: {
-      needsWork: number;
-      keepWorking: number;
-      needsAttention: number;
-      almostThere: number;
-      doingGreat: number;
-    };
+    stars: IStars;
     teachers: number;
     teachersShowingImprovement: number;
     teacherWithoutFeedback: number;
@@ -167,7 +169,6 @@ export interface ITeachingPractices {
 }
 
 export interface IDashboard {
-  schools?: ISchool[];
   teachingPractices: ITeachingPractices[];
   engagement: {
     teachersCoached: number;
