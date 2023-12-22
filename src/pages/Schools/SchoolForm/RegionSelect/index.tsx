@@ -49,7 +49,7 @@ const RegionSelect: React.FC<Props> = ({ level, direction, region, onSelect, onC
       display="flex"
       flexDir={direction}
       mt={direction === 'column' ? '12px' : 0}
-      ml={direction === 'row' ? '12px' : 0}
+      ml={direction === 'row' ? (level === 0 ? 0 : '12px') : 0}
       w="full"
     >
       <VStack w="full" alignItems="flex-start">

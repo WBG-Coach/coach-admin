@@ -1,4 +1,4 @@
-import { Box, Center, HStack, Text, VStack } from '@chakra-ui/react';
+import { Box, Center, Flex, HStack, Text, VStack, useBreakpointValue } from '@chakra-ui/react';
 import { Chart as ChartJS, ChartData, ArcElement, Tooltip, LabelItem } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
@@ -11,23 +11,17 @@ type Props = {
   label?: string;
   values: number[];
   labels?: string[];
+  direction?: 'row' | 'column';
 };
 
 const COLORS = ['#69D6C7', '#4C9AF7', '#6A5CE2', '#A2CF57', '#D96684'];
 
-export const DoughnutGraph: React.FC<Props> = ({ showLegend, values, label, subTitle, title, labels }) => {
+export const DoughnutGraph: React.FC<Props> = ({ showLegend, values, label, subTitle, title, labels, direction }) => {
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
   return (
-    <VStack flex={1} justifyContent="center" alignItems="stretch" p="16px" bg="#F2F4F7" borderRadius="16px">
-      {showLegend && (
-        <VStack>
-          {labels?.map((item, index) => (
-            <HStack key={item} w="100%">
-              <Box bg={COLORS[index]} w="20px" h="20px" /> <Text>{item}</Text>
-            </HStack>
-          ))}
-        </VStack>
-      )}
-      <Center position="relative">
+    <Flex direction={isMobile ? 'column' : direction} p="16px" bg="#F2F4F7" borderRadius="16px" w="full">
+      <Center position="relative" maxW="200px" m="auto">
         <Doughnut
           data={{
             labels,
@@ -61,11 +55,22 @@ export const DoughnutGraph: React.FC<Props> = ({ showLegend, values, label, subT
           </VStack>
         )}
       </Center>
+
+      {showLegend && (
+        <VStack my="auto">
+          {labels?.map((item, index) => (
+            <HStack key={item} w="100%">
+              <Box bg={COLORS[index]} w="20px" h="20px" /> <Text>{item}</Text>
+            </HStack>
+          ))}
+        </VStack>
+      )}
+
       {label && (
         <Text mt="16px" textAlign="center" color="#111417">
           {label}
         </Text>
       )}
-    </VStack>
+    </Flex>
   );
 };

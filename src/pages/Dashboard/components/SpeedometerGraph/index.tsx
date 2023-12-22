@@ -22,8 +22,8 @@ export const SpeedometerGraph: React.FC<Props> = ({ maxValue, value, label }) =>
   };
 
   return (
-    <VStack flex={1} justifyContent="center" alignItems="stretch" p="16px" bg="#F2F4F7" borderRadius="16px">
-      <Center position="relative">
+    <VStack p="16px" bg="#F2F4F7" borderRadius="16px" w="full">
+      <Center position="relative" maxW="200px" m="auto">
         <Doughnut
           data={coachingSessionPerTeacher}
           options={{ radius: 100, cutout: '80%' }}

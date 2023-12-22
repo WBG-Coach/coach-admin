@@ -60,12 +60,18 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <VStack mx="auto" minH="100vh" maxW="1200px" position="relative" overflow="scroll" alignItems="flex-start" p="56px">
-      <Flex mb="20px" ml={'-12px'} flexDir={isMobile ? 'column' : 'row'} w="full">
+    <VStack mx="auto" w="full" minH="100vh" maxW="1200px" position="relative" p="56px" alignItems="flex-start">
+      <Flex mb="20px" flexDir={isMobile ? 'column' : 'row'} w="full">
         <Flex flex={1}>
           <RegionSelect direction="row" level={0} onSelect={handleRegion} />
         </Flex>
-        <Flex flex={1} maxW="220px" ml="12px">
+        <Flex
+          flex={1}
+          ml={isMobile ? 0 : '12px'}
+          mt={isMobile ? '12px' : 0}
+          maxW={isMobile ? undefined : '220px'}
+          w="full"
+        >
           <DataRangePicker onChange={handleChangeDateRange} />
         </Flex>
       </Flex>
@@ -76,74 +82,71 @@ const DashboardPage: React.FC = () => {
         </Center>
       ) : (
         <>
-          <Flex flexDir={isMobile ? 'column' : 'row'} w="full" gap="16px" mb="56px" alignItems="stretch">
-            <VStack flex={3} gap="16px" alignItems="stretch">
-              <Text color="#111417" fontSize="24px" fontWeight={600}>
-                {t('dashboard.engagement.title')}
-              </Text>
-              <Text color="#111417" fontSize="16px" lineHeight="24px">
-                {t('dashboard.engagement.description')}
-              </Text>
-              <HStack gap="16px" alignItems="stretch">
-                <CardValue
-                  label={t('dashboard.engagement.teachers-coached')}
-                  value={dashboard.engagement.teachersCoached}
-                />
-                <CardValue
-                  label={t('dashboard.engagement.active-coaches')}
-                  value={dashboard.engagement.activeCoaches}
-                />
-                <CardValue
-                  label={t('dashboard.engagement.coaching-sessions')}
-                  value={dashboard.engagement.coachingSessions}
-                />
-              </HStack>
-              <HStack gap="16px" alignItems="stretch">
-                <SpeedometerGraph
-                  label={t('dashboard.engagement.coaching-sessions-per-teacher-over-last-three-months')}
-                  value={dashboard.engagement.coachingSessionPerTeacher}
-                  maxValue={dashboard.engagement.coachingSessionPerTeacherGoal}
-                />
-                <DoughnutGraph
-                  labels={[
-                    t('dashboard.engagement.completed-a-second-coach-session'),
-                    'Without a second coach sessions',
-                  ]}
-                  values={[
-                    dashboard.engagement.teacherThatCompletedSecondSession,
-                    dashboard.engagement.teachersCoached - dashboard.engagement.teacherThatCompletedSecondSession,
-                  ]}
-                  label={t('dashboard.engagement.completed-a-second-coach-session') || ''}
-                  title={
-                    (dashboard.engagement.teachersCoached
-                      ? (dashboard.engagement.teacherThatCompletedSecondSession /
-                          dashboard.engagement.teachersCoached) *
-                        100
-                      : 0
-                    ).toFixed(0) + '%'
-                  }
-                  subTitle="Of teachers"
-                />
-              </HStack>
-            </VStack>
-
-            <VStack flex={2} alignItems="stretch">
-              <Text color="#111417" fontSize="24px" fontWeight={600}>
-                {t('dashboard.targeted-improvement-areas.title')}
-              </Text>
-              <Text color="#111417" fontSize="16px" lineHeight="24px">
-                {t('dashboard.targeted-improvement-areas.description')}
-              </Text>
-
-              <DoughnutGraph
-                showLegend={true}
-                labels={dashboard.teachingPractices.map((item) => item.name)}
-                values={dashboard.teachingPractices.map((item) => item.data.teachers)}
+          <VStack gap="16px" w="full" alignItems="flex-start">
+            <Text color="#111417" fontSize="24px" fontWeight={600}>
+              {t('dashboard.engagement.title')}
+            </Text>
+            <Text color="#111417" fontSize="16px" lineHeight="24px">
+              {t('dashboard.engagement.description')}
+            </Text>
+            <HStack gap="16px" alignItems="stretch" w="full">
+              <CardValue
+                label={t('dashboard.engagement.teachers-coached')}
+                value={dashboard.engagement.teachersCoached}
               />
-            </VStack>
-          </Flex>
+              <CardValue label={t('dashboard.engagement.active-coaches')} value={dashboard.engagement.activeCoaches} />
+              <CardValue
+                label={t('dashboard.engagement.coaching-sessions')}
+                value={dashboard.engagement.coachingSessions}
+              />
+              <CardValue
+                label={t('dashboard.teachers-did-not-have-a-feedback-session')}
+                value={selected.data.teacherWithoutFeedback}
+              />
+            </HStack>
+            <HStack gap="16px" w="full">
+              <SpeedometerGraph
+                label={t('dashboard.engagement.coaching-sessions-per-teacher-over-last-three-months')}
+                value={dashboard.engagement.coachingSessionPerTeacher}
+                maxValue={dashboard.engagement.coachingSessionPerTeacherGoal}
+              />
+              <DoughnutGraph
+                direction="column"
+                labels={[t('dashboard.engagement.completed-a-second-coach-session'), 'Without a second coach sessions']}
+                values={[
+                  dashboard.engagement.teacherThatCompletedSecondSession,
+                  dashboard.engagement.teachersCoached - dashboard.engagement.teacherThatCompletedSecondSession,
+                ]}
+                label={t('dashboard.engagement.completed-a-second-coach-session') || ''}
+                title={
+                  (dashboard.engagement.teachersCoached
+                    ? (dashboard.engagement.teacherThatCompletedSecondSession / dashboard.engagement.teachersCoached) *
+                      100
+                    : 0
+                  ).toFixed(0) + '%'
+                }
+                subTitle="Of teachers"
+              />
+            </HStack>
+          </VStack>
 
-          <Text mb="8px" color="#111417" fontWeight={500} fontSize={'16px'}>
+          <VStack w="full" alignItems="flex-start" my="24px">
+            <Text color="#111417" fontSize="24px" fontWeight={600}>
+              {t('dashboard.targeted-improvement-areas.title')}
+            </Text>
+            <Text color="#111417" fontSize="16px" lineHeight="24px" mb="8px">
+              {t('dashboard.targeted-improvement-areas.description')}
+            </Text>
+
+            <DoughnutGraph
+              direction="row"
+              showLegend={true}
+              labels={dashboard.teachingPractices.map((item) => item.name)}
+              values={dashboard.teachingPractices.map((item) => item.data.teachers)}
+            />
+          </VStack>
+
+          <Text mb="8px" color="#111417" fontWeight={500} fontSize={'16px'} mt="24px">
             {t('dashboard.select-teaching-practices-to-show')}
           </Text>
 
@@ -199,10 +202,6 @@ const DashboardPage: React.FC = () => {
                 <CardValue
                   label={t('dashboard.teachers-and-coaches-chose-to-work-on-improving-this-practice')}
                   value={selected.data.teachers}
-                />
-                <CardValue
-                  label={t('dashboard.teachers-did-not-have-a-feedback-session')}
-                  value={selected.data.teacherWithoutFeedback}
                 />
               </HStack>
 

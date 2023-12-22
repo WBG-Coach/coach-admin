@@ -80,7 +80,7 @@ const Navbar: React.FC = () => {
         >
           <HStack w="full" justifyContent="space-between">
             <HamburgerIcon w={8} h={8} mx="24px" onClick={() => setOpen(!open)} cursor="pointer" maxW="180px" />
-            <Image mx="auto" src={CoachLogo} alt={'Logo do coach'} m="24px" mb="16px" />
+            <Image mx="auto" src={CoachLogo} alt={'Logo do coach'} m="24px" mb="16px" h="40px" />
             <Box w="72px" />
           </HStack>
           {menu}
