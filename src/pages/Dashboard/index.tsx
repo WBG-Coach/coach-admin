@@ -125,7 +125,7 @@ const DashboardPage: React.FC = () => {
                     : 0
                   ).toFixed(0) + '%'
                 }
-                subTitle="Of teachers"
+                subTitle={t('dashboard.of_teacher') || ''}
               />
             </HStack>
           </VStack>

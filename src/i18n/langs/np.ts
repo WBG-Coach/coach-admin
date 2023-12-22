@@ -37,6 +37,8 @@ const npTranslation = {
     schools: 'विद्यालयहरू',
   },
   dashboard: {
+    goal: 'लक्ष्य: {{value}}',
+    of_teacher: 'शिक्षकको',
     filters: {
       region: 'क्षेत्र चयन गर्नुहोस्',
       district: 'जिल्ला चयन गर्नुहोस्',

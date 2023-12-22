@@ -39,6 +39,8 @@ const enTranslation = {
   },
 
   dashboard: {
+    goal: 'Goal: {{value}}',
+    of_teacher: 'Of teacher',
     filters: {
       region: 'Select region',
       district: 'Select district',

@@ -1,6 +1,7 @@
 import { Center, Text, VStack } from '@chakra-ui/react';
 import { ChartData } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   label: string;
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export const SpeedometerGraph: React.FC<Props> = ({ maxValue, value, label }) => {
+  const { t } = useTranslation();
   const coachingSessionPerTeacher: ChartData<'doughnut', number[], string> = {
     datasets: [
       {
@@ -35,7 +37,7 @@ export const SpeedometerGraph: React.FC<Props> = ({ maxValue, value, label }) =>
             {value}
           </Text>
           <Text fontSize={16} color="#576375">
-            Goal: {maxValue}
+            {t('dashboard.goal', { value: maxValue })}
           </Text>
         </VStack>
       </Center>
