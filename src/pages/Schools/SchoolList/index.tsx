@@ -37,17 +37,14 @@ const SchoolList: React.FC<Props> = ({ schools, handleDelete, handleEdit }) => {
           {
             renderColumn: (item: ISchool) => item.emis_number,
             title: t('school.table.emis_number'),
-            width: '150px',
           },
           {
             renderColumn: (item: ISchool) => item.name,
             title: t('school.table.name'),
-            width: 'calc(40% - 115px)',
           },
           {
             renderColumn: (item: ISchool) => formatRegionPath(item.region),
             title: t('school.table.region'),
-            width: 'calc(60% - 115px)',
           },
           {
             renderColumn: (item: ISchool) => (
@@ -73,7 +70,6 @@ const SchoolList: React.FC<Props> = ({ schools, handleDelete, handleEdit }) => {
                 </Menu>
               </Flex>
             ),
-            width: '80px',
             title: 'common.actions',
           },
         ]}

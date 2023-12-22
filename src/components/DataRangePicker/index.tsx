@@ -79,8 +79,6 @@ const DataRangePicker: React.FC<Props> = ({ onChange }) => {
   const calendarRef = React.useRef(null);
 
   const handleSelect = (ranges: RangeKeyDict) => {
-    console.log(ranges);
-
     setState({
       selection: {
         ...ranges.selection,

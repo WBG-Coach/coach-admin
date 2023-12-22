@@ -11,8 +11,6 @@ type Props = {
 const SelectDistrict: React.FC<Props> = ({ role, region, ...field }) => {
   const [districts, setDistricts] = useState({ isLoading: false, data: [] as string[] });
 
-  console.log({ region });
-
   useEffect(() => {
     if (region) {
       setDistricts({ isLoading: true, data: [] });
