@@ -20,37 +20,37 @@ const SessionList: React.FC<Props> = ({ sessions, handleOpen }) => {
         {
           renderColumn: (item: ISession) => item.school.name,
           title: t('session.table.school'),
-          width: '20%',
+          getOrderProp: (item: ISession) => item.school.name,
         },
         {
           renderColumn: (item: ISession) => item.coach.name,
           title: t('session.table.coach'),
-          width: '20%',
+          getOrderProp: (item: ISession) => item.coach.name,
         },
         {
           renderColumn: (item: ISession) => item.teacher.name,
           title: t('session.table.teacher'),
-          width: '20%',
+          getOrderProp: (item: ISession) => item.teacher.name,
         },
         {
           renderColumn: (item: ISession) => item.subject,
           title: t('session.table.subject'),
-          width: '20%',
+          getOrderProp: (item: ISession) => item.subject,
         },
 
         {
           renderColumn: (item: ISession) =>
             item?.feedback_id ? (
               <Tag color="green.700" bg="green.100">
-                Complete
+                {t('common.complete')}
               </Tag>
             ) : (
               <Tag color="red.700" bg="red.100">
-                Incomplete
+                {t('common.incomplete')}
               </Tag>
             ),
           title: t('session.table.feedback'),
-          width: '10%',
+          getOrderProp: (item: ISession) => !!item?.feedback_id,
         },
         {
           renderColumn: (item: ISession) => (

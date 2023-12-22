@@ -54,7 +54,7 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
           <DrawerHeader>{defaultValues && 'id' in defaultValues ? 'Update user' : 'New user'}</DrawerHeader>
 
           <DrawerBody>
-            <FormLabel htmlFor="name">Name</FormLabel>
+            <FormLabel htmlFor="name">{t('settings.tabs.users.form.name')}</FormLabel>
             <Controller
               rules={{ required: true }}
               control={control}
@@ -65,7 +65,7 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
             />
 
             <FormLabel htmlFor="name" style={{ marginTop: '8px' }}>
-              Email
+              {t('settings.tabs.users.form.email')}
             </FormLabel>
             <Controller
               rules={{ required: true }}
@@ -79,7 +79,7 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
             {defaultValues && !('id' in defaultValues) && (
               <>
                 <FormLabel htmlFor="name" style={{ marginTop: '8px' }}>
-                  Password
+                  {t('settings.tabs.users.form.password')}
                 </FormLabel>
                 <Controller
                   rules={{ required: true }}
@@ -99,7 +99,7 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
             )}
 
             <FormLabel htmlFor="name" style={{ marginTop: '8px' }}>
-              Role
+              {t('settings.tabs.users.form.role')}
             </FormLabel>
 
             <Controller
@@ -165,10 +165,10 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
 
           <DrawerFooter mt="auto">
             <Button colorScheme="blue" mr={3} type="submit" isLoading={isLoading}>
-              Save
+              {t('settings.tabs.users.form.save')}
             </Button>
             <Button variant="outline" mr={'auto'} onClick={handleClose} isLoading={isLoading}>
-              Cancel
+              {t('settings.tabs.users.form.cancel')}
             </Button>
           </DrawerFooter>
         </form>

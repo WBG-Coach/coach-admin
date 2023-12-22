@@ -13,6 +13,7 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   session?: ISession;
@@ -20,6 +21,7 @@ type Props = {
 };
 
 const SessionView: React.FC<Props> = ({ session, onClose }) => {
+  const { t } = useTranslation();
   const [competencies, setCompetencies] = useState<ICompetence[]>([]);
 
   useEffect(() => {
@@ -47,26 +49,26 @@ const SessionView: React.FC<Props> = ({ session, onClose }) => {
       <DrawerOverlay />
       <DrawerContent roundedLeft={14}>
         <DrawerCloseButton mt={2} color="Primary.$200" />
-        <DrawerHeader>{'View session'}</DrawerHeader>
+        <DrawerHeader>{t('session.view.title')}</DrawerHeader>
 
         <DrawerBody>
           <HStack mb="4px" alignItems="center">
             <Icon name="university" size={16} />
-            <Text fontWeight="semibold">School</Text>
+            <Text fontWeight="semibold">{t('session.view.school')}</Text>
           </HStack>
           <Text>{session?.school.name}</Text>
           <Divider my="8px" />
 
           <HStack mb="4px" alignItems="center">
             <Icon name="user" size={16} />
-            <Text fontWeight="semibold">Coach</Text>
+            <Text fontWeight="semibold">{t('session.view.coach')}</Text>
           </HStack>
           <Text>{session?.coach.name}</Text>
           <Divider my="8px" />
 
           <HStack mb="4px" alignItems="center">
             <Icon name="graduation-cap" size={16} />
-            <Text fontWeight="semibold">Teacher</Text>
+            <Text fontWeight="semibold">{t('session.view.teacher')}</Text>
           </HStack>
           <Text>{session?.teacher.name}</Text>
           <Divider my="8px" />
@@ -74,7 +76,7 @@ const SessionView: React.FC<Props> = ({ session, onClose }) => {
           {session?.feedback_id && (
             <VStack w="100%" mb="20px" py="16px" borderBottom="1px solid #eee">
               <Text w="100%" mb="16px" fontSize={20} fontWeight="semibold">
-                Feedback annotation
+                {t('session.view.feedback')}
               </Text>
               <Text w="100%">{session?.feedback_id}</Text>
             </VStack>

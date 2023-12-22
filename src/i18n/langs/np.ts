@@ -1,24 +1,27 @@
 const npTranslation = {
   common: {
+    actions: 'क्रियाहरू',
+    activate: 'सक्रिय गर्नुहोस्',
+    deactivate: 'निष्क्रिय गर्नुहोस्',
+    save: 'बचत गर्नुहोस्',
     edit: 'सम्पादन गर्नुहोस्',
     view: 'हेर्नुहोस्',
-    delete: 'हटाउनुहोस्',
-    'items-per-page': 'पृष्ठ सूचीमा कुल',
-    activate: 'सक्रिय गर्नुहोस्',
-    deactivate: 'निष्क्रिय पार्नुहोस्',
-    generateQRCode: 'QR कोड सिर्जना गर्नुहोस्',
+    delete: 'मेटाउनुहोस्',
+    generateQRCode: 'क्यूआर कोड उत्पन्न गर्नुहोस्',
     cancel: 'रद्द गर्नुहोस्',
-    download: 'डाटा डाउनलोड गर्नुहोस्',
-    'all-time': 'सधैं',
-    'last-7-days': 'पछिल्लो ७ दिन',
-    'last-30-days': 'पछिल्लो ३० दिन',
-    'last-60-days': 'पछिल्लो ६० दिन',
-    'last-90-days': 'पछिल्लो ९० दिन',
+    download: 'डेटा डाउनलोड गर्नुहोस्',
+    import: 'डेटा आयात गर्नुहोस्',
+    'items-per-page': 'प्रति पृष्ठ वस्तुहरू',
+    'all-time': 'सबै समय',
+    'last-7-days': 'अन्तिम ७ दिनहरू',
+    'last-30-days': 'अन्तिम ३० दिनहरू',
+    'last-60-days': 'अन्तिम ६० दिनहरू',
+    'last-90-days': 'अन्तिम ९० दिनहरू',
     'all-regions': 'सबै क्षेत्रहरू',
     'all-schools': 'सबै विद्यालयहरू',
     'all-districts': 'सबै जिल्लाहरू',
-    actions: 'कार्यहरू',
-    save: 'बचत गर्नुहोस्',
+    complete: 'पूर्ण',
+    incomplete: 'अपूर्ण',
   },
   Navbar: {
     dashboard: 'मुख्य पृष्ठ',
@@ -69,6 +72,8 @@ const npTranslation = {
   },
   'teacher-practices': {
     new: 'शिक्षण अभ्यास थप्नुहोस्',
+    active: 'सक्रिय',
+    inactive: 'निष्क्रिय',
     table: {
       name: 'नाम',
       'number-of-questions': 'प्रश्न संख्या',
@@ -111,11 +116,19 @@ const npTranslation = {
     table: {
       actions: 'कार्यहरू',
       name: 'नाम',
+      region: 'क्षेत्रहरू',
       'teachers-count': 'कुल शिक्षक संख्या',
       'coaches-count': 'कोच को कुल संख्या',
     },
     'new-school': 'नयाँ विद्यालय',
     filter: 'विद्यालयको नाम',
+    form: {
+      new: 'नयाँ विद्यालय',
+      update: 'विद्यालय अपडेट गर्नुहोस्',
+      region: 'क्षेत्र: ',
+      name: 'विद्यालयको नाम',
+      emis: 'एमिस नम्बर',
+    },
   },
   'coach-over-time': {
     filters: {
@@ -142,6 +155,13 @@ const npTranslation = {
       teacher: 'शिक्षक',
       subject: 'विषय',
       feedback: 'प्रतिक्रिया',
+    },
+    view: {
+      title: 'सत्र हेर्नुहोस्',
+      school: 'विद्यालय',
+      coach: 'प्रशिक्षक',
+      teacher: 'शिक्षक',
+      feedback: 'प्रतिक्रिया टिप्पणी',
     },
   },
 
@@ -186,6 +206,16 @@ const npTranslation = {
       users: {
         title: 'प्रयोगकर्ताहरू',
         new: 'नयाँ प्रयोगकर्ताहरू',
+        edit: 'प्रयोगकर्ता सम्पादन गर्नुहोस्',
+        remove: 'प्रयोगकर्ता हटाउनुहोस्',
+        form: {
+          name: 'नाम',
+          email: 'इमेल',
+          password: 'पासवर्ड',
+          role: 'भूमिका',
+          save: 'बचत गर्नुहोस्',
+          cancel: 'रद्द गर्नुहोस्',
+        },
       },
       logs: {
         table: {

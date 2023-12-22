@@ -58,11 +58,11 @@ const Users = () => {
 
   const menuOptions = [
     {
-      label: 'Edit user',
+      label: t('settings.tabs.users.edit'),
       handleClick: (user: IUser) => setCurrentUser(user),
     },
     {
-      label: 'Remove user',
+      label: t('settings.tabs.users.remove'),
       color: 'Red.$400',
       handleClick: (user: IUser) => handleRemoveUser(user.id),
     },

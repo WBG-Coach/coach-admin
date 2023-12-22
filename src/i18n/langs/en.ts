@@ -20,6 +20,8 @@ const enTranslation = {
     'all-regions': 'All regions',
     'all-schools': 'All schools',
     'all-districts': 'All districts',
+    complete: 'Complete',
+    incomplete: 'Incomplete',
   },
 
   Navbar: {
@@ -160,6 +162,13 @@ const enTranslation = {
       subject: 'Subject',
       feedback: 'Feedback',
     },
+    view: {
+      title: 'View session',
+      school: 'School',
+      coach: 'Coach',
+      teacher: 'Teacher',
+      feedback: 'Feedback annotation',
+    },
   },
 
   'session-data': {
@@ -204,6 +213,16 @@ const enTranslation = {
       users: {
         title: 'Users',
         new: 'New user',
+        edit: 'Edit user',
+        remove: 'Remove user',
+        form: {
+          name: 'Name',
+          email: 'Email',
+          password: 'Password',
+          role: 'Role',
+          save: 'Save',
+          cancel: 'Cancel',
+        },
       },
       'change-password': {
         title: 'Change password',

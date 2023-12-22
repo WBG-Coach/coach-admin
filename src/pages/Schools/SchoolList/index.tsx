@@ -37,14 +37,17 @@ const SchoolList: React.FC<Props> = ({ schools, handleDelete, handleEdit }) => {
           {
             renderColumn: (item: ISchool) => item.emis_number,
             title: t('school.table.emis_number'),
+            getOrderProp: (item: ISchool) => item.emis_number,
           },
           {
             renderColumn: (item: ISchool) => item.name,
             title: t('school.table.name'),
+            getOrderProp: (item: ISchool) => item.name,
           },
           {
             renderColumn: (item: ISchool) => formatRegionPath(item.region),
             title: t('school.table.region'),
+            getOrderProp: (item: ISchool) => formatRegionPath(item.region),
           },
           {
             renderColumn: (item: ISchool) => (
