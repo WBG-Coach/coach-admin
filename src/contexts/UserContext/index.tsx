@@ -8,7 +8,8 @@ import UserService from '@/services/user';
 import { useTranslation } from 'react-i18next';
 
 export type UserContextProps = {
-  login: (prop: { email: string; password: string }) => Promise<void>;
+  login: (prop: { email: string; code: string }) => Promise<void>;
+  sendOTPCode: (email: string) => Promise<void>;
   handleUpdateUser: (user: Partial<IUser>) => Promise<void>;
   updateLocalUser: (user: IUser) => void;
   logout: () => void;
@@ -49,7 +50,7 @@ const UserContextProvider = ({ children }: Props) => {
     }
   }, [user]);
 
-  const handleLogin = async (props: { email: string; password: string }) => {
+  const handleLogin = async (props: { email: string; code: string }) => {
     const response = await AuthService.login(props);
 
     setUser(response.data);
@@ -83,13 +84,18 @@ const UserContextProvider = ({ children }: Props) => {
     setUser(user);
   };
 
+  const sendOTPCode = async (email: string) => {
+    await AuthService.sendOTPCode(email);
+  };
+
   return (
     <UserContext.Provider
       value={{
+        logout,
+        sendOTPCode,
+        updateLocalUser,
         handleUpdateUser,
         login: handleLogin,
-        logout,
-        updateLocalUser,
         user,
         userRegionsPath,
       }}

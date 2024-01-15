@@ -1,27 +1,56 @@
 import { CoachLogo } from '@/assets/images/logos';
 import Loader from '@/components/Base/Loader';
 import { UserContext } from '@/contexts/UserContext';
-import { Button, Center, Image, Input, VStack } from '@chakra-ui/react';
-import React, { useContext } from 'react';
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  Button,
+  Center,
+  HStack,
+  Image,
+  Input,
+  PinInput,
+  PinInputField,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
+import React, { useContext, useState } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { CloseButton } from 'react-toastify/dist/components';
 
 const defaultValues = {
   email: '',
-  password: '',
 };
 
 const Login: React.FC = () => {
-  const { login } = useContext(UserContext);
+  const { sendOTPCode, login } = useContext(UserContext);
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm({ defaultValues });
+  const [error, setError] = useState('');
+  const [showOTP, setShowOTP] = useState(false);
+  const [code, setCode] = useState('');
 
-  const handleLogin: SubmitHandler<typeof defaultValues> = async (values) => {
+  const handleLogin: SubmitHandler<typeof defaultValues> = async ({ email }) => {
     try {
-      await login(values);
-    } catch {}
+      setError('');
+      if (showOTP) {
+        await login({ email, code });
+      } else {
+        await sendOTPCode(email);
+        setShowOTP(true);
+      }
+    } catch (err: any) {
+      if (showOTP) {
+        setError('Invalid code');
+      } else {
+        setError('Invalid email');
+      }
+      setCode('');
+    }
     return;
   };
 
@@ -46,21 +75,36 @@ const Login: React.FC = () => {
                 rules={{ required: true }}
                 name="email"
                 render={({ field, fieldState: { error } }) => (
-                  <Input placeholder="E-mail" {...field} isInvalid={!!error} h={'48px'} />
+                  <Input placeholder="E-mail" {...field} isInvalid={!!error} h={'48px'} disabled={showOTP} />
                 )}
               />
-
-              <Controller
-                control={control}
-                rules={{ required: true }}
-                name="password"
-                render={({ field, fieldState: { error } }) => (
-                  <Input placeholder="Password" type="password" {...field} isInvalid={!!error} h={'48px'} />
-                )}
-              />
+              {error && (
+                <Alert status="error">
+                  <AlertIcon />
+                  <AlertTitle>{error}</AlertTitle>
+                </Alert>
+              )}
+              {showOTP && (
+                <VStack my={10}>
+                  <Text>Enter the code we sent to your email</Text>
+                  <HStack>
+                    <PinInput otp onComplete={setCode}>
+                      <PinInputField />
+                      <PinInputField />
+                      <PinInputField />
+                      <PinInputField />
+                    </PinInput>
+                  </HStack>
+                </VStack>
+              )}
             </VStack>
-            <Button mt={'32px !important'} w={'100%'} onClick={handleSubmit(handleLogin)}>
-              SignIn
+            <Button
+              mt={'32px !important'}
+              w={'100%'}
+              onClick={handleSubmit(handleLogin)}
+              isDisabled={showOTP && code.length < 4}
+            >
+              {showOTP ? 'Verify code' : 'Send OTP code'}
             </Button>
           </>
         )}
