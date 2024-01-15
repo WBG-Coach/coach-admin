@@ -2,14 +2,13 @@ import { Box, HStack, Text, VStack } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import EditUser from './EditUser';
-import ChangePassword from './ChangePassword';
 import Users from './Users';
 import Icon from '@/components/Base/Icon';
 import HeaderPage from '@/components/HeaderPage';
 import Logs from './Logs';
 import { UserContext } from '@/contexts/UserContext';
-import ChangeLanguage from './ChangeLanguage';
 import Regions from './Regions';
+import ChangeLanguage from './ChangeLanguage';
 
 const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
