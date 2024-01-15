@@ -93,6 +93,10 @@ const Login: React.FC = () => {
                       <PinInputField />
                       <PinInputField />
                       <PinInputField />
+                      <PinInputField />
+                      <PinInputField />
+                      <PinInputField />
+                      <PinInputField />
                     </PinInput>
                   </HStack>
                 </VStack>
