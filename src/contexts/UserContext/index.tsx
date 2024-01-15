@@ -52,8 +52,6 @@ const UserContextProvider = ({ children }: Props) => {
 
   const handleLogin = async (props: { email: string; code: string }) => {
     const response = await AuthService.login(props);
-    console.log({ response });
-
     setUser(response.data);
     StorageService.setUser(response.data);
     StorageService.setAccessToken(response.headers.token || '');

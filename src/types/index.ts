@@ -41,7 +41,6 @@ export interface IUser {
   region_id?: string;
   region?: IRegion;
   district?: string;
-  password: string;
 }
 
 export interface IGuide {

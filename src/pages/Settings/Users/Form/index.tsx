@@ -76,28 +76,6 @@ const UserForm: React.FC<Props> = ({ defaultValues, handleSubmitForm, handleClos
               )}
             />
 
-            {defaultValues && !('id' in defaultValues) && (
-              <>
-                <FormLabel htmlFor="name" style={{ marginTop: '8px' }}>
-                  {t('settings.tabs.users.form.password')}
-                </FormLabel>
-                <Controller
-                  rules={{ required: true }}
-                  control={control}
-                  name="password"
-                  render={({ field, fieldState }) => (
-                    <Input
-                      id="password"
-                      type="password"
-                      {...field}
-                      value={field.value}
-                      isInvalid={!!fieldState.error}
-                    />
-                  )}
-                />
-              </>
-            )}
-
             <FormLabel htmlFor="name" style={{ marginTop: '8px' }}>
               {t('settings.tabs.users.form.role')}
             </FormLabel>

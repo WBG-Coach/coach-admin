@@ -22,11 +22,6 @@ const SettingsPage: React.FC = () => {
       icon: 'user-circle',
       component: <EditUser />,
     },
-    {
-      label: t('settings.tabs.change-password.title'),
-      icon: 'lock',
-      component: <ChangePassword />,
-    },
     ...(user?.role === 'admin'
       ? [
           {
