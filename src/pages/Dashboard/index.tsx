@@ -15,34 +15,36 @@ import DataRangePicker from '@/components/DataRangePicker';
 import { Range } from 'react-date-range';
 
 const DashboardPage: React.FC = () => {
-  const { user } = useUserContext();
+  const { user, userRegionsPath } = useUserContext();
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const [dateRange, setDateRange] = useState<Range>();
   const [dashboard, setDashboard] = useState<IDashboard>();
   const [regionId, setRegionId] = useState(user?.region_id);
   const [selected, setSelected] = useState<ITeachingPractices>();
-  const [dateRange, setDateRange] = useState<Range>();
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && user) {
       setLoading(true);
 
-      DashboardService.getData(regionId, dateRange).then((data) => {
+      DashboardService.getData(regionId || user.region?.id, dateRange).then((data) => {
         setDashboard(data);
         setSelected(data?.teachingPractices[0]);
         setLoading(false);
       });
     }
-  }, [regionId, dateRange]);
+  }, [user, regionId, dateRange]);
 
-  const handleRegion = (regionId?: string) => {
-    setRegionId(regionId);
+  const handleRegion = (newRegionId?: string) => {
+    if (newRegionId !== regionId) setRegionId(newRegionId);
   };
 
   const calcAverageStars = (stars: IStars) => {
     const total = stars.needsWork + stars.keepWorking + stars.needsAttention + stars.almostThere + stars.doingGreat;
+
     if (total === 0) return 0;
+
     return (
       (stars.needsWork * 1 +
         stars.keepWorking * 2 +
@@ -63,7 +65,7 @@ const DashboardPage: React.FC = () => {
     <VStack mx="auto" w="full" minH="100vh" maxW="1200px" position="relative" p="56px" alignItems="flex-start">
       <Flex mb="20px" flexDir={isMobile ? 'column' : 'row'} w="full">
         <Flex flex={1}>
-          <RegionSelect direction="row" level={0} onSelect={handleRegion} />
+          <RegionSelect fixedItems={userRegionsPath} direction="row" level={0} onSelect={handleRegion} />
         </Flex>
         <Flex
           flex={1}

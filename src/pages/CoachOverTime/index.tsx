@@ -1,6 +1,6 @@
 import Loader from '@/components/Base/Loader';
 import SessionService from '@/services/session';
-import { ISession } from '@/types';
+import { IRegion, ISession } from '@/types';
 import { Box, Center, FormLabel, HStack, Select, Switch, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import SessionView from './SessionView';
@@ -8,16 +8,29 @@ import SessionList, { ISessionOverTime } from './SessionList';
 import HeaderPage from '@/components/HeaderPage';
 import { useTranslation } from 'react-i18next';
 import handleDownloadJSON from '@/common/download';
-import { REGIONS } from '@/common/constants';
+import { useUserContext } from '@/contexts/UserContext';
+import RegionService from '@/services/region';
 
 const CoachOverTimePage: React.FC = () => {
   const { t } = useTranslation();
+  const { userRegionsPath } = useUserContext();
   const [sessionOverTime, setSessionOverTime] = useState<ISessionOverTime[]>([]);
   const [isLoadingList, setIsLoadingList] = useState(false);
   const [sessionToView, setSessionToView] = useState<ISession>();
   const [showOnlyWithValues, setShowOnlyWithValues] = useState(true);
-  const [region, setRegion] = useState<string>();
   const [schoolId, setSchoolId] = useState<string>();
+  const [region, setRegion] = useState<string | undefined>(
+    userRegionsPath.length > 0 ? userRegionsPath[0].id : undefined,
+  );
+  const [regions, setRegions] = useState<IRegion[]>([]);
+
+  useEffect(() => {
+    if (userRegionsPath.length > 0) {
+      setRegions([userRegionsPath[0]]);
+    } else {
+      RegionService.getRegionsTree().then(setRegions);
+    }
+  }, [userRegionsPath]);
 
   useEffect(() => {
     loadSessions(region, schoolId, showOnlyWithValues);
@@ -57,8 +70,10 @@ const CoachOverTimePage: React.FC = () => {
                 <FormLabel htmlFor="region">{t('coach-over-time.filters.region')}</FormLabel>
                 <Select id="region" value={region} onChange={(e) => setRegion(e.target.value)} bg="#fff">
                   <option value={''}>All regions</option>
-                  {REGIONS.map((item) => (
-                    <option value={item}>{item}</option>
+                  {regions.map((item) => (
+                    <option value={item.id} key={item.id}>
+                      {item.name}
+                    </option>
                   ))}
                 </Select>
               </VStack>
@@ -68,7 +83,9 @@ const CoachOverTimePage: React.FC = () => {
                 <Select id="schoolId" value={schoolId} onChange={(e) => setSchoolId(e.target.value)} bg="#fff">
                   <option value={''}>All schools</option>
                   {sessionOverTime.map((item) => (
-                    <option value={item.id}>{item['School Name']}</option>
+                    <option value={item.id} key={item.id}>
+                      {item['School Name']}
+                    </option>
                   ))}
                 </Select>
               </VStack>

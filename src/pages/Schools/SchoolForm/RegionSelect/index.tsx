@@ -1,7 +1,7 @@
 import RegionService from '@/services/region';
 import { IRegion } from '@/types';
 import { Flex, Select, Text, VStack } from '@chakra-ui/react';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
@@ -11,21 +11,52 @@ type Props = {
   onSelect?: (regionId?: string) => void;
   onChangeEvent?: (e: ChangeEvent<HTMLSelectElement>) => void;
   isInvalid?: boolean;
+  fixedItems?: IRegion[];
 };
 
-const RegionSelect: React.FC<Props> = ({ level, direction, region, onSelect, onChangeEvent, ...otherProps }) => {
+const RegionSelect: React.FC<Props> = ({
+  level,
+  region,
+  direction,
+  fixedItems,
+  onSelect,
+  onChangeEvent,
+  ...otherProps
+}) => {
   const { t } = useTranslation();
   const [regions, setRegions] = useState<IRegion[]>(region?.children || []);
   const [selectedRegion, setSelectedRegion] = useState<IRegion>();
 
+  const loadRegions = useCallback(async () => {
+    if (regions.length === 0) {
+      const data = await RegionService.getRegionsTree();
+      setRegions(data);
+    }
+  }, [fixedItems]);
+
   useEffect(() => {
-    if (!region) {
-      RegionService.getRegionsTree().then(setRegions);
-    } else {
+    if (!!region) {
       setRegions(region.children || []);
       setSelectedRegion(undefined);
+    } else {
+      loadRegions();
     }
-  }, [region]);
+  }, [fixedItems, loadRegions]);
+
+  useEffect(() => {
+    if (fixedItems && fixedItems[0]) {
+      const newRegions = regions.filter((item) => item.id === fixedItems[0].id);
+      if (selectedRegion !== newRegions[0]) {
+        setRegions(newRegions);
+        setSelectedRegion(newRegions[0]);
+      }
+
+      if (!fixedItems[1]) {
+        setSelectedRegion(newRegions[0]);
+        if (onSelect) onSelect(newRegions[0].id);
+      }
+    }
+  }, [regions, fixedItems]);
 
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const region = regions.find((region) => region.id === e.target.value);
@@ -71,6 +102,7 @@ const RegionSelect: React.FC<Props> = ({ level, direction, region, onSelect, onC
         <RegionSelect
           {...otherProps}
           level={level + 1}
+          fixedItems={fixedItems?.slice(1)}
           onChangeEvent={onChangeEvent}
           region={selectedRegion}
           onSelect={onSelect}

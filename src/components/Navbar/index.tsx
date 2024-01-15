@@ -30,18 +30,21 @@ const Navbar: React.FC = () => {
               <Text m="16px" mb="8px" fontSize="12px" color="#9AA2AC" fontWeight={700}>
                 {t(`Navbar.${item.label}`)}
               </Text>
-              {item.subItems.map((subItem, sIndex) => (
-                <MenuItem
-                  key={index + sIndex}
-                  icon={subItem.icon}
-                  label={t(`Navbar.${subItem.label}`)}
-                  route={subItem.route}
-                  onClick={() => {
-                    setOpen(false);
-                    navigate(subItem.route);
-                  }}
-                />
-              ))}
+              {item.subItems.map(
+                (subItem, sIndex) =>
+                  (!subItem.role || user?.role === subItem.role) && (
+                    <MenuItem
+                      key={index + sIndex}
+                      icon={subItem.icon}
+                      label={t(`Navbar.${subItem.label}`)}
+                      route={subItem.route}
+                      onClick={() => {
+                        setOpen(false);
+                        navigate(subItem.route);
+                      }}
+                    />
+                  ),
+              )}
             </Stack>
           ) : (
             <MenuItem

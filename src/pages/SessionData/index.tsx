@@ -1,6 +1,6 @@
 import Loader from '@/components/Base/Loader';
 import SessionService from '@/services/session';
-import { ISession } from '@/types';
+import { IRegion, ISession } from '@/types';
 import { Box, Center, FormLabel, HStack, Select, Switch, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import SessionView from './SessionView';
@@ -8,17 +8,30 @@ import SessionList, { ISessionData } from './SessionList';
 import HeaderPage from '@/components/HeaderPage';
 import { useTranslation } from 'react-i18next';
 import handleDownloadJSON from '@/common/download';
-import { REGIONS } from '@/common/constants';
+import { useUserContext } from '@/contexts/UserContext';
+import RegionService from '@/services/region';
 
 const SessionDataPage: React.FC = () => {
   const { t } = useTranslation();
+  const { userRegionsPath } = useUserContext();
   const [sessionData, setSessionData] = useState<ISessionData[]>([]);
   const [isLoadingList, setIsLoadingList] = useState(false);
   const [sessionToView, setSessionToView] = useState<ISession>();
   const [period, setPeriod] = useState<string>();
-  const [region, setRegion] = useState<string>();
+  const [region, setRegion] = useState<string | undefined>(
+    userRegionsPath.length > 0 ? userRegionsPath[0].id : undefined,
+  );
   const [schoolId, setSchoolId] = useState<string>();
   const [showOnlyWithValues, setShowOnlyWithValues] = useState(true);
+  const [regions, setRegions] = useState<IRegion[]>([]);
+
+  useEffect(() => {
+    if (userRegionsPath.length > 0) {
+      setRegions([userRegionsPath[0]]);
+    } else {
+      RegionService.getRegionsTree().then(setRegions);
+    }
+  }, [userRegionsPath]);
 
   useEffect(() => {
     loadSessions(period, region, schoolId, showOnlyWithValues);
@@ -65,8 +78,8 @@ const SessionDataPage: React.FC = () => {
                 <FormLabel htmlFor="region">{t('session-data.filters.region')}</FormLabel>
                 <Select id="region" value={region} onChange={(e) => setRegion(e.target.value)} bg="#fff">
                   <option value={''}>All regions</option>
-                  {REGIONS.map((item) => (
-                    <option value={item}>{item}</option>
+                  {regions.map((item) => (
+                    <option value={item.id}>{item.name}</option>
                   ))}
                 </Select>
               </VStack>

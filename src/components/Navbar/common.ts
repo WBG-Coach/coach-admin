@@ -40,6 +40,7 @@ export const MenuItems = [
       {
         icon: 'sync',
         label: 'syncs',
+        role: 'admin',
         route: `/${import.meta.env.VITE_COUNTRY}/admin/syncs`,
       },
     ],
