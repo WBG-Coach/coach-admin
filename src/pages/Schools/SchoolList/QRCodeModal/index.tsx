@@ -16,6 +16,7 @@ import QRCode from 'qrcode.react';
 import React from 'react';
 import { Props } from './types';
 import { QROpenApp, QRScan, QRSelectSchool } from '@/assets/images/qrcode';
+import { useTranslation } from 'react-i18next';
 
 const QRSteps = [
   {
@@ -33,6 +34,8 @@ const QRSteps = [
 ];
 
 const QRCodeModal: React.FC<Props> = ({ handleClose, school, schoolKey }) => {
+  const { t } = useTranslation();
+
   return (
     <Modal isOpen={!!school} onClose={handleClose} size={'full'}>
       <ModalOverlay />
@@ -42,7 +45,7 @@ const QRCodeModal: React.FC<Props> = ({ handleClose, school, schoolKey }) => {
             {school && schoolKey ? (
               <VStack>
                 <Text fontSize={'24px'} mb={'18px'} fontWeight={600}>
-                  Getting started with the app
+                  {t('qrcode.title')}
                 </Text>
 
                 <HStack spacing={'24px'} alignItems={'flex-start'} mb={'64px'}>
@@ -50,10 +53,10 @@ const QRCodeModal: React.FC<Props> = ({ handleClose, school, schoolKey }) => {
                     <VStack spacing={0} key={index} maxW={'180px'}>
                       <Image src={step.src} alt={step.description} />
                       <Text fontSize={'TMD'} mt={'8px'} fontWeight={700}>
-                        Step {index + 1}
+                        {t(`qrcode.step${index + 1}`)}
                       </Text>
                       <Text textAlign={'center'} fontSize={'TSM'} mt={'4px'} fontWeight={400}>
-                        {step.description}
+                        {t(`qrcode.step${index + 1}description`)}
                       </Text>
                     </VStack>
                   ))}
@@ -78,10 +81,10 @@ const QRCodeModal: React.FC<Props> = ({ handleClose, school, schoolKey }) => {
             <Center flex={1}>
               <HStack>
                 <Button variant={'outline'} colorScheme="blue" w="3xs" onClick={window.print}>
-                  Print this page
+                  {t('qrcode.print')}
                 </Button>
                 <Button colorScheme="blue" w="3xs" onClick={handleClose}>
-                  Close
+                  {t('qrcode.close')}
                 </Button>
               </HStack>
             </Center>

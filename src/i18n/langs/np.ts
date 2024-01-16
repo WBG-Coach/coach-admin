@@ -281,6 +281,17 @@ const npTranslation = {
       },
     },
   },
+  qrcode: {
+    title: 'अनुप्रयोगसँग सुरु गर्नुहोस्',
+    step1: 'चरण १',
+    step1description: 'अनुप्रयोग खोल्नुहोस्',
+    step2: 'चरण २',
+    step2description: 'क्यूआर कोड स्क्यान गर्नुहोस्',
+    step3: 'चरण ३',
+    step3description: 'विद्यालय, प्रोफाइल चयन गर्नुहोस् र कोचिंग सुरु गर्नुहोस्',
+    print: 'यो पृष्ठ प्रिन्ट गर्नुहोस्',
+    close: 'बन्द गर्नुहोस्',
+  },
 };
 
 export default npTranslation;

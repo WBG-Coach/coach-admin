@@ -286,6 +286,17 @@ const enTranslation = {
       },
     },
   },
+  qrcode: {
+    title: 'Getting started with the app',
+    step1: 'Step 1',
+    step1description: 'Open the app',
+    step2: 'Step 2',
+    step2description: 'Scan the QR Code',
+    step3: 'Step 3',
+    step3description: 'Select school, profile and start coaching',
+    print: 'Print this page',
+    close: 'Close',
+  },
 };
 
 export default enTranslation;
