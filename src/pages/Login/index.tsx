@@ -94,7 +94,7 @@ const Login: React.FC = () => {
               )}
               {showOTP && (
                 <VStack my={10}>
-                  <Text>{t('Login.code-labelकोच डिजिटल एनपी')}</Text>
+                  <Text>{t('Login.code-label')}</Text>
                   <HStack>
                     <PinInput otp onComplete={setCode}>
                       <PinInputField />
