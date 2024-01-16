@@ -23,6 +23,14 @@ const npTranslation = {
     complete: 'पूर्ण',
     incomplete: 'अपूर्ण',
   },
+  Login: {
+    email: 'ई-मेल',
+    'request-button': 'एक-पटकको लग-इन कोड माग गर्नुहोस्',
+    'verify-button': 'कोड प्रमाणित गर्नुहोस्',
+    'invalid-email': 'अमान्य इमेल',
+    'invalid-code': 'अमान्य कोड',
+    'code-label': 'तपाईंको ईमेलमा पठाइएको कोड प्रविष्ट गर्नुहोस्',
+  },
   Navbar: {
     dashboard: 'मुख्य पृष्ठ',
     questionnaire: 'प्रश्नावली',

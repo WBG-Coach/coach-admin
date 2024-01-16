@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useContext, useState } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { CloseButton } from 'react-toastify/dist/components';
 
 const defaultValues = {
@@ -33,6 +34,7 @@ const Login: React.FC = () => {
   const [error, setError] = useState('');
   const [showOTP, setShowOTP] = useState(false);
   const [code, setCode] = useState('');
+  const { t } = useTranslation();
 
   const handleLogin: SubmitHandler<typeof defaultValues> = async ({ email }) => {
     try {
@@ -45,9 +47,9 @@ const Login: React.FC = () => {
       }
     } catch (err: any) {
       if (showOTP) {
-        setError('Invalid code');
+        setError(t('Login.invalid-code') || '');
       } else {
-        setError('Invalid email');
+        setError(t('Login.invalid-email') || '');
       }
       setCode('');
     }
@@ -75,7 +77,13 @@ const Login: React.FC = () => {
                 rules={{ required: true }}
                 name="email"
                 render={({ field, fieldState: { error } }) => (
-                  <Input placeholder="E-mail" {...field} isInvalid={!!error} h={'48px'} disabled={showOTP} />
+                  <Input
+                    placeholder={t('Login.email') || ''}
+                    {...field}
+                    isInvalid={!!error}
+                    h={'48px'}
+                    disabled={showOTP}
+                  />
                 )}
               />
               {error && (
@@ -86,7 +94,7 @@ const Login: React.FC = () => {
               )}
               {showOTP && (
                 <VStack my={10}>
-                  <Text>Enter the code we sent to your email</Text>
+                  <Text>{t('Login.code-labelकोच डिजिटल एनपी')}</Text>
                   <HStack>
                     <PinInput otp onComplete={setCode}>
                       <PinInputField />
@@ -108,7 +116,7 @@ const Login: React.FC = () => {
               onClick={handleSubmit(handleLogin)}
               isDisabled={showOTP && code.length < 4}
             >
-              {showOTP ? 'Verify code' : 'Send OTP code'}
+              {showOTP ? t('Login.verify-button') : t('Login.request-button')}
             </Button>
           </>
         )}

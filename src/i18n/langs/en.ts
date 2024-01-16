@@ -23,7 +23,14 @@ const enTranslation = {
     complete: 'Complete',
     incomplete: 'Incomplete',
   },
-
+  Login: {
+    email: 'E-mail',
+    'request-button': 'Request one-time login code',
+    'verify-button': 'Verify code',
+    'invalid-email': 'Invalid email',
+    'invalid-code': 'Invalid code',
+    'code-label': 'Enter the code we sent to your email',
+  },
   Navbar: {
     logout: 'Log out',
     settings: 'Settings',

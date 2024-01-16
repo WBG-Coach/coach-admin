@@ -15,7 +15,7 @@ export const resources: {
 i18n.use(initReactI18next).init({
   compatibilityJSON: 'v3',
   resources,
-  fallbackLng: 'en',
+  fallbackLng: import.meta.env.VITE_COUNTRY === 'np' ? 'np' : 'en',
   interpolation: {
     escapeValue: false,
   },
