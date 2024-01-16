@@ -67,17 +67,17 @@ const SessionDataPage: React.FC = () => {
               <VStack alignItems="start">
                 <FormLabel htmlFor="period">{t('session-data.filters.period')}</FormLabel>
                 <Select id="period" value={period} onChange={(e) => setPeriod(e.target.value)} bg="#fff">
-                  <option value={''}>All time</option>
-                  <option value={'7 days'}>Last 7 days</option>
-                  <option value={'30 days'}>Last 30 days</option>
-                  <option value={'60 days'}>Last 60 days</option>
-                  <option value={'90 days'}>Last 90 days</option>
+                  <option value={''}>{t('common.all-time')}</option>
+                  <option value={'7 days'}>{t('common.last-7-days')}</option>
+                  <option value={'30 days'}>{t('common.last-30-days')}</option>
+                  <option value={'60 days'}>{t('common.last-60-days')}</option>
+                  <option value={'90 days'}>{t('common.last-90-days')}</option>
                 </Select>
               </VStack>
               <VStack alignItems="start">
                 <FormLabel htmlFor="region">{t('session-data.filters.region')}</FormLabel>
                 <Select id="region" value={region} onChange={(e) => setRegion(e.target.value)} bg="#fff">
-                  <option value={''}>All regions</option>
+                  <option value={''}>{t('common.all-regions')}</option>
                   {regions.map((item) => (
                     <option value={item.id}>{item.name}</option>
                   ))}
@@ -86,7 +86,7 @@ const SessionDataPage: React.FC = () => {
               <VStack alignItems="start">
                 <FormLabel htmlFor="schoolId">{t('session-data.filters.school')}</FormLabel>
                 <Select id="schoolId" value={schoolId} onChange={(e) => setSchoolId(e.target.value)} bg="#fff">
-                  <option value={''}>All schools</option>
+                  <option value={''}>{t('common.all-schools')}</option>
                   {sessionData.map((item) => (
                     <option value={item.id}>{item['School Name']}</option>
                   ))}

@@ -124,6 +124,7 @@ const npTranslation = {
   },
   school: {
     table: {
+      emis_number: 'एमिस नम्बर',
       actions: 'कार्यहरू',
       name: 'नाम',
       region: 'क्षेत्रहरू',

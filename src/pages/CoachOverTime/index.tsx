@@ -69,7 +69,7 @@ const CoachOverTimePage: React.FC = () => {
               <VStack alignItems="start">
                 <FormLabel htmlFor="region">{t('coach-over-time.filters.region')}</FormLabel>
                 <Select id="region" value={region} onChange={(e) => setRegion(e.target.value)} bg="#fff">
-                  <option value={''}>All regions</option>
+                  <option value={''}>{t('common.all-regions')}</option>
                   {regions.map((item) => (
                     <option value={item.id} key={item.id}>
                       {item.name}
@@ -81,7 +81,7 @@ const CoachOverTimePage: React.FC = () => {
               <VStack alignItems="start" ml="12px">
                 <FormLabel htmlFor="schoolId">{t('coach-over-time.filters.school')}</FormLabel>
                 <Select id="schoolId" value={schoolId} onChange={(e) => setSchoolId(e.target.value)} bg="#fff">
-                  <option value={''}>All schools</option>
+                  <option value={''}>{t('common.all-schools')}</option>
                   {sessionOverTime.map((item) => (
                     <option value={item.id} key={item.id}>
                       {item['School Name']}
