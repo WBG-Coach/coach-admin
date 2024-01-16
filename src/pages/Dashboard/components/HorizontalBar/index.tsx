@@ -1,4 +1,5 @@
 import { Box, HStack, Text, VStack } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   values: number[];
@@ -10,6 +11,8 @@ const BAD_VALUE = 3;
 const GOOD_VALUE = 4;
 
 export const HorizontalBar: React.FC<Props> = ({ labels, values }) => {
+  const { t } = useTranslation();
+
   const getColor = (value: number) => {
     if (value <= BAD_VALUE) return '#D96684';
     if (value <= GOOD_VALUE) return '#4C9AF7';
@@ -21,18 +24,18 @@ export const HorizontalBar: React.FC<Props> = ({ labels, values }) => {
     if (value <= BAD_VALUE)
       return (
         <Text px="8px" py="4px" borderRadius="4px" bg="#FEEDEC" color="#9B1208" fontSize="14px">
-          {'Needs improvement'}
+          {t('common.Needs-improvement')}
         </Text>
       );
     if (value <= GOOD_VALUE)
       return (
         <Text px="8px" py="4px" borderRadius="4px" bg="#EBF1FF" color="#264673" fontSize="14px">
-          {'Good'}
+          {t('common.good')}
         </Text>
       );
     return (
       <Text px="8px" py="4px" borderRadius="4px" bg="#EFFBEF" color="#218225" fontSize="14px">
-        {'Excelent'}
+        {t('common.excellent')}
       </Text>
     );
   };

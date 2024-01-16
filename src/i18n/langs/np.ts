@@ -22,6 +22,9 @@ const npTranslation = {
     'all-districts': 'सबै जिल्लाहरू',
     complete: 'पूर्ण',
     incomplete: 'अपूर्ण',
+    'needs-improvement': 'सुधारको आवश्यकता',
+    good: 'राम्रो',
+    excellent: 'उत्कृष्ट',
   },
   Login: {
     email: 'ई-मेल',

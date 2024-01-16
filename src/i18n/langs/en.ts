@@ -22,6 +22,9 @@ const enTranslation = {
     'all-districts': 'All districts',
     complete: 'Complete',
     incomplete: 'Incomplete',
+    'needs-improvement': 'Needs improvement',
+    good: 'Good',
+    excellent: 'Excellent',
   },
   Login: {
     email: 'E-mail',
