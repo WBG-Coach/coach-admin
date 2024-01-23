@@ -1,5 +1,6 @@
 const enTranslation = {
   common: {
+    clean: 'Clean',
     actions: 'Actions',
     activate: 'Activate',
     deactivate: 'Deactivate',

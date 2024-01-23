@@ -1,5 +1,6 @@
 const npTranslation = {
   common: {
+    clean: 'सफा',
     actions: 'क्रियाहरू',
     activate: 'सक्रिय गर्नुहोस्',
     deactivate: 'निष्क्रिय गर्नुहोस्',

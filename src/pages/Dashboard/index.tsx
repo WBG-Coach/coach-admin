@@ -55,9 +55,13 @@ const DashboardPage: React.FC = () => {
     );
   };
 
-  const handleChangeDateRange = (range: Range) => {
-    if (dateRange?.startDate !== range.startDate || dateRange?.endDate !== range.endDate) {
-      setDateRange(range);
+  const handleChangeDateRange = (range?: Range) => {
+    if (range) {
+      if (dateRange?.startDate !== range.startDate || dateRange?.endDate !== range.endDate) {
+        setDateRange(range);
+      }
+    } else {
+      setDateRange(undefined);
     }
   };
 
@@ -71,7 +75,7 @@ const DashboardPage: React.FC = () => {
           flex={1}
           ml={isMobile ? 0 : '12px'}
           mt={isMobile ? '12px' : 0}
-          maxW={isMobile ? undefined : '220px'}
+          maxW={isMobile ? undefined : '270px'}
           w="full"
         >
           <DataRangePicker onChange={handleChangeDateRange} />

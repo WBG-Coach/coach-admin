@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import { DateRangePicker, Range, RangeKeyDict, defaultStaticRanges } from 'react-date-range';
-import { Input, Box, useOutsideClick, FormControl, FormLabel } from '@chakra-ui/react';
+import {
+  Input,
+  Box,
+  useOutsideClick,
+  FormControl,
+  FormLabel,
+  InputGroup,
+  InputRightElement,
+  Button,
+} from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 
@@ -61,7 +70,7 @@ const nepaliLocale: Locale = {
 };
 
 type Props = {
-  onChange: (range: Range) => void;
+  onChange: (range?: Range) => void;
 };
 
 const DataRangePicker: React.FC<Props> = ({ onChange }) => {
@@ -78,16 +87,27 @@ const DataRangePicker: React.FC<Props> = ({ onChange }) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const calendarRef = React.useRef(null);
 
-  const handleSelect = (ranges: RangeKeyDict) => {
-    setState({
-      selection: {
-        ...ranges.selection,
-      },
-    });
+  const handleSelect = (ranges?: RangeKeyDict) => {
+    if (!ranges) {
+      setState({
+        selection: {
+          startDate: undefined,
+          endDate: undefined,
+          key: 'selection',
+        },
+      });
+      onChange();
+    } else {
+      setState({
+        selection: {
+          ...ranges.selection,
+        },
+      });
 
-    if (ranges.selection.startDate !== ranges.selection.endDate) {
-      onChange(ranges.selection);
-      setIsCalendarOpen(false);
+      if (ranges.selection.startDate !== ranges.selection.endDate) {
+        onChange(ranges.selection);
+        setIsCalendarOpen(false);
+      }
     }
   };
 
@@ -108,12 +128,19 @@ const DataRangePicker: React.FC<Props> = ({ onChange }) => {
   return (
     <FormControl ref={calendarRef} position="relative">
       <FormLabel fontWeight="bold">{t('dashboard.filters.data-range')}</FormLabel>
-      <Input
-        readOnly
-        value={displayDates()}
-        onFocus={() => setIsCalendarOpen(true)}
-        placeholder={t('dashboard.filters.data-range-placeholder') || ''}
-      />
+      <InputGroup>
+        <Input
+          readOnly
+          value={displayDates()}
+          onFocus={() => setIsCalendarOpen(true)}
+          placeholder={t('dashboard.filters.data-range-placeholder') || ''}
+        />
+        <InputRightElement width="4.5rem">
+          <Button h="1.75rem" size="sm" onClick={() => handleSelect()}>
+            {t('common.clean')}
+          </Button>
+        </InputRightElement>
+      </InputGroup>
       {isCalendarOpen && (
         <Box position="absolute" zIndex="2" top="80px" right={0} shadow="base">
           <DateRangePicker
