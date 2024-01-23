@@ -35,9 +35,8 @@ const RegionSelect: React.FC<Props> = ({
   }, [fixedItems]);
 
   useEffect(() => {
-    if (!!region) {
-      setRegions(region.children || []);
-      setSelectedRegion(undefined);
+    if (!!region?.children && region.children.length > 0) {
+      setRegions(region?.children || []);
     } else {
       loadRegions();
     }
@@ -61,19 +60,36 @@ const RegionSelect: React.FC<Props> = ({
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const region = regions.find((region) => region.id === e.target.value);
 
+    setSelectedRegion(region);
+
     if (region) {
       if (!!region.children?.length) {
-        setSelectedRegion(region);
         if (onSelect) onSelect(region.id);
       } else if (onSelect) {
         onSelect(region.id);
       }
     } else {
-      setSelectedRegion(undefined);
       if (onSelect) onSelect(undefined);
     }
     if (onChangeEvent) onChangeEvent(e);
   };
+
+  const renderNextPath = useCallback(() => {
+    if (selectedRegion?.children?.length && selectedRegion?.children?.length > 0)
+      return (
+        <RegionSelect
+          {...otherProps}
+          level={level + 1}
+          fixedItems={fixedItems?.slice(1)}
+          onChangeEvent={onChangeEvent}
+          region={selectedRegion}
+          onSelect={onSelect}
+          direction={direction}
+        />
+      );
+
+    return <></>;
+  }, [selectedRegion]);
 
   return (
     <Flex
@@ -98,17 +114,7 @@ const RegionSelect: React.FC<Props> = ({
           ))}
         </Select>
       </VStack>
-      {!!selectedRegion?.children?.length && (
-        <RegionSelect
-          {...otherProps}
-          level={level + 1}
-          fixedItems={fixedItems?.slice(1)}
-          onChangeEvent={onChangeEvent}
-          region={selectedRegion}
-          onSelect={onSelect}
-          direction={direction}
-        />
-      )}
+      {renderNextPath()}
     </Flex>
   );
 };
