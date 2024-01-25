@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import Papa from 'papaparse';
 import { useState } from 'react';
+import { saveAs } from 'file-saver';
 
 type Props = {
   isOpen: boolean;
@@ -81,7 +82,7 @@ const SchoolImportModal: React.FC<Props> = ({ isOpen, onClose }) => {
                 {!!response.failItems?.length ? 'Items that failed to import' : 'All items was imported'}
               </Text>
               <HStack w="full" px={4} borderBottom="1px solid">
-                <Box fontWeight="bold" w="50px"></Box>
+                <Box fontWeight="bold" w="50px" />
                 {header.map((_, index) => (
                   <Box flex={index === 1 ? 2 : 1} fontWeight="black">
                     {index === 0 ? 'Code' : index === 1 ? 'Name' : 'Region-' + (index - 2)}
@@ -103,7 +104,9 @@ const SchoolImportModal: React.FC<Props> = ({ isOpen, onClose }) => {
         ) : (
           <ModalBody>
             {arrayData.length === 0 ? (
-              <input type="file" accept=".csv" onChange={handleFileUpload} />
+              <VStack alignItems={'flex-start'}>
+                <input type="file" accept=".csv" onChange={handleFileUpload} />
+              </VStack>
             ) : (
               <VStack w="full">
                 <HStack w="full" px={4} borderBottom="1px solid">
@@ -132,10 +135,21 @@ const SchoolImportModal: React.FC<Props> = ({ isOpen, onClose }) => {
         <ModalFooter>
           {!!arrayData.length && <Text mr="auto">{'Total items: ' + arrayData.length}</Text>}
           {!response && (
-            <Button variant="ghost" onClick={onCancel} isDisabled={isLoading}>
+            <Button variant="ghost" mr={3} onClick={onCancel} isDisabled={isLoading}>
               Cancel
             </Button>
           )}
+
+          <Button
+            variant="outline"
+            borderColor={'Primary.$200'}
+            color={'Primary.$200'}
+            mr={3}
+            onClick={() => saveAs(SchoolImportModal, 'School impor template')}
+          >
+            Download template
+          </Button>
+
           {!isLoading && !response && (
             <Button colorScheme="blue" mr={3} isDisabled={!arrayData.length} onClick={startImport}>
               Start import
