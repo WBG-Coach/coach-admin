@@ -1,1 +1,0 @@
-export { default as SchoolImportModel } from './school_import.csv'

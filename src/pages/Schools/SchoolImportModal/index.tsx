@@ -65,6 +65,8 @@ const SchoolImportModal: React.FC<Props> = ({ isOpen, onClose }) => {
     setResponse(undefined);
   };
 
+  var csvBlob = new Blob(['emis_number,name,region,city,municipalities'], { type: 'text/csv;charset=utf-8' });
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} scrollBehavior="inside" size="5xl">
       <ModalOverlay />
@@ -145,7 +147,7 @@ const SchoolImportModal: React.FC<Props> = ({ isOpen, onClose }) => {
             borderColor={'Primary.$200'}
             color={'Primary.$200'}
             mr={3}
-            onClick={() => saveAs(SchoolImportModal, 'School impor template')}
+            onClick={() => saveAs(csvBlob, 'School import template')}
           >
             Download template
           </Button>
