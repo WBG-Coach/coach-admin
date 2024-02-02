@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Icon from '@/components/Base/Icon';
 import Loader from '@/components/Base/Loader';
 import Menu from '@/components/Menu';
-import { IRegion, IUser } from '@/types';
+import { IRegion } from '@/types';
 import {
   Button,
   Center,
@@ -22,10 +22,12 @@ import RegionForm from './Form';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import RegionService from '@/services/region';
+import RegionImportModal from './RegionImportModal';
 
 const Regions = () => {
   const theme = useTheme();
   const { t } = useTranslation();
+  const [importIsOpen, setImportIsOpen] = useState(false);
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [deleteIsOpen, setDeleteIsOpen] = useState(false);
   const [currentRegion, setCurrentRegion] = useState<IRegion>();
@@ -145,9 +147,29 @@ const Regions = () => {
               </HStack>
             ))}
 
-            <HStack px={'16px'} py={'12px'} cursor={'pointer'} onClick={() => setFormIsOpen(true)}>
-              <Icon name={'plus'} color={theme.colors.Primary['$200']} />
-              <Text color={'Primary.$200'}>{t('settings.tabs.region.new')}</Text>
+            <HStack w="full">
+              <Button
+                px={'16px'}
+                py={'12px'}
+                cursor={'pointer'}
+                onClick={() => setFormIsOpen(true)}
+                variant="outline"
+                leftIcon={<Icon name={'plus'} color={theme.colors.Primary['$200']} />}
+              >
+                <Text color={'Primary.$200'}>{t('settings.tabs.region.new')}</Text>
+              </Button>
+              <Button
+                ml="auto"
+                px={'16px'}
+                py={'12px'}
+                cursor={'pointer'}
+                variant="solid"
+                justifyContent="center"
+                onClick={() => setImportIsOpen(true)}
+                leftIcon={<Icon name={'file-alt-solid'} color={theme.colors.Primary['$200']} />}
+              >
+                <Text color={theme.colors.Primary['$200']}>{t('settings.tabs.region.import')}</Text>
+              </Button>
             </HStack>
           </>
         )}
@@ -169,6 +191,8 @@ const Regions = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+
+      <RegionImportModal isOpen={importIsOpen} onClose={() => setImportIsOpen(false)} />
     </>
   );
 };

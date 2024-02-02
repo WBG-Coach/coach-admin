@@ -261,6 +261,8 @@ const npTranslation = {
         edit: 'सम्पादन गर्नुहोस्',
         total_schools: 'कुल विद्यालय: {{ value }}',
         placeholder: 'क्षेत्रको नाम',
+        import: 'csv आयात गर्नुहोस्',
+        'import-title': 'क्षेत्र फाइल आयात गर्नुहोस्',
         0: {
           title: 'क्षेत्रहरू',
           new: 'नयाँ क्षेत्र',

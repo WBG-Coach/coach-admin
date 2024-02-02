@@ -266,6 +266,8 @@ const enTranslation = {
         delete: 'Delete',
         total_schools: 'Total school: {{ value }}',
         placeholder: 'Region name',
+        import: 'Import csv',
+        'import-title': 'Import regions file',
         0: {
           title: 'Regions',
           new: 'New region',
