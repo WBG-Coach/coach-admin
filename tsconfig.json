@@ -19,6 +19,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "**/*.csv"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
