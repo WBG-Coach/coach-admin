@@ -60,7 +60,7 @@ const RegionImportModal: React.FC<Props> = ({ isOpen, onClose }) => {
   };
 
   const onFinish = () => {
-    onClose();
+    onClose(true);
     setArrayData([]);
     setIsLoading(false);
     setResponse(undefined);

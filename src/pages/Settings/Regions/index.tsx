@@ -84,6 +84,13 @@ const Regions = () => {
     }
   };
 
+  const onCloseImport = (reload?: boolean) => {
+    setImportIsOpen(false);
+    if (reload) {
+      refreshRegions();
+    }
+  };
+
   return (
     <>
       <RegionForm
@@ -192,7 +199,7 @@ const Regions = () => {
         </ModalContent>
       </Modal>
 
-      <RegionImportModal isOpen={importIsOpen} onClose={() => setImportIsOpen(false)} />
+      <RegionImportModal isOpen={importIsOpen} onClose={onCloseImport} />
     </>
   );
 };
