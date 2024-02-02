@@ -80,7 +80,9 @@ const RegionImportModal: React.FC<Props> = ({ isOpen, onClose }) => {
           <ModalBody>
             <VStack w="full">
               <Text fontSize={28} mb={8}>
-                {!!response.failItems?.length ? 'Items that failed to import' : 'All items was imported'}
+                {!!response.failItems?.length
+                  ? t('settings.tabs.region.items-imported-fail')
+                  : t('settings.tabs.region.items-imported-success')}
               </Text>
               <HStack w="full" px={4} borderBottom="1px solid">
                 <Box fontWeight="bold" w="50px"></Box>
@@ -133,20 +135,21 @@ const RegionImportModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
         <ModalFooter>
           {!!arrayData.length && <Text mr="auto">{t('common.total_items') + arrayData.length}</Text>}
-          {!response && (
-            <Button variant="ghost" onClick={onCancel} isDisabled={isLoading}>
-              {t('common.cancel')}
-            </Button>
-          )}
+
           {!isLoading && !response && (
-            <Button colorScheme="blue" mr={3} isDisabled={!arrayData.length} onClick={startImport}>
-              {t('common.import')}
-            </Button>
+            <>
+              <Button variant="ghost" onClick={onCancel} isDisabled={isLoading}>
+                {t('common.cancel')}
+              </Button>
+              <Button colorScheme="blue" mr={3} isDisabled={!arrayData.length} onClick={startImport}>
+                {t('common.import')}
+              </Button>
+            </>
           )}
 
           {!!response && (
             <Button colorScheme="blue" mr={3} isDisabled={!arrayData.length} onClick={onFinish}>
-              Finish
+              {t('common.finish')}
             </Button>
           )}
         </ModalFooter>

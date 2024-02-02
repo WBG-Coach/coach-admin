@@ -22,6 +22,7 @@ const enTranslation = {
     'all-regions': 'All regions',
     'all-schools': 'All schools',
     'all-districts': 'All districts',
+    finish: 'Finish',
     complete: 'Complete',
     incomplete: 'Incomplete',
     'needs-improvement': 'Needs improvement',
@@ -269,6 +270,8 @@ const enTranslation = {
         placeholder: 'Region name',
         import: 'Import csv',
         'import-title': 'Import regions file',
+        'items-imported-fail': 'Items that failed to import',
+        'items-imported-success': 'All items was imported',
         0: {
           title: 'Regions',
           new: 'New region',

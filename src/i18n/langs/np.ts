@@ -22,6 +22,7 @@ const npTranslation = {
     'all-regions': 'सबै क्षेत्रहरू',
     'all-schools': 'सबै विद्यालयहरू',
     'all-districts': 'सबै जिल्लाहरू',
+    finish: 'समाप्त गर्नुहोस्',
     complete: 'पूर्ण',
     incomplete: 'अपूर्ण',
     'needs-improvement': 'सुधारको आवश्यकता',
@@ -265,6 +266,8 @@ const npTranslation = {
         delete: 'मेटाउन',
         import: 'csv आयात गर्नुहोस्',
         'import-title': 'क्षेत्र फाइल आयात गर्नुहोस्',
+        'items-imported-fail': 'आयात गर्न असफल वस्तुहरू',
+        'items-imported-success': 'सबै वस्तुहरू आयात गरियो',
         0: {
           title: 'क्षेत्रहरू',
           new: 'नयाँ क्षेत्र',
