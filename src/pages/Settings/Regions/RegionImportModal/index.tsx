@@ -132,7 +132,7 @@ const RegionImportModal: React.FC<Props> = ({ isOpen, onClose }) => {
         )}
 
         <ModalFooter>
-          {!!arrayData.length && <Text mr="auto">{'Total items: ' + arrayData.length}</Text>}
+          {!!arrayData.length && <Text mr="auto">{t('common.total_items') + arrayData.length}</Text>}
           {!response && (
             <Button variant="ghost" onClick={onCancel} isDisabled={isLoading}>
               {t('common.cancel')}

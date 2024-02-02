@@ -4,6 +4,7 @@ const enTranslation = {
     actions: 'Actions',
     activate: 'Activate',
     deactivate: 'Deactivate',
+    total_items: 'Total items: ',
     save: 'Save',
     edit: 'Edit',
     view: 'View',

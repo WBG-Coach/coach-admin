@@ -4,6 +4,7 @@ const npTranslation = {
     actions: 'क्रियाहरू',
     activate: 'सक्रिय गर्नुहोस्',
     deactivate: 'निष्क्रिय गर्नुहोस्',
+    total_items: 'कुल वस्तुहरू: ',
     save: 'बचत गर्नुहोस्',
     edit: 'सम्पादन गर्नुहोस्',
     view: 'हेर्नुहोस्',
@@ -261,6 +262,7 @@ const npTranslation = {
         edit: 'सम्पादन गर्नुहोस्',
         total_schools: 'कुल विद्यालय: {{ value }}',
         placeholder: 'क्षेत्रको नाम',
+        delete: 'मेटाउन',
         import: 'csv आयात गर्नुहोस्',
         'import-title': 'क्षेत्र फाइल आयात गर्नुहोस्',
         0: {
