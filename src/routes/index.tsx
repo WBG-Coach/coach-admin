@@ -13,7 +13,7 @@ import SessionsPage from '@/pages/Sessions';
 import SettingsPage from '@/pages/Settings';
 import TeachersPage from '@/pages/Teacher';
 import SyncsPage from '@/pages/Sync';
-import CoachOverTimePage from '@/pages/CoachOverTime';
+import CoachActivity from '@/pages/CoachActivity';
 import SessionDataPage from '@/pages/SessionData';
 
 export const Router = () => {
@@ -31,7 +31,7 @@ export const Router = () => {
             <Route index element={<DashboardPage />} />
             <Route path="teaching-practices" element={<CompetenciesPage />} />
             <Route path="coaching-sessions" element={<SessionsPage />} />
-            <Route path="coach-over-time" element={<CoachOverTimePage />} />
+            <Route path="coach-over-time" element={<CoachActivity />} />
             <Route path="session-data" element={<SessionDataPage />} />
             <Route path="questions" element={<QuestionsPage />} />
             <Route path="schools" element={<SchoolsPage />} />

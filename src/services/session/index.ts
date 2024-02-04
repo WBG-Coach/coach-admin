@@ -1,7 +1,7 @@
 import { ISessionData } from '@/pages/SessionData/SessionList';
 import _axios from '..';
 import { ISession } from '../../types';
-import { ISessionOverTime } from '@/pages/CoachOverTime/SessionList';
+import { ISessionOverTime } from '@/pages/CoachActivity/SessionList';
 
 export const SessionService = {
   getSessions: async (): Promise<ISession[]> => (await _axios.get('session')).data,
