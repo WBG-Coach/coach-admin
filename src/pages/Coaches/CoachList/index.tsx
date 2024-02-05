@@ -5,29 +5,27 @@ import Icon from '@/components/Base/Icon';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
-  coachs: ICoach[];
+  coaches: ICoach[];
   handleEdit: (coach: ICoach) => void;
   handleDelete: (coach: ICoach) => void;
+  handleView: (coach: ICoach) => void;
 };
 
-const CoachList: React.FC<Props> = ({ coachs, handleDelete, handleEdit }) => {
+const CoachList: React.FC<Props> = ({ coaches, handleDelete, handleEdit, handleView }) => {
   const { t } = useTranslation();
 
   return (
     <Table
-      data={coachs}
+      data={coaches}
+      filters={[{ label: t('coaches.full-name'), prop: 'name' }]}
       columns={[
         {
-          renderColumn: (item: ICoach) => item.name,
-          title: 'Name',
+          renderColumn: (item: ICoach) => `${item.name} ${item.surname}`,
+          title: t('coaches.full-name'),
         },
         {
-          renderColumn: (item: ICoach) => item.surname,
-          title: 'Surname',
-        },
-        {
-          renderColumn: (item: ICoach) => item.coachSchools?.length || '0',
-          title: 'Schools count',
+          renderColumn: (item: ICoach) => `${item.sessions?.length}`,
+          title: t('coaches.total-teacher-coached'),
         },
         {
           renderColumn: (item: ICoach) => (
@@ -37,6 +35,10 @@ const CoachList: React.FC<Props> = ({ coachs, handleDelete, handleEdit }) => {
                   <Icon name="ellipsis-v" size={16} />
                 </MenuButton>
                 <MenuList>
+                  <MenuItem gap="8px" alignItems="center" onClick={() => handleView(item)}>
+                    <Icon name="eye" />
+                    {t('common.view-details')}
+                  </MenuItem>
                   <MenuItem gap="8px" alignItems="center" onClick={() => handleEdit(item)}>
                     <Icon name="pen" />
                     {t('common.edit')}

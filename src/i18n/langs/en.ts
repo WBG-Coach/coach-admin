@@ -5,6 +5,7 @@ const enTranslation = {
     activate: 'Activate',
     deactivate: 'Deactivate',
     total_items: 'Total items: ',
+    'view-details': 'View details',
     save: 'Save',
     edit: 'Edit',
     view: 'View',
@@ -42,6 +43,7 @@ const enTranslation = {
     settings: 'Settings',
     dashboard: 'Dashboard',
     questionnaire: 'QUESTIONNAIRE',
+    coaches: 'Coaches',
     'teaching-practices': 'Teaching practices',
     'coaching-sessions': 'Coaching sessions',
     data: 'DATA',
@@ -149,6 +151,27 @@ const enTranslation = {
       name: 'School name',
       emis: 'Emis number',
     },
+  },
+
+  coaches: {
+    'new-coach': 'New coach',
+    'update-coach': 'Update coach',
+
+    name: 'Name',
+    surname: 'Surname',
+    email: 'Email',
+    phone: 'Phone',
+
+    'full-name': 'Full name',
+    'total-teacher-coached': 'Total teacher coached',
+
+    'delete-title': 'Confirm deletion',
+    'delete-detail': 'Are you sure you want to delete this coach?',
+    'detail-title': 'Coach details',
+
+    school: 'School name',
+    teacher: 'Teacher name',
+    'session-date': 'Session date',
   },
 
   'coach-over-time': {

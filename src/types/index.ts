@@ -19,7 +19,10 @@ export interface ICoach {
   id: string;
   name: string;
   surname: string;
+  email: string;
+  phone: string;
   coachSchools?: ICoachSchool[];
+  sessions?: ISession[];
 }
 
 export interface IRegion {
@@ -126,6 +129,8 @@ export interface ISession {
   coach: ICoach;
   school: ISchool;
   teacher: ITeacher;
+
+  created_at?: string;
 }
 
 export interface IDocumentation {

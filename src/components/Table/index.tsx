@@ -42,7 +42,8 @@ const Table: React.FC<Props> = ({ columns, data, filters, topSession }) => {
         data.filter((item) => {
           for (let index = 0; index < props.length; index++) {
             const prop = props[index];
-            if (!(item[prop] as string).includes(filter[prop])) return false;
+            console.log(item[prop], filter[prop]);
+            if (!(`${item[prop]}`.toLocaleUpperCase() as string).includes(filter[prop])) return false;
           }
           return true;
         }),

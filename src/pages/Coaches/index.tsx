@@ -19,6 +19,7 @@ import CoachList from './CoachList';
 import HeaderPage from '@/components/HeaderPage';
 import { useTranslation } from 'react-i18next';
 import handleDownloadJSON from '@/common/download';
+import CoachDetail from './CoachDetail';
 
 const CoachesPage: React.FC = () => {
   const { t } = useTranslation();
@@ -29,6 +30,7 @@ const CoachesPage: React.FC = () => {
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const [coachToEdit, setCoachToEdit] = useState<ICoach>();
   const [coachToDelete, setCoachToDelete] = useState<ICoach>();
+  const [coachToVew, setCoachToVew] = useState<ICoach>();
 
   useEffect(() => {
     loadCoaches();
@@ -44,6 +46,10 @@ const CoachesPage: React.FC = () => {
   const closeForm = () => {
     setNewCoach(false);
     setCoachToEdit(undefined);
+  };
+
+  const closeView = () => {
+    setCoachToVew(undefined);
   };
 
   const saveCoach = async (coach: Partial<ICoach>) => {
@@ -75,10 +81,11 @@ const CoachesPage: React.FC = () => {
       <HeaderPage
         subtitle={t('Navbar.data')}
         title={t('Navbar.coaches')}
-        newButtonValue={t('coach.new-coach')}
+        newButtonValue={t('coaches.new-coach')}
         onClickNew={() => setNewCoach(true)}
         onClickDownload={() => handleDownloadJSON(coaches, t('Navbar.coaches').toLowerCase().replace(' ', '-'))}
       />
+
       <CoachForm
         onClose={closeForm}
         onSubmit={saveCoach}
@@ -86,25 +93,33 @@ const CoachesPage: React.FC = () => {
         coachToEdit={coachToEdit}
         isOpen={!!coachToEdit || newCoach}
       />
+
+      <CoachDetail onClose={closeView} coach={coachToVew} isOpen={!!coachToVew} />
+
       {isLoadingList ? (
         <Center minW={'350px'} h={'200px'}>
           <Loader />
         </Center>
       ) : (
-        <CoachList coachs={coaches} handleEdit={setCoachToEdit} handleDelete={setCoachToDelete} />
+        <CoachList
+          coaches={coaches}
+          handleEdit={setCoachToEdit}
+          handleDelete={setCoachToDelete}
+          handleView={setCoachToVew}
+        />
       )}
       <Modal isOpen={!!coachToDelete} onClose={onCloseDeleteModal}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Confirm Deletion</ModalHeader>
+          <ModalHeader>{t('coaches.delete-title')}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>Are you sure you want to delete this school?</ModalBody>
+          <ModalBody>{t('coaches.delete-detail')}</ModalBody>
           <ModalFooter>
             <Button variant="ghost" mr={3} onClick={onCloseDeleteModal}>
-              Cancel
+              {t('common.cancel')}
             </Button>
             <Button colorScheme="red" onClick={deleteCoach} isLoading={isLoadingDelete}>
-              Delete
+              {t('common.delete')}
             </Button>
           </ModalFooter>
         </ModalContent>

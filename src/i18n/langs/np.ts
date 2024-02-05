@@ -5,6 +5,7 @@ const npTranslation = {
     activate: 'सक्रिय गर्नुहोस्',
     deactivate: 'निष्क्रिय गर्नुहोस्',
     total_items: 'कुल वस्तुहरू: ',
+    'view-details': 'विवरण हेर्नुहोस्',
     save: 'बचत गर्नुहोस्',
     edit: 'सम्पादन गर्नुहोस्',
     view: 'हेर्नुहोस्',
@@ -41,6 +42,7 @@ const npTranslation = {
     dashboard: 'मुख्य पृष्ठ',
     questionnaire: 'प्रश्नावली',
     'teaching-practices': 'शिक्षण अभ्यासहरू',
+    coaches: 'प्रशिक्षकहरू',
     data: 'डाटा',
     syncs: 'अपलोड र डाउनलोड',
     logout: 'एपबाट लगआउट गर्नुहोस्',
@@ -147,6 +149,28 @@ const npTranslation = {
       emis: 'एमिस नम्बर',
     },
   },
+
+  coaches: {
+    'new-coach': 'नयाँ प्रशिक्षक',
+    'update-coach': 'प्रशिक्षक अपडेट गर्नुहोस्',
+
+    name: 'नाम',
+    surname: 'थर',
+    email: 'इमेल',
+    phone: 'फोन',
+
+    'full-name': 'पूरा नाम',
+    'total-teacher-coached': 'कुल शिक्षक प्रशिक्षित',
+
+    'delete-title': 'मेटाउने पुष्टि',
+    'delete-detail': 'के तपाईं यो प्रशिक्षकलाई मेटाउन निश्चित हुनुहुन्छ?',
+    'detail-title': 'प्रशिक्षक विवरण',
+
+    school: 'स्कूलको नाम',
+    teacher: 'शिक्षकको नाम',
+    'session-date': 'सत्र मिति',
+  },
+
   'coach-over-time': {
     filters: {
       school: 'विद्यालय',

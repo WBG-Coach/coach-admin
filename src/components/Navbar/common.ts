@@ -28,6 +28,11 @@ export const MenuItems = [
         route: `/${import.meta.env.VITE_COUNTRY}/admin/schools`,
       },
       {
+        icon: 'user',
+        label: 'coaches',
+        route: `/${import.meta.env.VITE_COUNTRY}/admin/coaches`,
+      },
+      {
         icon: 'calender',
         label: 'coaches-over-time',
         route: `/${import.meta.env.VITE_COUNTRY}/admin/coach-over-time`,
