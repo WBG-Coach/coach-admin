@@ -8,7 +8,6 @@ import HeaderPage from '@/components/HeaderPage';
 import Logs from './Logs';
 import { UserContext } from '@/contexts/UserContext';
 import Regions from './Regions';
-import ChangeLanguage from './ChangeLanguage';
 
 const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -40,11 +39,6 @@ const SettingsPage: React.FC = () => {
           },
         ]
       : []),
-    {
-      label: t('settings.tabs.language.title'),
-      icon: 'globe',
-      component: <ChangeLanguage />,
-    },
   ];
 
   return (

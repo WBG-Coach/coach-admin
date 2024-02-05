@@ -1,22 +1,45 @@
 import React, { useContext, useState } from 'react';
-import { Box, HStack, Image, Stack, Text, VStack, useBreakpointValue } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  HStack,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Stack,
+  Text,
+  VStack,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { MenuItems } from './common';
-import { MenuItem } from './MenuItem';
+import { MenuItem as CustomMenuItem } from './MenuItem';
 import { CoachLogo } from '@/assets/images/logos';
-import { UserContext } from '@/contexts/UserContext';
+import { UserContext, useUserContext } from '@/contexts/UserContext';
 import UserCard from '../UserCard';
-import { HamburgerIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 
+const LANG_OPTIONS = [
+  { label: '🇺🇸 English (US)', value: 'en' },
+  { label: '🇳🇵 Nepali', value: 'np' },
+];
+
 const Navbar: React.FC = () => {
-  const { logout, user } = useContext(UserContext);
-  const { t } = useTranslation();
+  const { logout, user, updateLocalUser } = useContext(UserContext);
+  const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const isMobile = useBreakpointValue({ base: true, md: false });
   const navbarWidth = useBreakpointValue({ base: 'full', md: '240px' });
+
+  const changeLanguage = (language: string) => {
+    i18n.changeLanguage(language);
+    if (user) updateLocalUser({ ...user, language });
+  };
 
   const menu = (
     <>
@@ -33,7 +56,7 @@ const Navbar: React.FC = () => {
               {item.subItems.map(
                 (subItem, sIndex) =>
                   (!subItem.role || user?.role === subItem.role) && (
-                    <MenuItem
+                    <CustomMenuItem
                       key={index + sIndex}
                       icon={subItem.icon}
                       label={t(`Navbar.${subItem.label}`)}
@@ -47,7 +70,7 @@ const Navbar: React.FC = () => {
               )}
             </Stack>
           ) : (
-            <MenuItem
+            <CustomMenuItem
               key={index}
               icon={item.icon}
               label={t(`Navbar.${item.label}`)}
@@ -94,6 +117,34 @@ const Navbar: React.FC = () => {
           {menu}
         </>
       )}
+
+      <Menu>
+        <MenuButton
+          w="calc(100% - 32px)"
+          mx="16px"
+          mt="auto"
+          mb="16px"
+          bg="white"
+          shadow="md"
+          as={Button}
+          rightIcon={<ChevronDownIcon />}
+        >
+          {LANG_OPTIONS.filter((item) => item.value === i18n.language)[0].label}
+        </MenuButton>
+        <MenuList>
+          {LANG_OPTIONS.map((item) => (
+            <MenuItem
+              minH="48px"
+              key={item.value}
+              value={item.value}
+              onClick={() => changeLanguage(item.value)}
+              isDisabled={i18n.language === item.value}
+            >
+              {item.label}
+            </MenuItem>
+          ))}
+        </MenuList>
+      </Menu>
     </VStack>
   );
 };
