@@ -83,6 +83,34 @@ const Navbar: React.FC = () => {
           ),
         )}
       </VStack>
+
+      <Menu>
+        <MenuButton
+          w="calc(100% - 32px)"
+          mx="16px"
+          mt="auto"
+          mb="16px"
+          bg="white"
+          shadow="md"
+          as={Button}
+          rightIcon={<ChevronDownIcon />}
+        >
+          {LANG_OPTIONS.filter((item) => item.value === i18n.language)[0].label}
+        </MenuButton>
+        <MenuList>
+          {LANG_OPTIONS.map((item) => (
+            <MenuItem
+              minH="48px"
+              key={item.value}
+              value={item.value}
+              onClick={() => changeLanguage(item.value)}
+              isDisabled={i18n.language === item.value}
+            >
+              {item.label}
+            </MenuItem>
+          ))}
+        </MenuList>
+      </Menu>
     </>
   );
 
@@ -117,34 +145,6 @@ const Navbar: React.FC = () => {
           {menu}
         </>
       )}
-
-      <Menu>
-        <MenuButton
-          w="calc(100% - 32px)"
-          mx="16px"
-          mt="auto"
-          mb="16px"
-          bg="white"
-          shadow="md"
-          as={Button}
-          rightIcon={<ChevronDownIcon />}
-        >
-          {LANG_OPTIONS.filter((item) => item.value === i18n.language)[0].label}
-        </MenuButton>
-        <MenuList>
-          {LANG_OPTIONS.map((item) => (
-            <MenuItem
-              minH="48px"
-              key={item.value}
-              value={item.value}
-              onClick={() => changeLanguage(item.value)}
-              isDisabled={i18n.language === item.value}
-            >
-              {item.label}
-            </MenuItem>
-          ))}
-        </MenuList>
-      </Menu>
     </VStack>
   );
 };
