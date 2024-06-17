@@ -15,10 +15,10 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
+import { AxiosError } from 'axios';
 import React, { useContext, useState } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { CloseButton } from 'react-toastify/dist/components';
 
 const defaultValues = {
   email: '',
@@ -46,7 +46,9 @@ const Login: React.FC = () => {
         setShowOTP(true);
       }
     } catch (err: any) {
-      if (showOTP) {
+      if ((err as AxiosError).response?.status === 400) {
+        setError((err as AxiosError<any>).response?.data?.error || 'Error');
+      } else if (showOTP) {
         setError(t('Login.invalid-code') || '');
       } else {
         setError(t('Login.invalid-email') || '');

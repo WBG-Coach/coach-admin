@@ -6,6 +6,7 @@ import { IRegion, IUser } from '../../types';
 import { toast } from 'react-toastify';
 import UserService from '@/services/user';
 import { useTranslation } from 'react-i18next';
+import { throws } from 'assert';
 
 export type UserContextProps = {
   login: (prop: { email: string; code: string }) => Promise<void>;
@@ -51,10 +52,15 @@ const UserContextProvider = ({ children }: Props) => {
   }, [user]);
 
   const handleLogin = async (props: { email: string; code: string }) => {
-    const response = await AuthService.login(props);
-    setUser(response.data);
-    StorageService.setUser(response.data);
-    StorageService.setAccessToken(response.headers.token || '');
+    try {
+      const response = await AuthService.login(props);
+      setUser(response.data);
+      StorageService.setUser(response.data);
+      StorageService.setAccessToken(response.headers.token || '');
+    } catch (err: any) {
+      console.log({ err });
+      throw err;
+    }
   };
 
   const handleUpdateUser = async (userToUpdate: Partial<IUser & { currentPassword?: string }>) => {

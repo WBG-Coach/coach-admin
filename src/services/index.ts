@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import StorageService from './storage/storage.service';
 
 const config = {
@@ -15,17 +15,21 @@ _axios.interceptors.request.use(
     }
     return config;
   },
-  (error) => error,
+  (error) => {
+    console.log({ error });
+    return error;
+  },
 );
 
 _axios.interceptors.response.use(
   (response) => response,
-  (error) => {
+  (error: AxiosError) => {
     if (error.response?.status === 401) {
       StorageService.cleanStorage();
       location.reload();
     }
-    throw new Error(error);
+
+    throw error;
   },
 );
 
